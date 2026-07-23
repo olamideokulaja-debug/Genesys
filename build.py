@@ -1003,8 +1003,10 @@ contact=phead("Contact","See Genesys on <em>your own workflow.</em>",
     <div class="field"><label for="product">Product of interest</label><select id="product"><option>Not sure yet, advise me</option><option>Genesys HMIS</option><option>Genesys EMR</option><option>Clinical Specialized Packages</option><option>Stand-alone Packages</option></select></div>
     <div class="field"><label for="msg">Message</label><textarea id="msg" placeholder="Tell us what you are trying to fix."></textarea></div>
     <button class="btn btn-primary" type="button" id="formBtn">Request a demo <span class="arrow">&rarr;</span></button>
-    <div class="form-ok" id="formOk"><span>&#10003;</span><span>Thank you. This form is not yet connected, so nothing was sent.</span></div>
-    <p class="needs" style="margin-top:10px">[Form is visual. Wiring to Supabase and email is a later stage.]</p>
+    <div class="form-ok" id="formOk"></div>
+    <p class="muted" style="margin-top:10px;font-size:13.5px">We reply within one business day. Enquiries reach
+      <a href="mailto:cordor@genesys-health.com" style="color:var(--blue);font-weight:600">cordor@genesys-health.com</a>
+      and <a href="https://wa.me/2347047999337" target="_blank" rel="noopener" style="color:var(--blue);font-weight:600">+234 704 799 9337</a>.</p>
   </div>
   <div class="reveal d1">
     <div class="figure"><img src="assets/img/new_lobby.jpg" alt="A practice manager helping patients at a hospital reception desk" style="aspect-ratio:2/1"></div>

@@ -43,6 +43,8 @@ Connect it when you are ready:
 2. Open **SQL Editor → New query**, paste the whole of `supabase/schema.sql`, and click **Run**.
    This creates six tables with row-level security: `leads`, `chat_messages`, `subscribers`,
    `news_items`, `stories`, `testimonials`.
+   The file is safe to run repeatedly. If you see `policy ... already exists`, it simply means
+   the schema was applied before — nothing is wrong, and you can move on to step 3.
 3. Go to **Project Settings → API** and copy the **Project URL** and the **anon public** key.
 4. Open `assets/config.js`, paste both values, commit. Vercel redeploys automatically.
 
