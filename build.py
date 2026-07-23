@@ -151,9 +151,8 @@ def client_tile(n,loc,m,logo):
     return f'<div class="client reveal">{head}<span class="cname">{n}</span><span class="cmeta">{loc}</span></div>'
 clients_html="".join(client_tile(*c) for c in CLIENTS)
 
-def clients_section(title="Facilities running Genesys.", note=True):
-    n=('<p class="stat-note">Client names published with permission. Official logo files replace these marks '
-       'as each facility supplies them.</p>') if note else ""
+def clients_section(title="Facilities running Genesys.", note=False):
+    n = ""
     return f"""
 <section class="band tight"><div class="wrap">
   <div class="sec-head reveal"><span class="eyebrow">Clients</span><h2>{title}</h2>
@@ -198,15 +197,30 @@ ROUTES=[("Path 01","I run a hospital","50 to 500 beds. See where the money goes 
 routes="".join(f'<a class="route reveal d{i}" href="{u}"><div><span class="rk">{k}</span><h3>{h}</h3><p>{p}</p></div>'
  f'<span class="go">Read more &rarr;</span></a>' for i,(k,h,p,u) in enumerate(ROUTES,1))
 
-QUOTES=[("Our transition was eased by the assistance of the Genesys team. The software is quick and efficient, yet complete.","[Name needed]","Role and facility to be confirmed"),
- ("We can finally see which department earns and which one drains. That conversation used to be guesswork.","[Name needed]","Hospital administrator, facility to be confirmed"),
- ("Claims that used to sit for weeks now leave the same day the patient does.","[Name needed]","Billing lead, facility to be confirmed")]
+CLIENT_SLIDES=[
+ ("Reddington Hospital Ikeja","Ikeja, Lagos","Multi-specialty hospital","reddington"),
+ ("Medbury Medical Services","Lekki, Lagos","Multi-service provider","medbury"),
+ ("Subol Hospital Limited","Lagos","General hospital","subol"),
+ ("Finnih Medical Centre","Lagos","Medical centre","finnih"),
+ ("Kaaf Specialist Hospital","Lagos","Specialist hospital","kaaf"),
+ ("Sky-High Medical Centre","Lagos","Medical centre","skyhigh"),
+ ("11PLC Clinic","Lagos","Clinic","plc11"),
+ ("Mart Medical Clinic","Lagos","Clinic",None),
+]
+
 def carousel():
-    s="".join(f'<div class="slide{" active" if i==0 else ""}"><p class="q">&ldquo;{q}&rdquo;</p>'
-      f'<div class="attr"><b>{n}</b>{r}</div></div>' for i,(q,n,r) in enumerate(QUOTES))
-    d="".join(f'<button class="dot" aria-selected="{"true" if i==0 else "false"}" aria-label="Quote {i+1}"></button>'
-      for i in range(len(QUOTES)))
-    return f'<div class="carou reveal">{s}<div class="carou-ctl">{d}<button class="carou-pause">Pause</button></div></div>'
+    sl=""
+    for i,(fac,loc,kind,logo) in enumerate(CLIENT_SLIDES):
+        mark=(f'<img class="cs-logo" src="assets/clients/{logo}.png" alt="{fac}">' if logo
+              else f'<span class="cs-init">{"".join(w[0] for w in fac.split()[:2]).upper()}</span>')
+        sl+=(f'<div class="slide{" active" if i==0 else ""}">{mark}'
+             f'<div class="cs-name">{fac}</div>'
+             f'<div class="cs-meta">{kind} &middot; {loc}</div>'
+             f'<div class="cs-live"><span class="uc-dot"></span>Running Genesys</div></div>')
+    d="".join(f'<button class="dot" aria-selected="{"true" if i==0 else "false"}" '
+              f'aria-label="Client {i+1}"></button>' for i in range(len(CLIENT_SLIDES)))
+    return (f'<div class="carou reveal">{sl}'
+            f'<div class="carou-ctl">{d}<button class="carou-pause">Pause</button></div></div>')
 
 home=f"""
 <section class="hero"><div class="wrap">
@@ -259,9 +273,9 @@ home=f"""
 </div></section>
 {clients_section()}
 <section><div class="wrap">
-  <div class="sec-head reveal"><span class="eyebrow">In their words</span><h2>What facilities tell us.</h2></div>
+  <div class="sec-head reveal"><span class="eyebrow">Our clients</span><h2>Facilities running Genesys.</h2></div>
   {carousel()}
-  <p class="stat-note">Quotes are held with placeholder attribution until each facility confirms name and role.</p>
+  <p class="stat-note">Named with each facility&rsquo;s permission. We publish a quote only after that facility has approved its exact wording and named a spokesperson.</p>
 </div></section>
 {cta()}"""
 
@@ -656,7 +670,7 @@ case_cards="".join('<a class="ins reveal d%d" href="%s"><span class="k">Case stu
 proof=phead("Proof","The record is <em>the argument.</em>",
  "Named clients, certifications and quantified case studies belong here. We publish only what we can stand behind, and mark clearly what is still to be confirmed.")+clients_section("Who runs Genesys today.")+f"""
 <section class="tight"><div class="wrap">{carousel()}
-  <p class="stat-note">Quotes are held with placeholder attribution until each facility confirms name and role.</p></div></section>
+  <p class="stat-note">Named with each facility&rsquo;s permission. We publish a quote only after that facility has approved its exact wording and named a spokesperson.</p></div></section>
 <section class="band tight"><div class="wrap split wide-left">
   <div class="reveal"><span class="eyebrow">What we can show</span>
     <h2 style="font-size:clamp(24px,3.2vw,34px);margin:10px 0 14px">Evidence, not adjectives.</h2>

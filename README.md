@@ -116,3 +116,11 @@ The site ships with:
 6. Write an internal breach response plan that meets the 72-hour notification duty.
 7. Run a DPIA if you begin any higher-risk processing.
 Search the legal pages for `[` to find every placeholder awaiting your input.
+
+## Adding real client quotes
+The homepage and Proof carousel currently show each client facility, its logo and location.
+No quote is shown, because a quote must be the facility's own approved words.
+
+When a facility signs off wording, open `build.py`, find `CLIENT_SLIDES`, and add two fields:
+the quote and the named spokesperson. Then extend the `carousel()` function to render them.
+Send the approved text and it takes about two minutes to insert.
