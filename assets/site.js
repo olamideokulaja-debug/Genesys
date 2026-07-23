@@ -215,17 +215,62 @@
   var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
 
   /* ---- Supabase REST helper (no SDK needed) ---- */
+  function sbConfigured(){
+    return !!(CFG.SUPABASE_URL && CFG.SUPABASE_ANON_KEY &&
+              /^https:\/\/[a-z0-9-]+\.supabase\.co/i.test(CFG.SUPABASE_URL.trim()));
+  }
   function sbInsert(table, row){
-    if(!CFG.SUPABASE_URL || !CFG.SUPABASE_ANON_KEY) return Promise.resolve({ok:false, reason:'not-configured'});
+    if(!sbConfigured()){
+      console.warn('[Genesys] Supabase not configured. Add SUPABASE_URL and SUPABASE_ANON_KEY in assets/config.js, then redeploy.');
+      return Promise.resolve({ok:false, reason:'not-configured'});
+    }
     return fetch(CFG.SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/'+table, {
       method:'POST',
       headers:{'Content-Type':'application/json','apikey':CFG.SUPABASE_ANON_KEY,
                'Authorization':'Bearer '+CFG.SUPABASE_ANON_KEY,'Prefer':'return=minimal'},
       body: JSON.stringify(row)
-    }).then(function(r){ return {ok:r.ok, status:r.status}; })
-      .catch(function(e){ return {ok:false, reason:String(e)}; });
+    }).then(function(r){
+      if(r.ok) return {ok:true, status:r.status};
+      return r.text().then(function(t){
+        console.error('[Genesys] Supabase rejected the insert into "'+table+'". HTTP '+r.status+' — '+t);
+        return {ok:false, status:r.status, reason:t};
+      });
+    }).catch(function(e){
+      console.error('[Genesys] Could not reach Supabase:', e);
+      return {ok:false, reason:String(e)};
+    });
   }
   window.gxInsert = sbInsert;
+
+  /* Diagnostic: type gxCheck() in the browser console on the live site */
+  window.gxCheck = function(){
+    var u=(CFG.SUPABASE_URL||'').trim(), k=(CFG.SUPABASE_ANON_KEY||'').trim();
+    console.log('%c Genesys connection check ','background:#0B4FC4;color:#fff;padding:2px 6px;border-radius:3px');
+    console.log('URL set:      ', u ? u : 'NO — assets/config.js SUPABASE_URL is empty');
+    console.log('Anon key set: ', k ? (k.slice(0,12)+'… ('+k.length+' chars)') : 'NO — assets/config.js SUPABASE_ANON_KEY is empty');
+    if(!sbConfigured()){
+      console.warn('VERDICT: not configured. Fill both values in assets/config.js, commit, and let Vercel redeploy.');
+      return;
+    }
+    ['leads','chat_messages','subscribers'].forEach(function(t){
+      fetch(u.replace(/\/$/,'')+'/rest/v1/'+t+'?select=id&limit=1',
+        {headers:{'apikey':k,'Authorization':'Bearer '+k}})
+      .then(function(r){
+        if(r.status===200) console.log('table '+t+': reachable (read allowed)');
+        else if(r.status===401||r.status===403) console.log('table '+t+': exists, public reads blocked by RLS (expected)');
+        else if(r.status===404) console.error('table '+t+': NOT FOUND — run supabase/schema.sql in the SQL editor');
+        else console.warn('table '+t+': HTTP '+r.status);
+      }).catch(function(e){ console.error('table '+t+': network error', e); });
+    });
+    fetch(u.replace(/\/$/,'')+'/rest/v1/leads',{method:'POST',
+      headers:{'Content-Type':'application/json','apikey':k,'Authorization':'Bearer '+k,'Prefer':'return=minimal'},
+      body:JSON.stringify({full_name:'Connection test',email:'test@genesys-health.com',
+        message:'Automated check from gxCheck(). Safe to delete.',source_page:'gxCheck'})})
+    .then(function(r){
+      if(r.ok) console.log('%cWRITE TEST PASSED — a row named "Connection test" is now in your leads table.','color:#0B8C5A;font-weight:bold');
+      else r.text().then(function(t){ console.error('WRITE TEST FAILED — HTTP '+r.status+': '+t); });
+    }).catch(function(e){ console.error('WRITE TEST FAILED — network:', e); });
+  };
 
   /* ---- LIGHTBOX for product screenshots ---- */
   var lb = document.createElement('div');
@@ -309,20 +354,67 @@
   fab.addEventListener('click',function(){ toggle(!panel.classList.contains('open')); });
   $('.ch-x',panel).addEventListener('click',function(){ toggle(false); });
 
-  /* ---- FORM → Supabase ---- */
+  /* ---- FORM: validate → Supabase if configured → always give a real way to send ---- */
   var fb=$('#formBtn');
-  if(fb) fb.addEventListener('click',function(){
-    var g=function(id){var e=document.getElementById(id);return e?e.value:'';};
-    sbInsert('leads',{full_name:g('name'),email:g('email'),phone:g('phone'),facility_name:g('facility'),
-      facility_type:g('ftype'),beds_sites:g('beds'),product:g('product'),message:g('msg'),
-      source_page:location.pathname, locale:(localStorage.getItem('gx-lang')||'en')}).then(function(res){
-        var ok=$('#formOk');
-        if(ok){ ok.querySelector('span:last-child').textContent = res.ok
-          ? 'Thank you. Your request has been sent — we reply within one business day.'
-          : 'Thank you. The form is not yet connected to a database, so nothing was sent. Add your Supabase keys in assets/config.js to enable it.';
-          ok.classList.add('show'); }
+  if(fb){
+    var val=function(id){var e=document.getElementById(id);return e?e.value.trim():'';};
+    var fieldEl=function(id){return document.getElementById(id);};
+    function flag(id,bad){
+      var e=fieldEl(id); if(!e) return;
+      e.style.borderColor = bad ? '#C4341F' : '';
+      e.style.boxShadow   = bad ? '0 0 0 3px rgba(196,52,31,.12)' : '';
+    }
+    fb.addEventListener('click',function(){
+      var name=val('name'), email=val('email'), phone=val('phone');
+      var okName=!!name, okMail=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+      flag('name',!okName); flag('email',!okMail);
+      var ok=$('#formOk');
+      if(!okName||!okMail){
+        if(ok){ ok.className='form-ok show';
+          ok.innerHTML='<span>!</span><span>Please add '+(!okName?'your name':'')+
+            (!okName&&!okMail?' and ':'')+(!okMail?'a valid email address':'')+' so we can reply.</span>';
+          ok.style.background='rgba(196,52,31,.08)'; ok.style.color='#C4341F'; }
+        (fieldEl(!okName?'name':'email')||{focus:function(){}}).focus();
+        return;
+      }
+      var row={full_name:name,email:email,phone:phone,facility_name:val('facility'),
+        facility_type:val('ftype'),beds_sites:val('beds'),product:val('product'),message:val('msg'),
+        source_page:location.pathname, locale:(function(){try{return localStorage.getItem('gx-lang')||'en';}catch(e){return 'en';}})()};
+
+      var lines=['Demo request via genesys-health.com','',
+        'Name: '+row.full_name,'Email: '+row.email,'Phone: '+(row.phone||'-'),
+        'Facility: '+(row.facility_name||'-'),'Type: '+row.facility_type,
+        'Beds / sites: '+row.beds_sites,'Product of interest: '+row.product,'',
+        'Message:', (row.message||'-')].join('\n');
+      var subject='Demo request — '+(row.facility_name||row.full_name);
+      var mailto='mailto:'+mail+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(lines);
+      var waLink='https://wa.me/'+wa+'?text='+encodeURIComponent(lines);
+
+      sbInsert('leads',row).then(function(res){
+        if(!ok) return;
+        ok.style.background=''; ok.style.color='';
+        ok.className='form-ok show';
+        if(res.ok){
+          ok.innerHTML='<span>&#10003;</span><span>Thank you, '+row.full_name.split(' ')[0]+
+            '. Your request has reached us and we reply within one business day.</span>';
+        } else {
+          ok.innerHTML='<span>&#10003;</span><span style="display:block">'+
+            '<b style="display:block;margin-bottom:6px">Almost there, '+row.full_name.split(' ')[0]+'.</b>'+
+            'Choose how to send it and your details go straight to our enquiries team.'+
+            '<span style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">'+
+              '<a class="btn btn-primary" style="font-size:14px;padding:.6em 1em" href="'+mailto+'">Send by email</a>'+
+              '<a class="btn btn-ghost" style="font-size:14px;padding:.6em 1em" href="'+waLink+'" target="_blank" rel="noopener">Send on WhatsApp</a>'+
+              '<button class="btn btn-ghost" id="copyLead" style="font-size:14px;padding:.6em 1em">Copy details</button>'+
+            '</span></span>';
+          var cp=document.getElementById('copyLead');
+          if(cp) cp.addEventListener('click',function(){
+            (navigator.clipboard?navigator.clipboard.writeText(lines):Promise.reject())
+              .then(function(){cp.textContent='Copied';}).catch(function(){cp.textContent='Select and copy above';});
+          });
+        }
       });
-  });
+    });
+  }
   /* ---- newsletter ---- */
   $$('.news button').forEach(function(b){
     b.addEventListener('click',function(){

@@ -27,8 +27,17 @@ genesys-site/
 4. Go to https://vercel.com/new, import the repo, set Framework Preset to **Other**, leave build fields empty, click **Deploy**.
 5. Add your domain under **Settings → Domains**.
 
-## 2. Supabase (needed for the form, chat and newsletter to actually save)
-Without this the site works fine, but the demo form, chat and newsletter do not store anything.
+## 2. Supabase (optional, but recommended)
+
+**The demo form works right now, with or without Supabase.**
+
+- *Without Supabase* — when a visitor submits, the form validates their details and then offers
+  **Send by email**, **Send on WhatsApp** and **Copy details**, each pre-filled with everything they
+  typed. The enquiry reaches cordor@genesys-health.com or +234 704 799 9337 either way. Nothing is lost.
+- *With Supabase* — the submission is saved silently to your `leads` table and the visitor just sees
+  a thank-you. No extra click for them, and you get every enquiry in one dashboard.
+
+Connect it when you are ready:
 
 1. Create a free project at https://supabase.com (region: choose the closest, e.g. Frankfurt or London).
 2. Open **SQL Editor → New query**, paste the whole of `supabase/schema.sql`, and click **Run**.
