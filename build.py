@@ -137,10 +137,14 @@ FOOT=f"""
 </body></html>"""
 
 
-CLIENTS=[("Medbury Medicals","Lekki, Lagos","MM",None),("Kaaf Medical Center","Lagos","KM",None),
- ("Finnih Medical Centre","Lagos","FM","finnih"),("Sky-High Medical Center","Lagos","SH",None),
- ("Subol Hospital Limited","Lagos","SL",None),("11PLC Clinic","Lagos","11",None),
- ("Mart Medical Clinic","Lagos","MC",None),("Reddington Hospital Ikeja","Ikeja, Lagos","RH","reddington")]
+CLIENTS=[("Medbury Medical Services","Lekki, Lagos","MM","medbury"),
+ ("Kaaf Specialist Hospital","Lagos","KM","kaaf"),
+ ("Finnih Medical Centre","Lagos","FM","finnih"),
+ ("Sky-High Medical Centre","Lagos","SH","skyhigh"),
+ ("Subol Hospital Limited","Lagos","SL","subol"),
+ ("11PLC Clinic","Lagos","11","plc11"),
+ ("Mart Medical Clinic","Lagos","MC",None),
+ ("Reddington Hospital Ikeja","Ikeja, Lagos","RH","reddington")]
 def client_tile(n,loc,m,logo):
     head = (f'<img class="clogo" src="assets/clients/{logo}.png" alt="{n}">' if logo
             else f'<span class="cmark">{m}</span>')
