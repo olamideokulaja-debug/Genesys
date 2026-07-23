@@ -6,6 +6,13 @@ OUT = pathlib.Path(__file__).parent
 # ---------------------------------------------------------------- NAVIGATION
 NAV = [
  ("index.html","Home",None,None),
+ ("how-it-works.html","How it works","g3",[
+   ("how-it-works.html","The system itself","Screens","Real screens from a live Genesys deployment."),
+   ("how-it-works.html#frontdesk","Front desk &amp; records","Patients","Registration, search and the patient queue."),
+   ("how-it-works.html#clinical","Laboratory &amp; radiology","Diagnostics","Sample collection, imaging orders and scheduling."),
+   ("how-it-works.html#pharmacy","Pharmacy &amp; inventory","Stock","Dispensing history, stores and products."),
+   ("how-it-works.html#billing","Billing &amp; finance","Money","Outpatient bills, payments and claims."),
+ ]),
  ("solutions.html","Solutions","g4",[
    ("solutions.html","All solutions","Overview","Compare the four systems side by side."),
    ("solutions-hmis.html","Genesys HMIS","Large practices","ERP-class automation across every department."),
@@ -59,6 +66,7 @@ def head(t,d):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
+<script src="assets/config.js"></script>
 </head>
 <body>"""
 
@@ -68,7 +76,7 @@ def nav(cur):
     for i,(href,label,cols,kids) in enumerate(NAV):
         cls="tab has-mega" if kids else "tab"
         aria=' aria-current="page"' if href==active_top else ''
-        tabs+=f'<a class="{cls}" href="{href}" data-drop="d{i}"{aria}>{label}</a>'
+        tabs+=f'<a class="{cls}" href="{href}" data-drop="d{i}"{aria} data-i18n="{label}">{label}</a>'
         if kids:
             items="".join(
               f'<a class="mega-item" href="{p}"><span class="mi-k">{k}</span><h4>{n}</h4><p>{d}</p></a>'
@@ -79,7 +87,7 @@ def nav(cur):
   <div class="wrap nav-top">
     <a class="brand" href="index.html" aria-label="Genesys Health home">{LOGO}</a>
     <div class="nav-actions">
-      <span class="lang" title="French coming soon"><b>EN</b> / FR</span>
+      <button class="langbtn" aria-label="Passer en français"><b>EN</b> / FR</button>
       <button class="iconbtn" id="themeBtn" aria-label="Switch colour theme">{SUN}</button>
       <a class="btn btn-primary" href="contact.html">Request a demo</a>
     </div>
@@ -120,6 +128,35 @@ FOOT=f"""
 <div class="mobar"><a class="btn btn-primary" href="contact.html">Request a demo</a><a class="btn btn-ghost" href="contact.html">WhatsApp</a></div>
 <script src="assets/site.js"></script>
 </body></html>"""
+
+
+CLIENTS=[("Medbury Medicals","Lekki, Lagos","MM"),("Kaaf Medical Center","Lagos","KM"),
+ ("Finnih Medical Centre","Lagos","FM"),("Sky-High Medical Center","Lagos","SH"),
+ ("Subol Hospital Limited","Lagos","SL"),("11PLC Clinic","Lagos","11"),
+ ("Mart Medical Clinic","Lagos","MC"),("Reddington Hospital Ikeja","Ikeja, Lagos","RH")]
+clients_html="".join(f'<div class="client reveal"><span class="cmark">{m}</span>'
+ f'<span class="cname">{n}</span><span class="cmeta">{loc}</span></div>' for n,loc,m in CLIENTS)
+
+def clients_section(title="Facilities running Genesys.", note=True):
+    n=('<p class="stat-note">Client names published with permission. Official logo files replace these marks '
+       'as each facility supplies them.</p>') if note else ""
+    return f"""
+<section class="band tight"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">Clients</span><h2>{title}</h2>
+    <p>Hospitals, clinics and diagnostic centres across Lagos run day-to-day operations on Genesys.</p></div>
+  <div class="clients">{clients_html}</div>
+  {n}
+</div></section>"""
+
+SHOTS=[("frontdesk","Front desk &middot; Search patients","Every patient in the facility, filterable by number, name, phone, sponsor, type and status. The list is the front desk's working queue, not a report."),
+ ("lab","Laboratory &middot; Sample collection queue","Requests arrive from the clinician with priority and patient status attached. The scientist takes the sample straight from the queue."),
+ ("radiology","Radiology &middot; Test order queue","Imaging orders with categories, priority flags and requested dates. Emergency and high-priority cases surface at the top."),
+ ("radiology_sched","Radiology &middot; Scheduling","An order becomes a scheduled appointment against the patient record, with the doctor's requested date visible."),
+ ("pharmacy","Pharmacy &middot; Drug dispense history","Every dispensed medication tied to prescriber, dispenser, quantity and instruction. Filterable by patient, doctor, sponsor and status."),
+ ("inventory","Inventory &middot; Stock across stores","One product, several stores, live quantities. Main store, pharmacy store and laboratory store counted separately and together."),
+ ("products","Inventory &middot; Product catalogue","Unit cost, selling price, variants and total quantity per item, with bulk upload for setting up a facility quickly."),
+ ("billing","Billing &middot; Outpatient bills","Bills generated from care delivered, showing sponsor, amount and payment status across the facility."),
+ ("billing_pay","Billing &middot; Receive payment","The patient's accumulated bills, wallet balance and sponsorship type on one screen, with discounts and invoicing built in.")]
 
 PAGES=[]
 def page(f,t,d,body):
@@ -241,6 +278,7 @@ home=f"""
     </div></div>
   <div class="figure reveal"><img src="assets/img/band_why.jpg" alt="A clinician working with a live health data dashboard"></div>
 </div></section>
+{clients_section()}
 <section><div class="wrap">
   <div class="sec-head reveal"><span class="eyebrow">In their words</span><h2>What facilities tell us.</h2></div>
   {carousel()}
@@ -494,7 +532,7 @@ serve_payers=serve_page("Payers &amp; HMOs &middot; Insurers","Claims that arriv
 
 # ============================================================ PROOF CLUSTER
 proof=phead("Proof","The record is <em>the argument.</em>",
- "Named clients, certifications and quantified case studies belong here. We publish only what we can stand behind, and mark clearly what is still to be confirmed.")+f"""
+ "Named clients, certifications and quantified case studies belong here. We publish only what we can stand behind, and mark clearly what is still to be confirmed.")+clients_section("Who runs Genesys today.")+f"""
 <section class="tight"><div class="wrap">{carousel()}
   <p class="stat-note">Quotes are held with placeholder attribution until each facility confirms name and role.</p></div></section>
 <section class="band tight"><div class="wrap split wide-left">
@@ -759,6 +797,56 @@ news=phead("Industry news","What the sector <em>is reporting.</em>",
 </div></section>
 {cta()}"""
 
+
+# ============================================================ HOW IT WORKS
+GROUPS=[("frontdesk","Front desk &amp; records","Where every patient journey starts",["frontdesk"]),
+ ("clinical","Laboratory &amp; radiology","Diagnostics ordered, tracked and resulted",["lab","radiology","radiology_sched"]),
+ ("pharmacy","Pharmacy &amp; inventory","Dispensing tied to stock that tells the truth",["pharmacy","inventory","products"]),
+ ("billing","Billing &amp; finance","Care delivered becomes money collected",["billing","billing_pay"])]
+SHOTMAP={k:(t,d) for k,t,d in SHOTS}
+
+def shot_block(key,delay=""):
+    t,d=SHOTMAP[key]
+    return f"""<div class="shot reveal {delay}">
+      <div class="shot-bar"><i></i><i></i><i></i><span>genesys &middot; live deployment</span></div>
+      <img class="zoomable" src="assets/shots/{key}.jpg" alt="{t}" data-cap="{t}">
+      <div class="shot-cap"><b>{t}.</b> {d}</div></div>"""
+
+how_groups=""
+for gi,(anchor,title,sub,keys) in enumerate(GROUPS):
+    band=' class="band"' if gi%2==1 else ""
+    shots="".join(shot_block(k,f"d{i}") for i,k in enumerate(keys))
+    how_groups+=f"""
+<section id="{anchor}"{band}><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">{"0"+str(gi+1)}</span><h2>{title}</h2><p>{sub}</p></div>
+  <div style="display:grid;gap:18px">{shots}</div>
+</div></section>"""
+
+how=phead("How it works","This is the actual system, <em>not a mock-up.</em>",
+ "Screens from a live Genesys deployment. Click any image to enlarge. Patient names and figures shown are demonstration data.")+f"""
+<section class="tight"><div class="wrap split wide-right">
+  <div class="reveal"><span class="eyebrow">Sign in</span>
+    <h2 style="font-size:clamp(24px,3.2vw,34px);margin:10px 0 12px">One login, one branch, one record.</h2>
+    <p style="margin-bottom:12px">Staff sign in against a role. What they can see and change follows that role, and every action is attributable.</p>
+    <p class="muted">Multi-branch facilities switch site from the top bar without signing out, so a group runs as one organisation.</p></div>
+  <div class="shot reveal">
+    <div class="shot-bar"><i></i><i></i><i></i><span>genesys &middot; sign in</span></div>
+    <img class="zoomable" src="assets/shots/login.jpg" alt="The Genesys sign-in screen" data-cap="Genesys sign-in">
+  </div>
+</div></section>
+{marquee()}
+{how_groups}
+<section class="band tight"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">Behind every screen</span><h2>What the screens have in common.</h2></div>
+  <div class="grid-4">
+    <div class="pillar reveal"><h3>Filters first</h3><p>Every queue filters by date, name, doctor, sponsor and status, because that is how staff actually search.</p></div>
+    <div class="pillar reveal d1"><h3>One patient identity</h3><p>The same patient number follows the record from front desk to laboratory to billing.</p></div>
+    <div class="pillar reveal d2"><h3>Action at the row</h3><p>Take sample, schedule, receive payment. The next step sits on the line you are reading.</p></div>
+    <div class="pillar reveal d3"><h3>Export everywhere</h3><p>Any list can leave the system. Your data is yours, in a format you can use.</p></div>
+  </div>
+</div></section>
+{cta("Want to click through it yourself? Book a live demo.")}"""
+
 # ============================================================ CONTACT
 contact=phead("Contact","See Genesys on <em>your own workflow.</em>",
  "Tell us about the facility you run and we will show you the system built for it. We respond within one business day.")+f"""
@@ -800,6 +888,7 @@ contact=phead("Contact","See Genesys on <em>your own workflow.</em>",
 # ---------------------------------------------------------------- BUILD
 if __name__=="__main__":
     page("index.html","Genesys Health — hospital and records systems for African health facilities","Genesys builds the hospital management and electronic medical records systems that African health facilities run on.",home)
+    page("how-it-works.html","How it works — Genesys Health","Real screens from a live Genesys deployment: front desk, laboratory, radiology, pharmacy, inventory and billing.",how)
     page("solutions.html","Solutions — Genesys Health","Four systems: HMIS, EMR, Clinical Specialized Packages and Stand-alone Packages.",solutions)
     page("solutions-hmis.html","Genesys HMIS — Genesys Health","ERP-class hospital management across every department on one spine.",sol_hmis)
     page("solutions-emr.html","Genesys EMR — Genesys Health","An electronic medical record built around the clinical encounter.",sol_emr)

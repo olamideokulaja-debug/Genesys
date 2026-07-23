@@ -207,3 +207,170 @@
     tabs.scrollLeft=cur.offsetLeft-(tabs.clientWidth-cur.offsetWidth)/2;
   }
 })();
+
+/* =================== CHAT · LANGUAGE · LIGHTBOX · SUPABASE =================== */
+(function(){
+  var CFG = window.GENESYS_CONFIG || {};
+  var $  = function(s,c){return (c||document).querySelector(s);};
+  var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
+
+  /* ---- Supabase REST helper (no SDK needed) ---- */
+  function sbInsert(table, row){
+    if(!CFG.SUPABASE_URL || !CFG.SUPABASE_ANON_KEY) return Promise.resolve({ok:false, reason:'not-configured'});
+    return fetch(CFG.SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/'+table, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':CFG.SUPABASE_ANON_KEY,
+               'Authorization':'Bearer '+CFG.SUPABASE_ANON_KEY,'Prefer':'return=minimal'},
+      body: JSON.stringify(row)
+    }).then(function(r){ return {ok:r.ok, status:r.status}; })
+      .catch(function(e){ return {ok:false, reason:String(e)}; });
+  }
+  window.gxInsert = sbInsert;
+
+  /* ---- LIGHTBOX for product screenshots ---- */
+  var lb = document.createElement('div');
+  lb.className='lightbox';
+  lb.innerHTML='<button class="lb-close" aria-label="Close">&times;</button>'+
+    '<img alt="" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">'+
+    '<div class="lb-cap"></div>';
+  document.body.appendChild(lb);
+  var lbImg=$('img',lb), lbCap=$('.lb-cap',lb);
+  function closeLb(){ lb.classList.remove('open'); }
+  $('.lb-close',lb).addEventListener('click',closeLb);
+  lb.addEventListener('click',function(e){ if(e.target===lb) closeLb(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeLb(); });
+  $$('.zoomable').forEach(function(el){
+    el.addEventListener('click',function(){
+      var img=el.tagName==='IMG'?el:$('img',el);
+      if(!img) return;
+      lbImg.src=img.src; lbImg.alt=img.alt||'';
+      lbCap.textContent=img.getAttribute('data-cap')||img.alt||'';
+      lb.classList.add('open');
+    });
+  });
+
+  /* ---- CHAT WIDGET ---- */
+  var wa = CFG.WHATSAPP || '2349036001000';
+  var mail = CFG.EMAIL || 'info@genesys-health.com';
+  var fab=document.createElement('button');
+  fab.className='chat-fab'; fab.setAttribute('aria-label','Chat with Genesys');
+  fab.innerHTML='<span class="badge"></span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-3.9-.9L3 21l1.9-5A8.4 8.4 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4z"/></svg>';
+  var panel=document.createElement('div');
+  panel.className='chat-panel'; panel.setAttribute('role','dialog'); panel.setAttribute('aria-label','Chat with Genesys');
+  panel.innerHTML =
+    '<div class="chat-head"><span class="ch-av">G</span><span><b>Genesys</b>'+
+      '<span><i></i>Usually replies within one business day</span></span>'+
+      '<button class="ch-x" aria-label="Close chat">&times;</button></div>'+
+    '<div class="chat-body" id="chatBody">'+
+      '<div class="bubble bot">Hello. Tell us about the facility you run and we will point you to the right system. What would you like to do?</div>'+
+    '</div>'+
+    '<div class="quicks" id="chatQuicks">'+
+      '<button class="quick" data-q="demo">Request a demo</button>'+
+      '<button class="quick" data-q="which">Which system fits us?</button>'+
+      '<button class="quick" data-q="price">Pricing</button>'+
+      '<button class="quick" data-q="wa">WhatsApp us</button>'+
+    '</div>'+
+    '<div class="chat-foot"><input id="chatIn" type="text" placeholder="Type a message…" aria-label="Your message">'+
+      '<button id="chatSend" aria-label="Send">&rarr;</button></div>'+
+    '<div class="chat-note">Automated assistant. Not for medical advice or patient information.</div>';
+  document.body.appendChild(fab); document.body.appendChild(panel);
+
+  var body=$('#chatBody',panel), input=$('#chatIn',panel);
+  var session='gx-'+Math.random().toString(36).slice(2,10);
+  function add(text, who){
+    var b=document.createElement('div');
+    b.className='bubble '+(who==='me'?'me':'bot');
+    b.innerHTML=text; body.appendChild(b); body.scrollTop=body.scrollHeight;
+  }
+  function botReply(text){ setTimeout(function(){ add(text,'bot'); }, 420); }
+  var REPLIES={
+    demo:'Good. Use the <a href="contact.html" style="color:var(--blue);font-weight:600">demo request form</a> and tell us your facility type and bed count. We reply within one business day, and the demo runs on workflows that match your facility rather than a generic script.',
+    which:'It comes down to scale. 1 to 20 beds is usually <a href="solutions-emr.html" style="color:var(--blue);font-weight:600">Genesys EMR</a>; 100 to 500 beds is <a href="solutions-hmis.html" style="color:var(--blue);font-weight:600">Genesys HMIS</a>; a lab, pharmacy or imaging centre wants <a href="solutions-standalone.html" style="color:var(--blue);font-weight:600">Stand-alone Packages</a>. How many beds do you run?',
+    price:'Pricing is set to the scale of the practice, and we scope before quoting rather than publishing a number that would not hold. Tell us your facility type and size and we will come back with a real figure.',
+    wa:'Opening WhatsApp now. If it does not open, message us on +234 903 600 1000.'
+  };
+  function handle(q, label){
+    add(label,'me');
+    if(q==='wa'){ botReply(REPLIES.wa); window.open('https://wa.me/'+wa,'_blank','noopener'); return; }
+    botReply(REPLIES[q] || 'Thank you. A member of the team will follow up. If it is urgent, message us on WhatsApp at +234 903 600 1000 or email <a href="mailto:'+mail+'" style="color:var(--blue);font-weight:600">'+mail+'</a>.');
+  }
+  $$('.quick',panel).forEach(function(b){
+    b.addEventListener('click',function(){ handle(b.getAttribute('data-q'), b.textContent); });
+  });
+  function send(){
+    var v=input.value.trim(); if(!v) return;
+    add(v,'me'); input.value='';
+    sbInsert('chat_messages',{session_id:session,sender:'visitor',body:v,source_page:location.pathname});
+    botReply('Thank you. A member of the team will pick this up and reply within one business day. If it is urgent, <a href="https://wa.me/'+wa+'" target="_blank" rel="noopener" style="color:var(--blue);font-weight:600">message us on WhatsApp</a>.');
+  }
+  $('#chatSend',panel).addEventListener('click',send);
+  input.addEventListener('keydown',function(e){ if(e.key==='Enter') send(); });
+  function toggle(open){ panel.classList.toggle('open', open); if(open) setTimeout(function(){input.focus();},250); }
+  fab.addEventListener('click',function(){ toggle(!panel.classList.contains('open')); });
+  $('.ch-x',panel).addEventListener('click',function(){ toggle(false); });
+
+  /* ---- FORM → Supabase ---- */
+  var fb=$('#formBtn');
+  if(fb) fb.addEventListener('click',function(){
+    var g=function(id){var e=document.getElementById(id);return e?e.value:'';};
+    sbInsert('leads',{full_name:g('name'),email:g('email'),phone:g('phone'),facility_name:g('facility'),
+      facility_type:g('ftype'),beds_sites:g('beds'),product:g('product'),message:g('msg'),
+      source_page:location.pathname, locale:(localStorage.getItem('gx-lang')||'en')}).then(function(res){
+        var ok=$('#formOk');
+        if(ok){ ok.querySelector('span:last-child').textContent = res.ok
+          ? 'Thank you. Your request has been sent — we reply within one business day.'
+          : 'Thank you. The form is not yet connected to a database, so nothing was sent. Add your Supabase keys in assets/config.js to enable it.';
+          ok.classList.add('show'); }
+      });
+  });
+  /* ---- newsletter ---- */
+  $$('.news button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var inp=b.parentNode.querySelector('input'); if(!inp||!inp.value.trim()) return;
+      sbInsert('subscribers',{email:inp.value.trim()});
+      inp.value=''; b.textContent='✓'; setTimeout(function(){b.innerHTML='&rarr;';},2200);
+    });
+  });
+
+  /* ---- LANGUAGE TOGGLE (EN / FR) ---- */
+  var FR={
+    "Home":"Accueil","How it works":"Comment ça marche","Solutions":"Solutions","Who we serve":"Qui nous servons",
+    "Proof":"Références","About":"À propos","Insights":"Analyses","Contact":"Contact",
+    "Request a demo":"Demander une démo","Chat on WhatsApp":"Discuter sur WhatsApp",
+    "Book a consultation":"Réserver une consultation","Read more":"En savoir plus",
+    "All solutions":"Toutes les solutions","Everyone we serve":"Tous nos clients",
+    "Case studies":"Études de cas","Security &amp; compliance":"Sécurité et conformité",
+    "Implementation":"Mise en œuvre","Our story":"Notre histoire","The team":"L'équipe",
+    "Vision &amp; values":"Vision et valeurs","Stories by Genesys":"Récits de Genesys",
+    "Industry news":"Actualité du secteur","Hospitals":"Hôpitaux",
+    "Clinics &amp; practices":"Cliniques et cabinets","Public health systems":"Systèmes de santé publique",
+    "Payers &amp; HMOs":"Assureurs et HMO","Stay in the loop":"Restez informé",
+    "Company":"Entreprise","Your email address":"Votre adresse e-mail"
+  };
+  var lang = (function(){ try{return localStorage.getItem('gx-lang')||'en';}catch(e){return 'en';} })();
+  var banner=document.createElement('div');
+  banner.className='fr-banner';
+  banner.innerHTML='<div class="wrap"><b>Version française en cours.</b> La navigation est traduite; le contenu détaillé est en cours de traduction professionnelle. <a href="contact.html" style="color:var(--blue);font-weight:600">Contactez-nous en français</a>.</div>';
+  var hdr=document.querySelector('header.nav');
+  if(hdr && hdr.parentNode) hdr.parentNode.insertBefore(banner, hdr.nextSibling);
+
+  function applyLang(l){
+    var fr = (l==='fr');
+    banner.classList.toggle('show', fr);
+    document.documentElement.setAttribute('lang', fr?'fr':'en');
+    $$('[data-i18n]').forEach(function(el){
+      var k=el.getAttribute('data-i18n');
+      if(fr && FR[k]) el.textContent=FR[k];
+      else el.textContent=k.replace(/&amp;/g,'&');
+    });
+    $$('.langbtn').forEach(function(b){
+      b.innerHTML = fr ? 'EN / <b>FR</b>' : '<b>EN</b> / FR';
+      b.setAttribute('aria-label', fr?'Switch to English':'Passer en français');
+    });
+    try{ localStorage.setItem('gx-lang', l); }catch(e){}
+  }
+  $$('.langbtn').forEach(function(b){
+    b.addEventListener('click',function(){ lang = (lang==='fr'?'en':'fr'); applyLang(lang); });
+  });
+  applyLang(lang);
+})();
