@@ -1,6 +1,6 @@
 # Genesys Health — website
 
-A static site: 24 pages of HTML, one stylesheet, one script. No build step and no server required.
+A static site: 31 pages of HTML, one stylesheet, one script. No build step and no server required.
 It deploys to Vercel straight from GitHub, and every change you commit afterwards goes live automatically.
 
 ## Structure
@@ -13,6 +13,7 @@ genesys-site/
 │   ├── config.js                  ← YOUR KEYS GO HERE
 │   ├── img/                       Photography
 │   ├── shots/                     Real product screenshots
+│   ├── clients/                   Client logos
 │   └── team/                      Board portraits
 ├── supabase/schema.sql            Database setup (run once)
 ├── vercel.json
@@ -49,9 +50,9 @@ For email alerts on new leads, add a Database Webhook on `leads` pointing at you
 - **Industry news** — edit the `NEWS` list near the bottom of `build.py` and rebuild.
   Once Supabase is connected you can move this to the `news_items` table instead.
 - **Photographs** — replace files in `assets/img/` keeping the same names.
-- **Client logos** — `CLIENTS` in `build.py` currently renders typographic marks.
-  Drop official logo files into `assets/clients/` and swap the markup once you have written
-  permission from each facility.
+- **Client logos** — `CLIENTS` in `build.py` lists each facility as `(name, location, initials, logo)`.
+  Set the fourth value to a filename in `assets/clients/` to show a real logo, or `None` to show
+  the typographic mark. Reddington and Finnih currently use real logo files.
 
 ## Notes
 - Typeface is Lora, loaded from Google Fonts.
@@ -59,3 +60,8 @@ For email alerts on new leads, add a Database Webhook on `leads` pointing at you
   Full page translation should be done professionally before launch in francophone markets.
 - Product screenshots in `assets/shots/` are from a live deployment and show demonstration data.
 - Placeholders written as `[fact needed]` mark content still to be supplied.
+
+## Enquiries
+Demo requests, chat messages and the contact page all point to:
+**cordor@genesys-health.com** and **+234 704 799 9337** (also the WhatsApp number).
+Change both in `assets/config.js` and in the footer block of `build.py`.

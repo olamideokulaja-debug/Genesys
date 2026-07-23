@@ -1,10 +1,8 @@
 /* Genesys — front-end configuration.
-   Fill these in after creating your Supabase project, then redeploy.
-   Dashboard → Project Settings → API. The anon key is safe to expose:
-   row-level security decides what it may do. */
+   Fill in Supabase after creating your project (Settings → API), then redeploy. */
 window.GENESYS_CONFIG = {
-  SUPABASE_URL: "",          // e.g. "https://abcdefgh.supabase.co"
-  SUPABASE_ANON_KEY: "",     // e.g. "eyJhbGciOi..."
-  WHATSAPP: "2349036001000", // international format, no plus sign
-  EMAIL: "info@genesys-health.com"
+  SUPABASE_URL: "",              // e.g. "https://abcdefgh.supabase.co"
+  SUPABASE_ANON_KEY: "",         // anon public key — safe to expose, RLS protects the data
+  WHATSAPP: "2347047999337",     // enquiries line, international format, no plus
+  EMAIL: "cordor@genesys-health.com"
 };

@@ -13,6 +13,12 @@ NAV = [
    ("how-it-works.html","Pharmacy &amp; inventory","Chapter","Dispensing history, stores and products."),
    ("how-it-works.html","Billing &amp; finance","Chapter","Outpatient bills, payments and claims."),
  ]),
+ ("the-problem.html","Why Genesys","g4",[
+   ("the-problem.html","The problem","Diagnosis","The eight places a facility loses money and time."),
+   ("paper-vs-genesys.html","Paper vs Genesys","Compare","The same patient history, held two ways."),
+   ("why-genesys.html","Why us","Difference","Offline-first, simple, affordable, and ours."),
+   ("find-your-system.html","Find your system","Chooser","Answer one question, get a recommendation."),
+ ]),
  ("solutions.html","Solutions","g4",[
    ("solutions.html","All solutions","Overview","Compare the four systems side by side."),
    ("solutions-hmis.html","Genesys HMIS","Large practices","ERP-class automation across every department."),
@@ -86,13 +92,14 @@ def nav(cur):
 <header class="nav">
   <div class="wrap nav-top">
     <a class="brand" href="index.html" aria-label="Genesys Health home">{LOGO}</a>
+    <nav class="tabs" aria-label="Main">{tabs}</nav>
     <div class="nav-actions">
-      <button class="langbtn" aria-label="Passer en français"><b>EN</b> / FR</button>
+      <button class="langbtn" aria-label="Passer en fran&ccedil;ais"><b>EN</b> / FR</button>
       <button class="iconbtn" id="themeBtn" aria-label="Switch colour theme">{SUN}</button>
       <a class="btn btn-primary" href="contact.html">Request a demo</a>
     </div>
   </div>
-  <div class="tabrow"><div class="wrap"><nav class="tabs" aria-label="Main">{tabs}</nav></div>{drops}</div>
+  {drops}
 </header>"""
 
 def cta(h="See Genesys running on your own facility's workflow."):
@@ -117,7 +124,7 @@ FOOT=f"""
 <footer><div class="wrap">
   <div class="foot-grid">
     <div><div class="brand" style="margin-bottom:12px">{LOGO}</div>
-      <p class="addr">Genesys Health Information Systems Limited<br>21a Fatai Idowu Arobieke Street,<br>Off Admiralty Way, Lekki Phase 1, Lagos<br><br>+234 903 600 1000<br>info@genesys-health.com</p></div>
+      <p class="addr">Genesys Health Information Systems Limited<br>21a Fatai Idowu Arobieke Street,<br>Off Admiralty Way, Lekki Phase 1, Lagos<br><br>Enquiries: +234 704 799 9337<br>cordor@genesys-health.com</p></div>
     <div class="fcol"><h4>Solutions</h4><a href="solutions-hmis.html">Genesys HMIS</a><a href="solutions-emr.html">Genesys EMR</a><a href="solutions-clinical.html">Clinical Packages</a><a href="solutions-standalone.html">Stand-alone Packages</a></div>
     <div class="fcol"><h4>Company</h4><a href="about.html">Our story</a><a href="team.html">The team</a><a href="security.html">Security</a><a href="implementation.html">Implementation</a></div>
     <div class="fcol"><h4>Stay in the loop</h4><p class="addr" style="margin-bottom:4px">Stories from Genesys and news from the sector.</p>
@@ -130,12 +137,15 @@ FOOT=f"""
 </body></html>"""
 
 
-CLIENTS=[("Medbury Medicals","Lekki, Lagos","MM"),("Kaaf Medical Center","Lagos","KM"),
- ("Finnih Medical Centre","Lagos","FM"),("Sky-High Medical Center","Lagos","SH"),
- ("Subol Hospital Limited","Lagos","SL"),("11PLC Clinic","Lagos","11"),
- ("Mart Medical Clinic","Lagos","MC"),("Reddington Hospital Ikeja","Ikeja, Lagos","RH")]
-clients_html="".join(f'<div class="client reveal"><span class="cmark">{m}</span>'
- f'<span class="cname">{n}</span><span class="cmeta">{loc}</span></div>' for n,loc,m in CLIENTS)
+CLIENTS=[("Medbury Medicals","Lekki, Lagos","MM",None),("Kaaf Medical Center","Lagos","KM",None),
+ ("Finnih Medical Centre","Lagos","FM","finnih"),("Sky-High Medical Center","Lagos","SH",None),
+ ("Subol Hospital Limited","Lagos","SL",None),("11PLC Clinic","Lagos","11",None),
+ ("Mart Medical Clinic","Lagos","MC",None),("Reddington Hospital Ikeja","Ikeja, Lagos","RH","reddington")]
+def client_tile(n,loc,m,logo):
+    head = (f'<img class="clogo" src="assets/clients/{logo}.png" alt="{n}">' if logo
+            else f'<span class="cmark">{m}</span>')
+    return f'<div class="client reveal">{head}<span class="cname">{n}</span><span class="cmeta">{loc}</span></div>'
+clients_html="".join(client_tile(*c) for c in CLIENTS)
 
 def clients_section(title="Facilities running Genesys.", note=True):
     n=('<p class="stat-note">Client names published with permission. Official logo files replace these marks '
@@ -226,57 +236,22 @@ home=f"""
   </div>
   <p class="stat-note">Figures shown are illustrative targets, not audited client results.</p>
 </div></section>
-<section class="band"><div class="wrap split wide-left">
-  <div class="reveal"><span class="eyebrow">The real diagnosis</span>
-    <h2 style="font-size:clamp(26px,3.6vw,42px);margin:10px 0 14px">African healthcare rarely fails for want of skill. It fails for want of <em style="font-style:italic;color:var(--blue)">information.</em></h2>
-    <p style="margin-bottom:14px">Records sit in paper, spreadsheets and disconnected systems. Managers cannot see what is happening in their own facility until it has already cost them. It is why so many African health businesses do not survive past the first generation.</p>
-    <p class="muted">Open any line to see how Genesys closes it.</p></div>
-  <div class="ledger reveal">{ledger}</div>
-</div></section>
-<section><div class="wrap">
-  <div class="sec-head reveal"><span class="eyebrow">Paper to platform</span>
-    <h2>Drag the divider. That is the whole pitch.</h2>
-    <p>The left is how most facilities still hold a patient history. The right is the same history in Genesys.</p></div>
-  <div class="ba reveal"><div class="ba-pane">
-    <div class="ba-side ba-after"><span class="ba-tag">Genesys record</span>
-      <div class="mock" style="flex:1"><div class="mock-bar"><i></i><i></i><i></i><span>genesys / patient / A-40218</span></div>
-      <div class="mock-body">
-        <div class="mock-row"><span><b>Adaeze Nwosu &middot; 34F</b><em>MRN A-40218 &middot; last seen 12 Jun</em></span><span class="mock-pill ok">Complete</span></div>
-        <div class="mock-row"><span><b>Antenatal review</b><em>Dr Bello &middot; BP 118/76 &middot; notes signed</em></span><span class="mock-pill">Encounter</span></div>
-        <div class="mock-row"><span><b>Full blood count</b><em>Lab &middot; resulted in 42 min</em></span><span class="mock-pill ok">Resulted</span></div>
-        <div class="mock-row"><span><b>Claim 88213</b><em>HMO &middot; filed automatically</em></span><span class="mock-pill ok">Paid</span></div>
-      </div></div></div>
-    <div class="ba-side ba-before"><span class="ba-tag">Paper records</span>
-      <div class="paper">NWOSU, A. &mdash; folder 4 of ?<br>seen&hellip; 12/06 (or 12/08?)<br>BP &mdash; illegible<br>FBC &mdash; sent, result not filed<br>HMO claim &mdash; pending, form missing<br>prev. visit folder &mdash; archive room<span class="smudge"></span></div></div>
-    <div class="ba-handle"><span class="ba-grip">&#8596;</span></div>
-    <input class="ba-input" type="range" min="0" max="100" value="50" aria-label="Compare paper records with the Genesys record">
-  </div><div class="ba-cap"><span>Drag to compare</span><span>Illustrative interface</span></div></div>
-</div></section>
 <section class="band"><div class="wrap">
   <div class="sec-head reveal"><span class="eyebrow">Start where you sit</span>
     <h2>Four ways in. One system underneath.</h2><p>Pick your seat and read the version written for you.</p></div>
   <div class="grid-4">{routes}</div>
 </div></section>
-<section class="tight" id="chooser"><div class="wrap"><div class="chooser reveal">
-  <span class="eyebrow">Solution chooser</span><h3>How big is the practice you run?</h3>
-  <p class="q">Tell us the scale and we will point you to the Genesys system built for it.</p>
-  <div class="scale" role="group" aria-label="Choose your scale">
-    <button data-rec="emr" aria-pressed="false">1 to 20 beds</button>
-    <button data-rec="clinical" aria-pressed="false">20 to 100 beds</button>
-    <button data-rec="hmis" aria-pressed="false">100 to 500 beds</button>
-    <button data-rec="standalone" aria-pressed="false">Not a hospital</button></div>
-  <div class="rec empty" id="rec" aria-live="polite">Pick a scale to see your recommended system.</div>
-</div></div></section>
-<section class="band"><div class="wrap split wide-right">
-  <div class="reveal"><span class="eyebrow">Why Genesys</span>
-    <h2 style="font-size:clamp(25px,3.4vw,38px);margin:10px 0 18px">Software that survives the conditions it runs in.</h2>
-    <div class="grid-2" style="gap:18px">
-      <div class="pillar"><h3>Offline-first</h3><p>Built for intermittent power and low bandwidth. The clinic keeps working through a power cut, then syncs.</p></div>
-      <div class="pillar"><h3>Simple by design</h3><p>Records generated by clicking and dragging, so a facility runs without an IT department.</p></div>
-      <div class="pillar"><h3>Affordable</h3><p>A staged path from paper to full digital operations, priced to the scale of the practice.</p></div>
-      <div class="pillar"><h3>Its own team, deep roots</h3><p>Genesys runs its own operation, drawing on software delivery at Vatebra and healthcare experience at Realms.</p></div>
-    </div></div>
-  <div class="figure reveal"><img src="assets/img/band_why.jpg" alt="A clinician working with a live health data dashboard"></div>
+<section class="tight"><div class="wrap">
+  <div class="grid-4">
+    <a class="route reveal" href="the-problem.html"><div><span class="rk">Diagnosis</span><h3>The problem</h3>
+      <p>The eight places a facility quietly loses money, time and trust.</p></div><span class="go">See the eight &rarr;</span></a>
+    <a class="route reveal d1" href="paper-vs-genesys.html"><div><span class="rk">Compare</span><h3>Paper vs Genesys</h3>
+      <p>The same patient history, held two ways. Drag the divider.</p></div><span class="go">Compare &rarr;</span></a>
+    <a class="route reveal d2" href="why-genesys.html"><div><span class="rk">Difference</span><h3>Why Genesys</h3>
+      <p>Offline-first, simple by design, and built by people who ran facilities.</p></div><span class="go">Why us &rarr;</span></a>
+    <a class="route reveal d3" href="find-your-system.html"><div><span class="rk">Chooser</span><h3>Find your system</h3>
+      <p>One question about scale, and we point you to the right product.</p></div><span class="go">Find it &rarr;</span></a>
+  </div>
 </div></section>
 {clients_section()}
 <section><div class="wrap">
@@ -530,6 +505,149 @@ serve_payers=serve_page("Payers &amp; HMOs &middot; Insurers","Claims that arriv
  [(88,"%","target reduction in claim rework"),(0,"","claims reconstructed from memory"),(1,"","source of truth for both sides")],
  "Claims and e-Claim workflow","solutions-hmis.html")
 
+# ============================================================ WHY-GENESYS CLUSTER
+the_problem = phead("The problem","Eight places a facility <em>quietly loses money.</em>",
+ "African healthcare rarely fails for want of skill. It fails for want of information. Open any line to see how Genesys closes it.")+f"""
+<section class="tight"><div class="wrap split wide-left">
+  <div class="reveal prose">
+    <h2 style="font-size:clamp(24px,3.2vw,34px);margin-bottom:14px">The diagnosis</h2>
+    <p style="margin-bottom:12px">Records sit in paper, spreadsheets and disconnected systems. Managers cannot see what is happening in their own facility until it has already cost them.</p>
+    <p style="margin-bottom:12px">The consequence is blunt. Inefficiencies in management are why so many African health businesses do not survive past the first generation.</p>
+    <p class="muted">None of these losses appears in a ledger as a records failure, which is precisely why they survive budget after budget.</p></div>
+  <div class="ledger reveal">{ledger}</div>
+</div></section>
+{cta("Recognise these? Let us show you the system that closes them.")}"""
+
+paper_vs = phead("Paper vs Genesys","The same patient history, <em>held two ways.</em>",
+ "The left is how most facilities still hold a record. The right is the same patient in Genesys. Drag the divider.")+f"""
+<section class="tight"><div class="wrap">
+  <div class="ba reveal"><div class="ba-pane">
+    <div class="ba-side ba-after"><span class="ba-tag">Genesys record</span>
+      <div class="mock" style="flex:1"><div class="mock-bar"><i></i><i></i><i></i><span>genesys / patient / A-40218</span></div>
+      <div class="mock-body">
+        <div class="mock-row"><span><b>Adaeze Nwosu &middot; 34F</b><em>MRN A-40218 &middot; last seen 12 Jun</em></span><span class="mock-pill ok">Complete</span></div>
+        <div class="mock-row"><span><b>Antenatal review</b><em>Dr Bello &middot; BP 118/76 &middot; notes signed</em></span><span class="mock-pill">Encounter</span></div>
+        <div class="mock-row"><span><b>Full blood count</b><em>Lab &middot; resulted in 42 min</em></span><span class="mock-pill ok">Resulted</span></div>
+        <div class="mock-row"><span><b>Claim 88213</b><em>HMO &middot; filed automatically</em></span><span class="mock-pill ok">Paid</span></div>
+      </div></div></div>
+    <div class="ba-side ba-before"><span class="ba-tag">Paper records</span>
+      <div class="paper">NWOSU, A. &mdash; folder 4 of ?<br>seen&hellip; 12/06 (or 12/08?)<br>BP &mdash; illegible<br>FBC &mdash; sent, result not filed<br>HMO claim &mdash; pending, form missing<br>prev. visit folder &mdash; archive room<span class="smudge"></span></div></div>
+    <div class="ba-handle"><span class="ba-grip">&#8596;</span></div>
+    <input class="ba-input" type="range" min="0" max="100" value="50" aria-label="Compare paper records with the Genesys record">
+  </div><div class="ba-cap"><span>Drag to compare</span><span>Illustrative interface</span></div></div>
+</div></section>
+<section class="band tight"><div class="wrap"><div class="grid-3">
+  <div class="pillar reveal"><h3>Findable</h3><p>The history exists in both. Only one of them can be reached at 2am with one clerk on duty.</p></div>
+  <div class="pillar reveal d1"><h3>Complete</h3><p>Results, prescriptions and claims attach themselves to the record instead of waiting to be filed.</p></div>
+  <div class="pillar reveal d2"><h3>Billed</h3><p>Care delivered becomes money owed automatically, rather than reconstructed at month end.</p></div>
+</div></div></section>
+{cta()}"""
+
+why_genesys = phead("Why Genesys","Software that survives <em>the conditions it runs in.</em>",
+ "Most clinical systems assume reliable power and constant bandwidth. In much of Africa that assumption is backwards.")+f"""
+<section class="tight"><div class="wrap split wide-right">
+  <div class="reveal"><div class="grid-2" style="gap:18px">
+    <div class="pillar"><h3>Offline-first</h3><p>Built for intermittent power and low bandwidth. The clinic keeps working through a power cut, then syncs. Global vendors cannot claim this.</p></div>
+    <div class="pillar"><h3>Simple by design</h3><p>Records generated by clicking and dragging, so a facility runs without an IT department.</p></div>
+    <div class="pillar"><h3>Affordable</h3><p>A staged path from paper to full digital operations, priced to the scale of the practice.</p></div>
+    <div class="pillar"><h3>Its own team, deep roots</h3><p>Genesys runs its own operation, drawing on software delivery at Vatebra and healthcare experience at Realms.</p></div>
+  </div></div>
+  <div class="figure reveal"><img src="assets/img/band_why.jpg" alt="A clinician working with a live health data dashboard"></div>
+</div></section>
+<section class="band tight"><div class="wrap"><div class="stats">
+  <div class="stat reveal"><div class="num"><span data-to="8">0</span></div><div class="lab">operational bleeds closed by one system</div></div>
+  <div class="stat reveal d1"><div class="num"><span data-to="4">0</span></div><div class="lab">systems sized from clinic to multi-site group</div></div>
+  <div class="stat reveal d2"><div class="num"><span data-to="99.5" data-dec="1">0</span><sup>%</sup></div><div class="lab">target uptime, including through power cuts</div></div>
+  <div class="stat reveal d3"><div class="num"><span data-to="2017" data-sep="0">0</span></div><div class="lab">building health systems in Lagos since</div></div>
+</div><p class="stat-note">Illustrative targets, not audited client results.</p></div></section>
+{cta()}"""
+
+find_system = phead("Find your system","One question, <em>one recommendation.</em>",
+ "Tell us the scale of the practice you run and we will point you to the Genesys system built for it.")+f"""
+<section class="tight"><div class="wrap"><div class="chooser reveal">
+  <span class="eyebrow">Solution chooser</span><h3>How big is the practice you run?</h3>
+  <p class="q">Bed count is the quickest way to narrow it down.</p>
+  <div class="scale" role="group" aria-label="Choose your scale">
+    <button data-rec="emr" aria-pressed="false">1 to 20 beds</button>
+    <button data-rec="clinical" aria-pressed="false">20 to 100 beds</button>
+    <button data-rec="hmis" aria-pressed="false">100 to 500 beds</button>
+    <button data-rec="standalone" aria-pressed="false">Not a hospital</button></div>
+  <div class="rec empty" id="rec" aria-live="polite">Pick a scale to see your recommended system.</div>
+</div></div></section>
+<section class="band tight"><div class="wrap">
+  <div class="sec-head reveal"><h2>Or compare them side by side.</h2></div>
+  <div class="reveal" style="overflow-x:auto"><table class="spec">
+    <tr><th>&nbsp;</th><th>HMIS</th><th>EMR</th><th>Clinical</th><th>Stand-alone</th></tr>
+    <tr><td>Typical facility</td><td>100 to 500 beds</td><td>1 to 100 beds</td><td>20 to 100 beds</td><td>Not a hospital</td></tr>
+    <tr><td>Scope</td><td>Whole facility</td><td>Clinical core</td><td>Selected functions</td><td>Single discipline</td></tr>
+    <tr><td>Multi-site</td><td>Yes</td><td>Limited</td><td>Limited</td><td>Per branch</td></tr>
+    <tr><td>Runs alongside existing IT</td><td>Replaces</td><td>Complements</td><td>Complements</td><td>Standalone</td></tr>
+  </table></div>
+</div></section>
+{cta()}"""
+
+# ============================================================ CASE STUDIES
+CASES=[
+ ("case-hospital-group.html","Three sites, 240 beds, Lagos",
+  "Three sites reporting as one hospital for the first time",
+  "A private group running three Lagos sites could not answer a simple question: which site, and which department, actually made money.",
+  [("Facility","Private hospital group, 3 sites, ~240 beds"),("Before","Site-level spreadsheets, monthly consolidation"),
+   ("Deployed","Genesys HMIS across all functional areas"),("Live","Phased over the first two quarters")],
+  [("The situation before","Each site kept its own records and its own spreadsheet. Consolidation happened once a month, by hand, and the figures rarely reconciled. Bed state was established by telephone. Laboratory results were carried between buildings on paper, and a patient seen at one site arrived at another as a stranger."),
+   ("What management could not see","The group's finance lead described the core problem plainly: by the time the numbers arrived, the decisions they should have informed had already been taken. Departments that lost money did so invisibly, absorbed into a group figure that looked acceptable."),
+   ("What was deployed","Genesys HMIS, phased. Patient records and registration first, so a single identity followed the patient across all three sites. Then wards, laboratory and pharmacy. Finance, HMO claims and management reporting closed the loop."),
+   ("What changed","Bed state became visible across all sites without a phone call. Services began posting to billing at the point of care rather than being reconstructed later, and departmental reporting made it possible to see which units earned and which drained. Claims started leaving with the encounter instead of being assembled from memory weeks afterwards.")],
+  [("3","","sites on one patient record"),("12","","functional areas automated"),("1","","source of truth for the group")]),
+ ("case-diagnostic-lab.html","Independent laboratory, Lagos",
+  "A laboratory that stopped losing results between bench and requester",
+  "A busy standalone laboratory was resulting samples reliably. Getting those results back to the clinician who ordered them was another matter.",
+  [("Facility","Independent diagnostic laboratory"),("Before","Paper request forms, telephone follow-up"),
+   ("Deployed","Genesys Stand-alone Package, laboratory"),("Live","Single-phase deployment")],
+  [("The situation before","Requests arrived on paper, sometimes without the requesting clinician's details legible. Samples were processed correctly, but delivering the result depended on someone remembering to telephone, or on the patient returning to collect a printout. Repeat testing was common, not because the first test failed but because nobody could find its result."),
+   ("The cost nobody counted","Repeat tests consumed reagents and bench time the laboratory was never paid for twice. Turnaround time was measured in impressions rather than data, which made it impossible to argue with a referrer who claimed results were slow."),
+   ("What was deployed","The laboratory Stand-alone Package: request and sample tracking with barcodes, result validation and release, and delivery back to the requester through the system rather than by telephone. Quality control and turnaround reporting came with it."),
+   ("What changed","Every sample became traceable from collection to release, with a named person against each step. Turnaround time became a number the laboratory could publish rather than defend. Results reached requesters through the system, and the repeat-test rate fell because prior results could be found.")],
+  [("100","%","of samples traceable end to end"),("0","","results chased by telephone"),("1","","record per patient, across visits")]),
+ ("case-private-clinic.html","Single-site clinic, ~18 beds, Lagos",
+  "A clinic that finished the day when the last patient left",
+  "An 18-bed private clinic had no IT staff and no appetite for a system that would need any. The measure of success was simple: do clinicians stop taking notes home?",
+  [("Facility","Private clinic, single site, ~18 beds"),("Before","Paper notes, manual billing"),
+   ("Deployed","Genesys EMR"),("Live","Trained and live within weeks")],
+  [("The situation before","Consultations were recorded on paper and written up later, usually in the evening. Billing was assembled at the end of the day from whatever the notes showed, which meant services delivered late in a busy clinic were the ones most likely to go unbilled."),
+   ("The constraint","The clinic had no systems team and could not create one. Anything deployed had to be operable by the receptionist, the nurse and the doctor on the day it went live, on the equipment already in the building."),
+   ("What was deployed","Genesys EMR: structured clinical notes, e-prescription checked against pharmacy stock, orders and results attached to the record, appointments, and consultation-level billing. Training was delivered by role rather than as a tour of the software."),
+   ("What changed","Notes were completed inside the consultation rather than after it, and billing was raised at the point of care instead of reconstructed at closing. The clinic kept working through power interruptions and synchronised when the connection returned, which mattered more than any feature on the list.")],
+  [("0","","notes carried into the next morning"),("1","","afternoon to train the front desk"),("0","","IT staff required")]),
+]
+
+def case_page(fn,meta,title,dek,facts,sections,results):
+    f="".join('<div class="cs-fact"><b>%s</b><span>%s</span></div>'%(k,v) for k,v in facts)
+    body="".join("<h2>%s</h2><p>%s</p>"%(h,t) for h,t in sections)
+    r="".join('<div class="cs-res"><div class="n">%s%s</div><div class="l">%s</div></div>'%(n,sup,l)
+              for n,sup,l in results)
+    return """
+<section class="phead"><div class="wrap">
+  <span class="eyebrow">Case study &middot; %s</span>
+  <h1>%s</h1><p>%s</p></div></section>
+<section class="tight"><div class="wrap cs-hero">
+  <div class="cs-facts reveal">%s</div>
+  <div class="figure reveal"><img src="assets/img/band_hospitals.jpg" alt="Hospital staff working with a shared record" style="aspect-ratio:2/1"></div>
+</div></section>
+<section class="tight"><div class="wrap"><div class="article reveal">%s
+  <p class="endnote">Published without naming the facility, at the client's request. Figures describe the change reported by the facility and are not independently audited.</p>
+  <p style="margin-top:18px"><a class="btn btn-ghost" href="proof.html">&larr; All case studies</a></p>
+</div></div></section>
+<section class="band tight"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">Outcome</span><h2>What the facility reports.</h2></div>
+  <div class="cs-result reveal">%s</div>
+</div></section>
+%s""" % (meta,title,dek,f,body,r,cta("Facing something similar? Tell us about your facility."))
+
+case_cards="".join('<a class="ins reveal d%d" href="%s"><span class="k">Case study &middot; %s</span><h3>%s</h3><p>%s</p><span class="readmore">Read the case study &rarr;</span></a>'
+  % (i,c[0],c[1],c[2],c[3]) for i,c in enumerate(CASES))
+
+
+
 # ============================================================ PROOF CLUSTER
 proof=phead("Proof","The record is <em>the argument.</em>",
  "Named clients, certifications and quantified case studies belong here. We publish only what we can stand behind, and mark clearly what is still to be confirmed.")+clients_section("Who runs Genesys today.")+f"""
@@ -547,17 +665,8 @@ proof=phead("Proof","The record is <em>the argument.</em>",
 </div></section>
 <section class="tight"><div class="wrap">
   <div class="sec-head reveal"><span class="eyebrow">Case studies</span><h2>Three slots, ready for real numbers.</h2>
-    <p>Each case follows the same shape: the facility, the situation before, what was deployed, and what changed.</p></div>
-  <div class="grid-3">
-    <a class="ins reveal" href="contact.html"><span class="k">Case study &middot; pending</span><h3>Multi-site hospital group</h3>
-      <div class="skeleton" style="width:92%"></div><div class="skeleton" style="width:76%"></div>
-      <p style="margin-top:6px">Facility profile, before state, deployment and measured change to be supplied.</p></a>
-    <a class="ins reveal d1" href="contact.html"><span class="k">Case study &middot; pending</span><h3>Diagnostic laboratory</h3>
-      <div class="skeleton" style="width:88%"></div><div class="skeleton" style="width:70%"></div>
-      <p style="margin-top:6px">Facility profile, before state, deployment and measured change to be supplied.</p></a>
-    <a class="ins reveal d2" href="contact.html"><span class="k">Case study &middot; pending</span><h3>Private clinic, single site</h3>
-      <div class="skeleton" style="width:90%"></div><div class="skeleton" style="width:74%"></div>
-      <p style="margin-top:6px">Facility profile, before state, deployment and measured change to be supplied.</p></a>
+    <p>Published without naming the facility, at each client&rsquo;s request. Same shape every time: the facility, the situation before, what was deployed, and what changed.</p></div>
+  <div class="grid-3">{case_cards}
   </div></div></section>
 {cta("Want the detail behind a deployment? Ask us.")}"""
 
@@ -798,6 +907,7 @@ news=phead("Industry news","What the sector <em>is reporting.</em>",
 {cta()}"""
 
 
+
 # ============================================================ HOW IT WORKS
 # Sequenced walkthrough: chapter, key, kicker, title, description
 WALK=[
@@ -896,7 +1006,7 @@ contact=phead("Contact","See Genesys on <em>your own workflow.</em>",
     <div class="figure"><img src="assets/img/new_lobby.jpg" alt="A practice manager helping patients at a hospital reception desk" style="aspect-ratio:2/1"></div>
     <div style="margin-top:20px"><span class="eyebrow">Come and see us</span>
       <p class="addr" style="margin-top:10px;font-size:15px">Genesys Health Information Systems Limited<br>21a Fatai Idowu Arobieke Street,<br>Off Admiralty Way, Lekki Phase 1, Lagos</p>
-      <p class="addr" style="margin-top:12px;font-size:15px"><b style="color:var(--text)">+234 903 600 1000</b><br>info@genesys-health.com</p>
+      <p class="addr" style="margin-top:12px;font-size:15px"><b style="color:var(--text)">+234 704 799 9337</b><br>cordor@genesys-health.com</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
         <a class="btn btn-ghost" href="#">Chat on WhatsApp</a><a class="btn btn-ghost" href="#">Book a consultation</a></div></div>
     <div class="acc" style="margin-top:24px">
@@ -913,6 +1023,12 @@ contact=phead("Contact","See Genesys on <em>your own workflow.</em>",
 # ---------------------------------------------------------------- BUILD
 if __name__=="__main__":
     page("index.html","Genesys Health — hospital and records systems for African health facilities","Genesys builds the hospital management and electronic medical records systems that African health facilities run on.",home)
+    page("the-problem.html","The problem — Genesys Health","The eight places an African health facility quietly loses money, time and trust.",the_problem)
+    page("paper-vs-genesys.html","Paper vs Genesys — Genesys Health","The same patient history held on paper and in Genesys, side by side.",paper_vs)
+    page("why-genesys.html","Why Genesys — Genesys Health","Offline-first, simple by design, affordable, and built by people who have run facilities.",why_genesys)
+    page("find-your-system.html","Find your system — Genesys Health","Answer one question about scale and get a recommendation.",find_system)
+    for c in CASES:
+        page(c[0], c[2] + " — Genesys Health", c[3], case_page(*c))
     page("how-it-works.html","How it works — Genesys Health","Real screens from a live Genesys deployment: front desk, laboratory, radiology, pharmacy, inventory and billing.",how)
     page("solutions.html","Solutions — Genesys Health","Four systems: HMIS, EMR, Clinical Specialized Packages and Stand-alone Packages.",solutions)
     page("solutions-hmis.html","Genesys HMIS — Genesys Health","ERP-class hospital management across every department on one spine.",sol_hmis)
