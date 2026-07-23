@@ -118,9 +118,10 @@ The site ships with:
 Search the legal pages for `[` to find every placeholder awaiting your input.
 
 ## Adding real client quotes
-The homepage and Proof carousel currently show each client facility, its logo and location.
-No quote is shown, because a quote must be the facility's own approved words.
+Clients appear once per page, in the `clients_section()` logo wall. There is deliberately no
+testimonial carousel: a quote must be the facility's own approved words, attributed to a named
+person, and none have been signed off yet.
 
-When a facility signs off wording, open `build.py`, find `CLIENT_SLIDES`, and add two fields:
-the quote and the named spokesperson. Then extend the `carousel()` function to render them.
-Send the approved text and it takes about two minutes to insert.
+When a facility approves wording, send it over with the spokesperson's name and role and it can be
+added as a proper testimonial block on the Proof page. Do not attribute wording to a named facility
+that the facility has not approved.

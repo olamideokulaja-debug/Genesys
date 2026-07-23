@@ -197,31 +197,6 @@ ROUTES=[("Path 01","I run a hospital","50 to 500 beds. See where the money goes 
 routes="".join(f'<a class="route reveal d{i}" href="{u}"><div><span class="rk">{k}</span><h3>{h}</h3><p>{p}</p></div>'
  f'<span class="go">Read more &rarr;</span></a>' for i,(k,h,p,u) in enumerate(ROUTES,1))
 
-CLIENT_SLIDES=[
- ("Reddington Hospital Ikeja","Ikeja, Lagos","Multi-specialty hospital","reddington"),
- ("Medbury Medical Services","Lekki, Lagos","Multi-service provider","medbury"),
- ("Subol Hospital Limited","Lagos","General hospital","subol"),
- ("Finnih Medical Centre","Lagos","Medical centre","finnih"),
- ("Kaaf Specialist Hospital","Lagos","Specialist hospital","kaaf"),
- ("Sky-High Medical Centre","Lagos","Medical centre","skyhigh"),
- ("11PLC Clinic","Lagos","Clinic","plc11"),
- ("Mart Medical Clinic","Lagos","Clinic",None),
-]
-
-def carousel():
-    sl=""
-    for i,(fac,loc,kind,logo) in enumerate(CLIENT_SLIDES):
-        mark=(f'<img class="cs-logo" src="assets/clients/{logo}.png" alt="{fac}">' if logo
-              else f'<span class="cs-init">{"".join(w[0] for w in fac.split()[:2]).upper()}</span>')
-        sl+=(f'<div class="slide{" active" if i==0 else ""}">{mark}'
-             f'<div class="cs-name">{fac}</div>'
-             f'<div class="cs-meta">{kind} &middot; {loc}</div>'
-             f'<div class="cs-live"><span class="uc-dot"></span>Running Genesys</div></div>')
-    d="".join(f'<button class="dot" aria-selected="{"true" if i==0 else "false"}" '
-              f'aria-label="Client {i+1}"></button>' for i in range(len(CLIENT_SLIDES)))
-    return (f'<div class="carou reveal">{sl}'
-            f'<div class="carou-ctl">{d}<button class="carou-pause">Pause</button></div></div>')
-
 home=f"""
 <section class="hero"><div class="wrap">
   <span class="eyebrow">Health information systems &middot; Lekki, Lagos</span>
@@ -272,10 +247,28 @@ home=f"""
   </div>
 </div></section>
 {clients_section()}
-<section><div class="wrap">
-  <div class="sec-head reveal"><span class="eyebrow">Our clients</span><h2>Facilities running Genesys.</h2></div>
-  {carousel()}
-  <p class="stat-note">Named with each facility&rsquo;s permission. We publish a quote only after that facility has approved its exact wording and named a spokesperson.</p>
+<section><div class="wrap split wide-right">
+  <div class="reveal">
+    <span class="eyebrow">See it working</span>
+    <h2 style="font-size:clamp(25px,3.4vw,38px);margin:10px 0 14px">This is the software, not an impression of it.</h2>
+    <p style="margin-bottom:12px">Ten screens from a live deployment, in the order a patient moves through a
+      facility: sign in, front desk, laboratory, radiology, pharmacy, inventory, then billing.</p>
+    <p class="muted" style="margin-bottom:20px">It plays on its own, so you can watch it end to end in under
+      two minutes, or stop on any screen and read what you are looking at.</p>
+    <div style="display:flex;gap:11px;flex-wrap:wrap">
+      <a class="btn btn-primary" href="how-it-works.html">Watch the walkthrough <span class="arrow">&rarr;</span></a>
+      <a class="btn btn-ghost" href="contact.html">Book a live demo</a>
+    </div>
+    <div class="hero-trust" style="margin-top:24px">
+      <span class="chip">Front desk</span><span class="chip">Laboratory</span><span class="chip">Radiology</span>
+      <span class="chip">Pharmacy</span><span class="chip">Inventory</span><span class="chip">Billing</span>
+    </div>
+  </div>
+  <a class="shot reveal d1" href="how-it-works.html" style="display:block">
+    <div class="shot-bar"><i></i><i></i><i></i><span>genesys &middot; live deployment</span></div>
+    <img src="assets/shots/frontdesk.jpg" alt="The Genesys front desk patient search screen">
+    <div class="shot-cap"><b>Front desk &middot; Search patients.</b> One of ten screens in the walkthrough.</div>
+  </a>
 </div></section>
 {cta()}"""
 
@@ -669,8 +662,9 @@ case_cards="".join('<a class="ins reveal d%d" href="%s"><span class="k">Case stu
 # ============================================================ PROOF CLUSTER
 proof=phead("Proof","The record is <em>the argument.</em>",
  "Named clients, certifications and quantified case studies belong here. We publish only what we can stand behind, and mark clearly what is still to be confirmed.")+clients_section("Who runs Genesys today.")+f"""
-<section class="tight"><div class="wrap">{carousel()}
-  <p class="stat-note">Named with each facility&rsquo;s permission. We publish a quote only after that facility has approved its exact wording and named a spokesperson.</p></div></section>
+<section class="tight"><div class="wrap">
+  <p class="stat-note" style="margin-top:0">Named with each facility&rsquo;s permission. We publish a quote only after that facility has approved its exact wording and named a spokesperson.</p>
+</div></section>
 <section class="band tight"><div class="wrap split wide-left">
   <div class="reveal"><span class="eyebrow">What we can show</span>
     <h2 style="font-size:clamp(24px,3.2vw,34px);margin:10px 0 14px">Evidence, not adjectives.</h2>
