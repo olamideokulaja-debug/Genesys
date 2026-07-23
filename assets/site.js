@@ -19,17 +19,42 @@
     nav.classList.toggle('stuck', window.scrollY>8);
   },{passive:true});
 
-  /* ---------- mega menu ---------- */
-  var megaTab=$('.tab.has-mega'), mega=$('#mega'), megaT;
-  function openMega(v){ if(mega) mega.classList.toggle('open',v); }
-  if(megaTab&&mega){
-    var row=$('.tabrow');
-    row.addEventListener('mouseenter',function(e){ if(e.target.closest('.has-mega')){clearTimeout(megaT);openMega(true);} },true);
-    row.addEventListener('mouseleave',function(){ megaT=setTimeout(function(){openMega(false);},180); });
-    mega.addEventListener('mouseenter',function(){clearTimeout(megaT);});
-    mega.addEventListener('mouseleave',function(){ megaT=setTimeout(function(){openMega(false);},180); });
-    megaTab.addEventListener('focus',function(){openMega(true);});
-    document.addEventListener('keydown',function(e){ if(e.key==='Escape') openMega(false); });
+  /* ---------- dropdown menus (multi-tab) ---------- */
+  var dropT=null, openEl=null;
+  function closeAll(){ $$('.mega').forEach(function(m){m.classList.remove('open');}); openEl=null; }
+  function openFor(tab){
+    var id=tab.getAttribute('data-drop'); if(!id) { closeAll(); return; }
+    var m=document.getElementById(id); if(!m) { closeAll(); return; }
+    if(openEl && openEl!==m) openEl.classList.remove('open');
+    m.classList.add('open'); openEl=m;
+  }
+  $$('.tab').forEach(function(tab){
+    tab.addEventListener('mouseenter',function(){ clearTimeout(dropT); openFor(tab); });
+    tab.addEventListener('focus',function(){ clearTimeout(dropT); openFor(tab); });
+    tab.addEventListener('mouseleave',function(){ dropT=setTimeout(closeAll,200); });
+  });
+  $$('.mega').forEach(function(m){
+    m.addEventListener('mouseenter',function(){ clearTimeout(dropT); });
+    m.addEventListener('mouseleave',function(){ dropT=setTimeout(closeAll,200); });
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeAll(); });
+
+  /* ---------- module picker (clinical packages) ---------- */
+  var picker=$('#modPicker'), out=$('#modOut');
+  if(picker&&out){
+    var mods=$$('.mod',picker);
+    mods.forEach(function(m){
+      m.addEventListener('click',function(){
+        m.setAttribute('aria-pressed', m.getAttribute('aria-pressed')==='true'?'false':'true');
+        var sel=mods.filter(function(x){return x.getAttribute('aria-pressed')==='true';})
+                    .map(function(x){return x.getAttribute('data-mod');});
+        if(!sel.length){ out.innerHTML='Nothing selected yet. Choose the departments where records, scheduling or reporting are still manual.'; return; }
+        var list=sel.length===1?sel[0]:sel.slice(0,-1).join(', ')+' and '+sel[sel.length-1];
+        out.innerHTML='<b>'+sel.length+' selected.</b> A Clinical Specialized Package covering '+list+
+          ', scoped to your existing systems and priced to that scope alone. '+
+          '<a href="contact.html" style="color:var(--blue);font-weight:600">Send this scope to us &rarr;</a>';
+      });
+    });
   }
 
   /* ---------- scroll reveal ---------- */
