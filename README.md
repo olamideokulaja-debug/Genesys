@@ -46,7 +46,28 @@ Connect it when you are ready:
    The file is safe to run repeatedly. If you see `policy ... already exists`, it simply means
    the schema was applied before — nothing is wrong, and you can move on to step 3.
 3. Go to **Project Settings → API** and copy the **Project URL** and the **anon public** key.
-4. Open `assets/config.js`, paste both values, commit. Vercel redeploys automatically.
+4. Give the site those two values. Either way works:
+
+   **Option A — edit the file (simplest).**
+   Open `assets/config.js`, paste both values between the quotes, commit.
+
+   **Option B — Vercel environment variables.**
+   Vercel → Project → Settings → Environment Variables, add:
+   | Name | Value |
+   |---|---|
+   | `SUPABASE_URL` | `https://xxxx.supabase.co` |
+   | `SUPABASE_ANON_KEY` | your anon public key |
+   | `WHATSAPP` | `2347047999337` *(optional)* |
+   | `CONTACT_EMAIL` | `cordor@genesys-health.com` *(optional)* |
+
+   Then **Deployments → ⋯ → Redeploy**. `scripts/build-config.js` runs on every deploy and
+   writes `assets/config.js` from those variables. If the variables are missing it leaves the
+   committed file alone, so nothing breaks.
+
+   Note: the anon key is *designed* to be public — it always ends up in the browser either way.
+   Supabase security comes from row-level security, not from hiding this key. Option B is about
+   convenience and key rotation, not extra secrecy. Never put the `service_role` key in either
+   place; the build script refuses it.
 
 The anon key is safe to publish. Row-level security means the public can only *insert*
 demo requests, chat messages and newsletter sign-ups, and can only *read* items you have
