@@ -1,54 +1,65 @@
 # Genesys Health — website
 
-A static website (HTML, CSS, JavaScript). No build step and no server. It deploys to Vercel straight from GitHub, and every future edit you commit goes live automatically.
+A static site: 7 pages of HTML, one stylesheet, one small script. No build step, no server, no dependencies. It deploys to Vercel straight from GitHub, and every change you commit afterwards goes live automatically.
 
-## What is in here
+## Pages
+| File | Tab |
+|---|---|
+| `index.html` | Home |
+| `solutions.html` | Solutions |
+| `who-we-serve.html` | Who we serve |
+| `proof.html` | Proof |
+| `about.html` | About (story, vision, mission, values, team) |
+| `insights.html` | Insights |
+| `contact.html` | Contact |
+
 ```
 genesys-site/
-├── index.html          The homepage
-├── leadership.html     The team / board page
+├── index.html … contact.html   The 7 pages
 ├── assets/
-│   ├── img/            Section photographs
-│   └── team/           Board portraits
-├── vercel.json         Hosting settings (caching)
-├── .gitignore
-└── README.md           This file
+│   ├── site.css                All styling (fonts, colours, layout)
+│   ├── site.js                 Solution chooser + scroll reveals
+│   ├── img/                    Section photographs (full frame, 1800px)
+│   └── team/                   Board portraits (full, uncropped)
+├── vercel.json                 Caching settings
+├── build.py                    Optional. Regenerates the pages. Not needed to deploy.
+└── README.md
 ```
 
-To preview locally, just open `index.html` in any browser. Nothing to install.
+To preview locally, open `index.html` in any browser.
 
 ---
 
 ## Deploy in about 10 minutes
 
-You need two free accounts: a GitHub account (github.com) and a Vercel account (vercel.com). Sign in to Vercel with your GitHub account so they are already linked.
+You need a GitHub account (github.com) and a Vercel account (vercel.com). Sign in to Vercel using your GitHub account so the two are linked.
 
 ### Step 1 — Put the code on GitHub
 1. Go to https://github.com/new
-2. Repository name: `genesys-site`. Leave it Public or Private, your choice. Do not tick "Add a README". Click **Create repository**.
-3. On the next screen click the link **uploading an existing file**.
-4. Drag the **contents** of the `genesys-site` folder into the browser (the `index.html`, `leadership.html`, the `assets` folder, `vercel.json`). Keep the folder structure.
-5. Click **Commit changes**.
+2. Repository name: `genesys-site`. Public or Private, your choice. Do not tick "Add a README". Click **Create repository**.
+3. On the next screen, click the link **uploading an existing file**.
+4. Drag in the **contents** of this folder (all the `.html` files, the `assets` folder, `vercel.json`). Keep the folder structure exactly as it is.
+5. Scroll down and click **Commit changes**.
 
 ### Step 2 — Deploy on Vercel
 1. Go to https://vercel.com/new
 2. Under **Import Git Repository**, find `genesys-site` and click **Import**.
 3. Framework Preset: choose **Other**. Leave Build Command and Output Directory empty.
 4. Click **Deploy**.
-5. After about a minute you get a live link like `https://genesys-site.vercel.app`. That is your site.
+5. About a minute later you get a live link like `https://genesys-site.vercel.app`.
 
-### Step 3 — Use your own domain (optional)
-1. In Vercel, open the project, go to **Settings → Domains**.
-2. Add `genesys-health.com` (or a subdomain such as `www`).
-3. Vercel shows you the DNS records to add at your domain registrar. Add them, and the domain goes live once it verifies.
+### Step 3 — Your own domain (optional)
+In Vercel open the project, then **Settings → Domains**, and add `genesys-health.com` or a subdomain such as `www`. Vercel shows the DNS records to add at your domain registrar. The domain goes live once it verifies.
 
 ---
 
 ## Making changes later
-Edit any file on GitHub (click the file, then the pencil icon), or upload a replacement, and **Commit changes**. Vercel redeploys automatically within a minute. To swap a photograph, replace the matching file inside `assets/` keeping the same file name.
+Edit a file on GitHub (open it, click the pencil icon) and **Commit changes**. Vercel redeploys within a minute. To swap a photograph, upload a replacement into `assets/img/` or `assets/team/` using the same file name.
+
+If you would rather regenerate the pages from one place, edit `build.py` and run `python3 build.py`. It rewrites all 7 HTML files with the shared navigation and footer, so a change to the menu or the footer only has to be made once.
 
 ## Notes
-- Fonts load from Google Fonts, so the live site needs internet, which it always has.
-- The theme toggle in the top bar switches between the white and a dark view. White is the default.
-- Placeholders written like `[fact needed]` mark content still to be supplied. Search the two HTML files for `[` to find them all.
-- The contact form, WhatsApp link and newsletter are visual for now. Wiring them to real destinations is a later stage.
+- Typeface is Lora, loaded from Google Fonts.
+- Navigation is a tab bar; the current page is underlined in blue and scrolls into view on mobile.
+- Placeholders written like `[fact needed]` mark content still to be supplied. Search the HTML files for `[` to find them all.
+- The contact form, WhatsApp links and newsletter are visual for now. Wiring them to real destinations is a later stage.
