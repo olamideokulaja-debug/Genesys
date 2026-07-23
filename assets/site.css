@@ -8,7 +8,7 @@
   --shadow:0 18px 40px -26px rgba(3,33,92,.45);
   --shadow-lg:0 40px 80px -40px rgba(3,33,92,.55);
   --font:"Lora",Georgia,serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
-  --maxw:none; --gutter:clamp(14px,2.2vw,34px); --r:14px;
+  --maxw:1560px; --gutter:clamp(20px,3vw,46px); --r:14px;
   --ease:cubic-bezier(.22,.61,.36,1);
 }
 [data-theme="dark"]{
@@ -45,17 +45,17 @@ button{font-family:var(--font)}
 
 header.nav{position:sticky;top:0;z-index:80;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);transition:box-shadow .25s}
 header.nav.stuck{box-shadow:0 10px 30px -22px rgba(3,33,92,.5)}
-.nav-top{display:flex;align-items:center;gap:14px;height:60px}
-.brand{display:flex;align-items:center;flex:0 0 auto}
+.nav-top{display:flex;align-items:center;gap:12px;height:60px}
+.brand{display:flex;align-items:center;flex:1 1 0;min-width:120px}
 .brand img{height:30px;width:auto;display:block;transition:transform .25s var(--ease)}
 .brand:hover img{transform:scale(1.04)}
 [data-theme="dark"] .brand img{filter:brightness(0) invert(1)}
-.nav-actions{display:flex;align-items:center;gap:9px;flex:0 0 auto}
+.nav-actions{display:flex;align-items:center;gap:9px;flex:1 1 0;justify-content:flex-end;min-width:120px}
 .iconbtn{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--border);border-radius:9px;background:transparent;color:var(--text);cursor:pointer;transition:border-color .18s,color .18s,transform .18s}
 .iconbtn:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-1px)}
 .lang{font-family:var(--mono);font-size:11.5px;color:var(--text-muted);letter-spacing:.08em}.lang b{color:var(--text)}
 .tabrow{position:relative}
-.tabs{display:flex;gap:1px;margin-left:auto;justify-content:flex-end;overflow-x:auto;scrollbar-width:none;flex:0 1 auto}
+.tabs{display:flex;gap:1px;justify-content:center;flex:0 1 auto;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{position:relative;padding:19px 11px;font-size:14.5px;font-weight:500;color:var(--text-muted);white-space:nowrap;border-bottom:2px solid transparent;transition:color .18s,border-color .18s,background .18s;border-radius:8px 8px 0 0}
 .tab:hover{color:var(--text);background:var(--tint)}
@@ -63,8 +63,8 @@ header.nav.stuck{box-shadow:0 10px 30px -22px rgba(3,33,92,.5)}
 .tabrow{position:static}
 .tab.has-mega::after{content:"";display:inline-block;width:5px;height:5px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);margin-left:7px;opacity:.6}
 
-.mega{position:absolute;top:100%;right:var(--gutter);left:auto;transform:translateY(-8px);width:min(940px,94vw);background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg);padding:20px;opacity:0;visibility:hidden;transition:opacity .22s var(--ease),transform .22s var(--ease),visibility .22s;z-index:90}
-.mega.open{opacity:1;visibility:visible;transform:translateY(4px)}
+.mega{position:absolute;top:100%;left:50%;right:auto;transform:translate(-50%,-8px);width:min(940px,94vw);background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg);padding:20px;opacity:0;visibility:hidden;transition:opacity .22s var(--ease),transform .22s var(--ease),visibility .22s;z-index:90}
+.mega.open{opacity:1;visibility:visible;transform:translate(-50%,4px)}
 .mega-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .mega-grid.g3{grid-template-columns:repeat(3,1fr)}
 .mega-grid.g2{grid-template-columns:repeat(2,1fr)}
@@ -496,11 +496,11 @@ footer{border-top:1px solid var(--border);padding-block:28px 20px;background:var
   padding:8px 13px;border-radius:9px;cursor:pointer;white-space:nowrap;transition:background .18s,color .18s}
 .pl-chapters button:hover{color:var(--text);background:var(--surface)}
 .pl-chapters button[aria-selected="true"]{background:var(--blue);color:var(--ink)}
-.pl-main{display:grid;grid-template-columns:1.6fr .4fr;gap:0;align-items:stretch}
-.pl-stage{position:relative;background:var(--surface-2);border-right:1px solid var(--border);overflow:hidden;min-height:300px}
+.pl-main{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,290px);gap:0;align-items:stretch}
+.pl-stage{position:relative;background:var(--surface-2);border-right:1px solid var(--border);overflow:hidden;aspect-ratio:1400/662}
 .pl-slide{position:absolute;inset:0;opacity:0;transform:scale(1.015);transition:opacity .5s var(--ease),transform .7s var(--ease);pointer-events:none}
 .pl-slide.on{opacity:1;transform:none;pointer-events:auto}
-.pl-slide img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block;cursor:zoom-in}
+.pl-slide img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;cursor:zoom-in}
 .pl-side{padding:clamp(16px,2vw,24px);display:flex;flex-direction:column;background:var(--surface)}
 .pl-kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);margin-bottom:9px}
 .pl-title{font-size:clamp(19px,2.2vw,25px);line-height:1.18;margin-bottom:10px;color:var(--text);font-weight:600}
@@ -524,7 +524,7 @@ footer{border-top:1px solid var(--border);padding-block:28px 20px;background:var
 .pl-seg.now i{width:var(--p,0%)}
 @media(max-width:900px){
   .pl-main{grid-template-columns:1fr}
-  .pl-stage{border-right:none;border-bottom:1px solid var(--border);aspect-ratio:16/9;min-height:0}
+  .pl-stage{border-right:none;border-bottom:1px solid var(--border);aspect-ratio:1400/662}
   .pl-side{min-height:180px}
 }
 
@@ -545,6 +545,9 @@ footer{border-top:1px solid var(--border);padding-block:28px 20px;background:var
 @media(max-width:900px){.cs-hero,.cs-facts,.cs-result{grid-template-columns:1fr}}
 
 /* ---- nav on small screens: logo left, tabs scroll, actions compact ---- */
+@media(max-width:1320px){ .tab{padding:19px 8px;font-size:13.5px} }
+@media(max-width:1140px){ .tab{padding:19px 6px;font-size:12.8px} .nav-actions .btn-primary{padding:.65em 1em;font-size:14px} }
+@media(max-width:960px){ .nav-actions .btn-primary{display:none} .brand,.nav-actions{min-width:auto;flex:0 0 auto} .tabs{flex:1 1 auto;justify-content:flex-start;margin-left:6px} }
 @media(max-width:860px){
   .nav-top{gap:8px}
   .nav-actions .btn-primary{display:none}   /* sticky mobile bar carries the CTA */
