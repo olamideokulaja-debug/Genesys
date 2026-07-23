@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About — Genesys Health</title>
-<meta name="description" content="Genesys Health Information Systems Limited: why we exist, our vision, mission, values and team.">
+<meta name="description" content="Why Genesys exists, our vision, mission, values and team.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -16,122 +16,103 @@
     <a class="brand" href="index.html" aria-label="Genesys Health home"><img src="assets/genesys-logo.png" srcset="assets/genesys-logo.png 1x, assets/genesys-logo@2x.png 2x" alt="Genesys" height="30"></a>
     <div class="nav-actions">
       <span class="lang" title="French coming soon"><b>EN</b> / FR</span>
+      <button class="iconbtn" id="themeBtn" aria-label="Switch colour theme"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg></button>
       <a class="btn btn-primary" href="contact.html">Request a demo</a>
     </div>
   </div>
-  <div class="wrap"><nav class="tabs" aria-label="Main"><a class="tab" href="index.html">Home</a><a class="tab" href="solutions.html">Solutions</a><a class="tab" href="who-we-serve.html">Who we serve</a><a class="tab" href="proof.html">Proof</a><a class="tab" href="about.html" aria-current="page">About</a><a class="tab" href="insights.html">Insights</a><a class="tab" href="contact.html">Contact</a></nav></div>
+  <div class="tabrow"><div class="wrap"><nav class="tabs" aria-label="Main"><a class="tab" href="index.html">Home</a><a class="tab has-mega" href="solutions.html">Solutions</a><a class="tab" href="who-we-serve.html">Who we serve</a><a class="tab" href="proof.html">Proof</a><a class="tab" href="about.html" aria-current="page">About</a><a class="tab" href="insights.html">Insights</a><a class="tab" href="contact.html">Contact</a></nav></div>
+    <div class="mega" id="mega">
+      <div class="mega-grid">
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Large practices</span><h4>Genesys HMIS</h4><p>ERP-class automation across every department on one spine.</p></a>
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Small to mid</span><h4>Genesys EMR</h4><p>A clean clinical record at the centre of the consultation.</p></a>
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Small to mid</span><h4>Clinical Packages</h4><p>Targeted modules for practices already running some IT.</p></a>
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Non-hospital</span><h4>Stand-alone</h4><p>For laboratories, pharmacies and imaging centres.</p></a>
+      </div>
+      <div class="mega-foot"><span>Not sure which fits? The chooser takes 10 seconds.</span>
+        <a class="btn btn-primary" href="index.html#chooser">Find my system <span class="arrow">&rarr;</span></a></div>
+    </div></div>
 </header>
 <section class="phead">
-  <div class="wrap">
-    <span class="eyebrow">About</span>
-    <h1>A health-tech company <em>with its own team.</em></h1>
-    <p>Genesys Health Information Systems Limited was established in Lagos in 2017 to close the information gap that costs African health facilities money, time and trust.</p>
-  </div>
+  <div class="wrap"><span class="eyebrow">About</span><h1>A health-tech company <em>with its own team.</em></h1>
+    <p>Genesys Health Information Systems Limited was established in Lagos in 2017 to close the information gap that costs African health facilities money, time and trust.</p></div>
 </section>
-
 <section class="tight">
   <div class="wrap split wide-left">
-    <div class="reveal">
-      <h2 style="font-size:clamp(24px,3.2vw,34px);margin-bottom:14px">Why we exist</h2>
+    <div class="reveal"><h2 style="font-size:clamp(24px,3.2vw,34px);margin-bottom:14px">Why we exist</h2>
       <p style="margin-bottom:12px">The Nigerian healthcare industry is short of data of any sort, credible or otherwise, and studies place it among the sectors most resistant to information technology. Having worked in the sector, we identified the pain points early, and they persist today.</p>
       <p style="margin-bottom:12px">The consequence is blunt. Inefficiencies in management are why so many health businesses do not survive past the first generation.</p>
-      <p class="muted">The answer is the same one that transformed engineering, banking, finance and audit: put the information in one place, and let the facility see itself clearly.</p>
-    </div>
-    <div class="figure reveal"><img src="assets/img/team.jpg" alt="A hospital management team meeting beside a ward" width="1600" height="533"></div>
+      <p class="muted">The answer is the same one that transformed engineering, banking, finance and audit: put the information in one place, and let the facility see itself clearly.</p></div>
+    <div class="figure reveal"><img src="assets/img/band_about.jpg" alt="A hospital management team meeting beside a ward" style="aspect-ratio:4/3"></div>
   </div>
 </section>
-
-<section class="tight" style="background:var(--surface);border-block:1px solid var(--border)">
+<section class="band">
   <div class="wrap grid-2" style="gap:clamp(22px,3.5vw,44px)">
-    <div class="reveal">
-      <span class="eyebrow">Vision</span>
+    <div class="reveal"><span class="eyebrow">Vision</span>
       <h2 style="font-size:clamp(21px,2.6vw,27px);margin:8px 0 10px">To be the leading provider of simple, affordable health technology to public and private health systems in Africa.</h2>
       <span class="eyebrow" style="display:block;margin-top:20px">Mission</span>
-      <h2 style="font-size:clamp(21px,2.6vw,27px);margin:8px 0 0">To digitise and optimise healthcare service delivery through unparalleled client-centric service and technology solutions.</h2>
-    </div>
-    <div class="reveal">
-      <span class="eyebrow">Values &middot; IDEAL</span>
-      <div style="display:grid;gap:14px;margin-top:14px"><div class="value"><b>Integrity</b><span>In everything we do, internally and externally.</span></div><div class="value"><b>Diligence</b><span>We work hard and smart at improving healthcare sustainability in Africa.</span></div><div class="value"><b>Empathy</b><span>We build relationships, with our team and our clients, with empathy.</span></div><div class="value"><b>Accountability</b><span>Our word is our bond. We take responsibility and communicate clearly.</span></div><div class="value"><b>Loyalty</b><span>We are about relationships, and we go the extra mile.</span></div></div>
-    </div>
+      <h2 style="font-size:clamp(21px,2.6vw,27px);margin:8px 0 0">To digitise and optimise healthcare service delivery through unparalleled client-centric service and technology solutions.</h2></div>
+    <div class="reveal d1"><span class="eyebrow">Values &middot; IDEAL</span>
+      <div style="display:grid;gap:14px;margin-top:14px"><div class="value"><b>Integrity</b><span>In everything we do, internally and externally.</span></div><div class="value"><b>Diligence</b><span>We work hard and smart at improving healthcare sustainability in Africa.</span></div><div class="value"><b>Empathy</b><span>We build relationships, with our team and our clients, with empathy.</span></div><div class="value"><b>Accountability</b><span>Our word is our bond. We take responsibility and communicate clearly.</span></div><div class="value"><b>Loyalty</b><span>We are about relationships, and we go the extra mile.</span></div></div></div>
   </div>
 </section>
-
 <section class="tight">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">The team</span>
-      <h2>The people building Genesys.</h2>
-      <p>Our board brings together enterprise software leadership and healthcare operating experience, and sets the direction the company builds against.</p>
-    </div>
+    <div class="sec-head reveal"><span class="eyebrow">The team</span><h2>The people building Genesys.</h2>
+      <p>Our board brings together enterprise software leadership and healthcare operating experience, and sets the direction the company builds against.</p></div>
     <div class="split wide-right reveal" style="margin-bottom:22px;align-items:start">
       <div class="portrait chair"><span class="role-tag">Chairman</span>
-        <img src="assets/team/kunle.jpg" alt="Kunle Akinniran, Chairman of the Genesys board" width="560" height="560"></div>
-      <div>
-        <span class="eyebrow">Chairman of the board</span>
+        <img src="assets/team/kunle.jpg" alt="Kunle Akinniran, Chairman of the Genesys board"></div>
+      <div><span class="eyebrow">Chairman of the board</span>
         <h2 style="font-size:clamp(27px,3.6vw,40px);margin:10px 0 4px">Kunle Akinniran</h2>
         <p style="color:var(--blue);font-weight:600;font-size:14.5px;margin-bottom:14px">Managing Director and CEO, Vatebra Limited</p>
-        <p style="font-size:15.5px">A technology leader with over 20 years of experience, Kunle joined the Vatebra board in 2006. He was previously Group Head of IT at the defunct Fountain Trust Bank, where in 2001 he led the implementation of the Bankmaster and Branchpower banking systems, and he was part of the team that pioneered a scratch-card based online solution that carried Vatebra's work across Ghana, Sierra Leone and The Gambia. He holds a B.Sc in Computer Sciences from the University of Lagos and an MBA in International Business Management, and is a member of the Nigerian Computer Society, the Computer Professionals Registration Council of Nigeria and the Institute of Directors. He is a multiple-time winner of Tech Company CEO of the Year at the Nigeria Technology Awards.</p>
-      </div>
+        <p style="font-size:15.5px">A technology leader with over 20 years of experience, Kunle joined the Vatebra board in 2006. He was previously Group Head of IT at the defunct Fountain Trust Bank, where in 2001 he led the implementation of the Bankmaster and Branchpower banking systems, and he was part of the team that pioneered a scratch-card based online solution that carried Vatebra's work across Ghana, Sierra Leone and The Gambia. He holds a B.Sc in Computer Sciences from the University of Lagos and an MBA in International Business Management, and is a member of the Nigerian Computer Society, the Computer Professionals Registration Council of Nigeria and the Institute of Directors. He is a multiple-time winner of Tech Company CEO of the Year at the Nigeria Technology Awards.</p></div>
     </div>
     <div class="grid-3">
-      <article class="card member reveal">
+      <article class="card member reveal d1">
         <div class="portrait" style="border:none;border-bottom:1px solid var(--border);border-radius:0">
-          <img src="assets/team/mike.jpg" alt="Mike Aigbe, board member" width="560" height="560"></div>
-        <div class="body"><span class="mtag">Board member</span><h3>Mike Aigbe</h3>
-          <span class="aff">Deputy Managing Director, Vatebra Limited</span><p class="bio">Leads business direction, product development, marketing and relationship management at Vatebra, and coordinates its work across Abuja, Ghana, Kenya, Sierra Leone and The Gambia. He holds a B.Sc in Computer Science from the University of Benin, an M.Sc in Computer Science from the University of Lagos, an MBA from the University of Nigeria, Nsukka, and an M.Sc in Corporate Governance from Leeds Metropolitan University in the United Kingdom.</p>
-          </div>
+          <img src="assets/team/mike.jpg" alt="Mike Aigbe, board member"></div>
+        <div class="body"><span class="mtag">Board member</span><h3>Mike Aigbe</h3><span class="aff">Deputy Managing Director, Vatebra Limited</span>
+          <p class="bio">Leads business direction, product development, marketing and relationship management at Vatebra, and coordinates its work across Abuja, Ghana, Kenya, Sierra Leone and The Gambia. He holds a B.Sc in Computer Science from the University of Benin, an M.Sc in Computer Science from the University of Lagos, an MBA from the University of Nigeria, Nsukka, and an M.Sc in Corporate Governance from Leeds Metropolitan University.</p></div>
       </article>
-      <article class="card member reveal">
+      <article class="card member reveal d2">
         <div class="portrait" style="border:none;border-bottom:1px solid var(--border);border-radius:0">
-          <img src="assets/team/olamide.jpg" alt="Olamide Okulaja, board member" width="560" height="560"></div>
-        <div class="body"><span class="mtag">Board member</span><h3>Olamide Okulaja</h3>
-          <span class="aff">Chief Executive Officer, Realms Healthcare</span><p class="bio">A healthcare strategist with a background in health systems and healthcare financing, he brings the operating side of the business to the board, pairing clinical and management insight with deep software experience.</p>
-          <span class="todo">Fuller biography to follow</span></div>
+          <img src="assets/team/olamide.jpg" alt="Olamide Okulaja, board member"></div>
+        <div class="body"><span class="mtag">Board member</span><h3>Olamide Okulaja</h3><span class="aff">Chief Executive Officer, Realms Healthcare</span>
+          <p class="bio">A healthcare strategist with a background in health systems and healthcare financing, he brings the operating side of the business to the board, pairing clinical and management insight with deep software experience.</p><span class="todo">Fuller biography to follow</span></div>
       </article>
-      <article class="card member reveal">
+      <article class="card member reveal d3">
         <div class="portrait" style="border:none;border-bottom:1px solid var(--border);border-radius:0">
-          <img src="assets/team/jennifer.jpg" alt="Jennifer Kaja, board member" width="560" height="560"></div>
-        <div class="body"><span class="mtag">Board member</span><h3>Jennifer Kaja</h3>
-          <span class="aff">Managing Director, Realms Healthcare</span><p class="bio">She helps lead the healthcare consulting arm of the business and its work with health facilities across the Genesys client base.</p>
-          <span class="todo">Fuller biography to follow</span></div>
+          <img src="assets/team/jennifer.jpg" alt="Jennifer Kaja, board member"></div>
+        <div class="body"><span class="mtag">Board member</span><h3>Jennifer Kaja</h3><span class="aff">Managing Director, Realms Healthcare</span>
+          <p class="bio">She helps lead the healthcare consulting arm of the business and its work with health facilities across the Genesys client base.</p><span class="todo">Fuller biography to follow</span></div>
       </article></div>
   </div>
 </section>
 
 <section class="tight">
-  <div class="wrap">
-    <div class="cta reveal">
-      <h2>Talk to the team behind Genesys.</h2>
-      <div style="display:flex;gap:11px;flex-wrap:wrap">
-        <a class="btn btn-white" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a>
-        <a class="btn btn-ghost" href="contact.html">Chat on WhatsApp</a>
-      </div>
-    </div>
-  </div>
+  <div class="wrap"><div class="cta reveal"><h2>Talk to the team behind Genesys.</h2>
+    <div style="display:flex;gap:11px;flex-wrap:wrap">
+      <a class="btn btn-white" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a>
+      <a class="btn btn-ghost" href="contact.html">Chat on WhatsApp</a></div>
+  </div></div>
 </section>
 <footer>
   <div class="wrap">
     <div class="foot-grid">
-      <div>
-        <div class="brand" style="margin-bottom:12px"><img src="assets/genesys-logo.png" srcset="assets/genesys-logo.png 1x, assets/genesys-logo@2x.png 2x" alt="Genesys" height="30"></div>
-        <p class="addr">Genesys Health Information Systems Limited<br>21a Fatai Idowu Arobieke Street,<br>Off Admiralty Way, Lekki Phase 1, Lagos<br><br>+234 903 600 1000<br>info@genesys-health.com</p>
-      </div>
-      <div class="fcol"><h4>Solutions</h4>
-        <a href="solutions.html">Genesys HMIS</a><a href="solutions.html">Genesys EMR</a>
-        <a href="solutions.html">Clinical Packages</a><a href="solutions.html">Stand-alone Packages</a></div>
-      <div class="fcol"><h4>Company</h4>
-        <a href="about.html">About</a><a href="about.html">The team</a>
-        <a href="proof.html">Proof</a><a href="insights.html">Insights</a></div>
-      <div class="fcol"><h4>Stay in the loop</h4>
-        <p class="addr" style="margin-bottom:4px">News on Genesys and African health tech.</p>
+      <div><div class="brand" style="margin-bottom:12px"><img src="assets/genesys-logo.png" srcset="assets/genesys-logo.png 1x, assets/genesys-logo@2x.png 2x" alt="Genesys" height="30"></div>
+        <p class="addr">Genesys Health Information Systems Limited<br>21a Fatai Idowu Arobieke Street,<br>Off Admiralty Way, Lekki Phase 1, Lagos<br><br>+234 903 600 1000<br>info@genesys-health.com</p></div>
+      <div class="fcol"><h4>Solutions</h4><a href="solutions.html">Genesys HMIS</a><a href="solutions.html">Genesys EMR</a><a href="solutions.html">Clinical Packages</a><a href="solutions.html">Stand-alone Packages</a></div>
+      <div class="fcol"><h4>Company</h4><a href="about.html">About</a><a href="about.html">The team</a><a href="proof.html">Proof</a><a href="insights.html">Insights</a></div>
+      <div class="fcol"><h4>Stay in the loop</h4><p class="addr" style="margin-bottom:4px">News on Genesys and African health tech.</p>
         <div class="news"><input type="email" placeholder="Your email address" aria-label="Email address"><button type="button">&rarr;</button></div></div>
     </div>
-    <div class="foot-base">
-      <span>&copy; 2026 Genesys Health Information Systems Limited.</span>
-      <span>Privacy &middot; Terms &middot; Sitemap</span>
-    </div>
+    <div class="foot-base"><span>&copy; 2026 Genesys Health Information Systems Limited.</span><span>Privacy &middot; Terms &middot; Sitemap</span></div>
   </div>
 </footer>
+<div class="mobar">
+  <a class="btn btn-primary" href="contact.html">Request a demo</a>
+  <a class="btn btn-ghost" href="contact.html">WhatsApp</a>
+</div>
 <script src="assets/site.js"></script>
 </body>
 </html>

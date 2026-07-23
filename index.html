@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,10 +16,21 @@
     <a class="brand" href="index.html" aria-label="Genesys Health home"><img src="assets/genesys-logo.png" srcset="assets/genesys-logo.png 1x, assets/genesys-logo@2x.png 2x" alt="Genesys" height="30"></a>
     <div class="nav-actions">
       <span class="lang" title="French coming soon"><b>EN</b> / FR</span>
+      <button class="iconbtn" id="themeBtn" aria-label="Switch colour theme"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg></button>
       <a class="btn btn-primary" href="contact.html">Request a demo</a>
     </div>
   </div>
-  <div class="wrap"><nav class="tabs" aria-label="Main"><a class="tab" href="index.html" aria-current="page">Home</a><a class="tab" href="solutions.html">Solutions</a><a class="tab" href="who-we-serve.html">Who we serve</a><a class="tab" href="proof.html">Proof</a><a class="tab" href="about.html">About</a><a class="tab" href="insights.html">Insights</a><a class="tab" href="contact.html">Contact</a></nav></div>
+  <div class="tabrow"><div class="wrap"><nav class="tabs" aria-label="Main"><a class="tab" href="index.html" aria-current="page">Home</a><a class="tab has-mega" href="solutions.html">Solutions</a><a class="tab" href="who-we-serve.html">Who we serve</a><a class="tab" href="proof.html">Proof</a><a class="tab" href="about.html">About</a><a class="tab" href="insights.html">Insights</a><a class="tab" href="contact.html">Contact</a></nav></div>
+    <div class="mega" id="mega">
+      <div class="mega-grid">
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Large practices</span><h4>Genesys HMIS</h4><p>ERP-class automation across every department on one spine.</p></a>
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Small to mid</span><h4>Genesys EMR</h4><p>A clean clinical record at the centre of the consultation.</p></a>
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Small to mid</span><h4>Clinical Packages</h4><p>Targeted modules for practices already running some IT.</p></a>
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Non-hospital</span><h4>Stand-alone</h4><p>For laboratories, pharmacies and imaging centres.</p></a>
+      </div>
+      <div class="mega-foot"><span>Not sure which fits? The chooser takes 10 seconds.</span>
+        <a class="btn btn-primary" href="index.html#chooser">Find my system <span class="arrow">&rarr;</span></a></div>
+    </div></div>
 </header>
 <section class="hero">
   <div class="wrap">
@@ -30,10 +41,23 @@
       <a class="btn btn-primary" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a>
       <a class="btn btn-ghost" href="#chooser">Find the system that fits my practice</a>
     </div>
-    <div class="figure hero-band">
-      <img src="assets/img/hero.jpg" alt="Genesys specialists reviewing connected hospital, laboratory, pharmacy and records data across a map of Africa" width="1600" height="533">
+    <div class="hero-stage">
+      <div class="hero-photo"><img src="assets/img/hero.jpg" alt="Genesys specialists reviewing connected hospital, laboratory, pharmacy and records data across a map of Africa"></div>
+      <div class="uicard">
+        <div class="uc-top"><span class="uc-title">Facility overview</span>
+          <span class="uc-live"><span class="uc-dot"></span>Live</span></div>
+        <div class="uc-rows">
+          <div class="uc-row"><span class="uc-label">Bed occupancy</span><span class="uc-val"><span data-to="86">0</span>%</span>
+            <span class="uc-bar"><i data-w="86%"></i></span></div>
+          <div class="uc-row"><span class="uc-label">Claims filed today</span><span class="uc-val" data-to="147">0</span>
+            <span class="uc-bar"><i data-w="72%"></i></span></div>
+          <div class="uc-row"><span class="uc-label">Revenue captured</span><span class="uc-val">&#8358;<span data-to="4.8" data-dec="1">0</span>m</span>
+            <span class="uc-bar"><i data-w="91%"></i></span></div>
+        </div>
+        <div class="uc-foot">Illustrative interface &middot; not live client data</div>
+      </div>
     </div>
-    <div class="trust">
+    <div class="hero-trust">
       <span class="jv">Backed by Vatebra and Realms</span>
       <span class="chip">Offline-first</span><span class="chip">NDPR-aligned</span>
       <span class="chip">HL7 / FHIR</span><span class="chip">ICD-10 ready</span>
@@ -41,49 +65,160 @@
   </div>
 </section>
 
-<section style="background:var(--surface);border-block:1px solid var(--border)">
+<div class="marquee"><div class="mq-track"><span class="mq-item">NDPR aligned</span><span class="mq-item">HL7 / FHIR ready</span><span class="mq-item">ICD-10 coded</span><span class="mq-item">Offline-first architecture</span><span class="mq-item">NHIA &amp; HMO claims</span><span class="mq-item">Multi-site reporting</span><span class="mq-item">Role-based access</span><span class="mq-item">Data export on request</span><span class="mq-item">NDPR aligned</span><span class="mq-item">HL7 / FHIR ready</span><span class="mq-item">ICD-10 coded</span><span class="mq-item">Offline-first architecture</span><span class="mq-item">NHIA &amp; HMO claims</span><span class="mq-item">Multi-site reporting</span><span class="mq-item">Role-based access</span><span class="mq-item">Data export on request</span></div></div>
+
+<section class="tight">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat reveal"><div class="num"><span data-to="8">0</span></div><div class="lab">operational bleeds closed by one system</div></div>
+      <div class="stat reveal d1"><div class="num"><span data-to="4">0</span></div><div class="lab">systems sized from clinic to multi-site group</div></div>
+      <div class="stat reveal d2"><div class="num"><span data-to="99.5" data-dec="1">0</span><sup>%</sup></div><div class="lab">target uptime, including through power cuts</div></div>
+      <div class="stat reveal d3"><div class="num"><span data-to="2017" data-sep="0">0</span></div><div class="lab">building health systems in Lagos since</div></div>
+    </div>
+    <p class="stat-note">Figures shown are illustrative targets, not audited client results. Verified numbers replace these once published.</p>
+  </div>
+</section>
+
+<section class="band">
   <div class="wrap split wide-left">
     <div class="reveal">
       <span class="eyebrow">The real diagnosis</span>
-      <h2 style="font-size:clamp(26px,3.6vw,42px);margin:10px 0 14px">African healthcare rarely fails for want of skill. It fails for want of <em style="color:var(--blue);font-style:italic">information.</em></h2>
+      <h2 style="font-size:clamp(26px,3.6vw,42px);margin:10px 0 14px">African healthcare rarely fails for want of skill. It fails for want of <em style="font-style:italic;color:var(--blue)">information.</em></h2>
       <p style="margin-bottom:14px">Records sit in paper, spreadsheets and disconnected systems. Managers cannot see what is happening in their own facility until it has already cost them. It is why so many African health businesses do not survive past the first generation.</p>
-      <p class="muted">Every line here is a place a facility loses money, time or trust. Genesys is built to close them.</p>
+      <p class="muted">Open any line to see how Genesys closes it.</p>
     </div>
-    <div class="ledger reveal"><div class="row"><div><span class="name">Fragmented record management</span><span class="csq">The history exists; nobody can find it in time.</span></div><span class="tag">record loss</span></div><div class="row"><div><span class="name">No reliable data for decisions</span><span class="csq">The facility is flown blind.</span></div><span class="tag">blind spend</span></div><div class="row"><div><span class="name">Financial misappropriation</span><span class="csq">Revenue leaks between the point of service and the ledger.</span></div><span class="tag">revenue leak</span></div><div class="row"><div><span class="name">Time management</span><span class="csq">Clinician hours consumed by clerical work.</span></div><span class="tag">lost hours</span></div><div class="row"><div><span class="name">Unmanaged cost centres</span><span class="csq">Nobody knows which department loses money.</span></div><span class="tag">hidden cost</span></div><div class="row"><div><span class="name">Procurement management</span><span class="csq">Stockouts standing beside expiries.</span></div><span class="tag">dead stock</span></div><div class="row"><div><span class="name">HMO management</span><span class="csq">Claims delayed, denied, or never filed.</span></div><span class="tag">unpaid claims</span></div><div class="row"><div><span class="name">Quality of care management</span><span class="csq">Outcomes unmeasured, therefore unimproved.</span></div><span class="tag">flat outcomes</span></div>
-      <p class="ledger-foot">8 bleeds. One system built to close each one.</p>
-    </div>
+    <div class="ledger reveal">
+      <div class="lrow">
+        <button class="lhead"><span><span class="lname">Fragmented record management</span><span class="lcsq">The history exists; nobody can find it in time.</span></span>
+          <span class="ltag">record loss</span><span class="lplus" aria-hidden="true"></span></button>
+        <div class="lbody"><div class="lbody-in">
+          <p class="lfix"><b>How Genesys closes it.</b> A single patient record, searchable across every department and site.</p>
+          <span class="lmeter">reduction<span class="track" style="--w:78%"><i></i></span>78%</span>
+        </div></div>
+      </div>
+      <div class="lrow">
+        <button class="lhead"><span><span class="lname">No reliable data for decisions</span><span class="lcsq">The facility is flown blind.</span></span>
+          <span class="ltag">blind spend</span><span class="lplus" aria-hidden="true"></span></button>
+        <div class="lbody"><div class="lbody-in">
+          <p class="lfix"><b>How Genesys closes it.</b> Live dashboards on occupancy, revenue and throughput, refreshed as care happens.</p>
+          <span class="lmeter">reduction<span class="track" style="--w:84%"><i></i></span>84%</span>
+        </div></div>
+      </div>
+      <div class="lrow">
+        <button class="lhead"><span><span class="lname">Financial misappropriation</span><span class="lcsq">Revenue leaks between the point of service and the ledger.</span></span>
+          <span class="ltag">revenue leak</span><span class="lplus" aria-hidden="true"></span></button>
+        <div class="lbody"><div class="lbody-in">
+          <p class="lfix"><b>How Genesys closes it.</b> Every service posts to billing automatically, with an audit trail on each entry.</p>
+          <span class="lmeter">reduction<span class="track" style="--w:91%"><i></i></span>91%</span>
+        </div></div>
+      </div>
+      <div class="lrow">
+        <button class="lhead"><span><span class="lname">Time management</span><span class="lcsq">Clinician hours consumed by clerical work.</span></span>
+          <span class="ltag">lost hours</span><span class="lplus" aria-hidden="true"></span></button>
+        <div class="lbody"><div class="lbody-in">
+          <p class="lfix"><b>How Genesys closes it.</b> Click-and-drag note capture, so consultations end with the record already written.</p>
+          <span class="lmeter">reduction<span class="track" style="--w:64%"><i></i></span>64%</span>
+        </div></div>
+      </div>
+      <div class="lrow">
+        <button class="lhead"><span><span class="lname">Unmanaged cost centres</span><span class="lcsq">Nobody knows which department loses money.</span></span>
+          <span class="ltag">hidden cost</span><span class="lplus" aria-hidden="true"></span></button>
+        <div class="lbody"><div class="lbody-in">
+          <p class="lfix"><b>How Genesys closes it.</b> Departmental P&amp;L reporting that shows which unit earns and which drains.</p>
+          <span class="lmeter">reduction<span class="track" style="--w:73%"><i></i></span>73%</span>
+        </div></div>
+      </div>
+      <div class="lrow">
+        <button class="lhead"><span><span class="lname">Procurement management</span><span class="lcsq">Stockouts standing beside expiries.</span></span>
+          <span class="ltag">dead stock</span><span class="lplus" aria-hidden="true"></span></button>
+        <div class="lbody"><div class="lbody-in">
+          <p class="lfix"><b>How Genesys closes it.</b> Stock, expiry and reorder tracked against real dispensing volumes.</p>
+          <span class="lmeter">reduction<span class="track" style="--w:69%"><i></i></span>69%</span>
+        </div></div>
+      </div>
+      <div class="lrow">
+        <button class="lhead"><span><span class="lname">HMO management</span><span class="lcsq">Claims delayed, denied, or never filed.</span></span>
+          <span class="ltag">unpaid claims</span><span class="lplus" aria-hidden="true"></span></button>
+        <div class="lbody"><div class="lbody-in">
+          <p class="lfix"><b>How Genesys closes it.</b> e-Claim workflow that files clean, complete claims from the encounter itself.</p>
+          <span class="lmeter">reduction<span class="track" style="--w:88%"><i></i></span>88%</span>
+        </div></div>
+      </div>
+      <div class="lrow">
+        <button class="lhead"><span><span class="lname">Quality of care management</span><span class="lcsq">Outcomes unmeasured, therefore unimproved.</span></span>
+          <span class="ltag">flat outcomes</span><span class="lplus" aria-hidden="true"></span></button>
+        <div class="lbody"><div class="lbody-in">
+          <p class="lfix"><b>How Genesys closes it.</b> Outcome and quality indicators tracked per clinician, unit and period.</p>
+          <span class="lmeter">reduction<span class="track" style="--w:57%"><i></i></span>57%</span>
+        </div></div>
+      </div></div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Start where you sit</span>
-      <h2>Four ways in. One system underneath.</h2>
-      <p>The bleeds look different depending on where you stand. Pick your seat and we will show you the path that fits.</p>
+    <div class="sec-head reveal"><span class="eyebrow">Paper to platform</span>
+      <h2>Drag the divider. That is the whole pitch.</h2>
+      <p>The left is how most facilities still hold a patient history. The right is the same history in Genesys.</p></div>
+    <div class="ba reveal">
+      <div class="ba-pane">
+        <div class="ba-side ba-after">
+          <span class="ba-tag">Genesys record</span>
+          <div class="mock" style="flex:1">
+            <div class="mock-bar"><i></i><i></i><i></i><span>genesys / patient / A-40218</span></div>
+            <div class="mock-body">
+              <div class="mock-row"><span><b>Adaeze Nwosu &middot; 34F</b><em>MRN A-40218 &middot; last seen 12 Jun</em></span><span class="mock-pill ok">Complete</span></div>
+              <div class="mock-row"><span><b>Antenatal review</b><em>Dr Bello &middot; BP 118/76 &middot; notes signed</em></span><span class="mock-pill">Encounter</span></div>
+              <div class="mock-row"><span><b>Full blood count</b><em>Lab &middot; resulted in 42 min</em></span><span class="mock-pill ok">Resulted</span></div>
+              <div class="mock-row"><span><b>Claim 88213</b><em>HMO &middot; filed automatically</em></span><span class="mock-pill ok">Paid</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="ba-side ba-before">
+          <span class="ba-tag">Paper records</span>
+          <div class="paper">
+            NWOSU, A. &mdash; folder 4 of ?<br>
+            seen&hellip; 12/06 (or 12/08?)<br>
+            BP &mdash; illegible<br>
+            FBC &mdash; sent, result not filed<br>
+            HMO claim &mdash; pending, form missing<br>
+            prev. visit folder &mdash; archive room
+            <span class="smudge"></span>
+          </div>
+        </div>
+        <div class="ba-handle"><span class="ba-grip">&#8596;</span></div>
+        <input class="ba-input" type="range" min="0" max="100" value="50" aria-label="Compare paper records with the Genesys record">
+      </div>
+      <div class="ba-cap"><span>Drag to compare</span><span>Illustrative interface</span></div>
     </div>
-    <div class="grid-4"><a class="route reveal" href="who-we-serve.html"><div><span class="rk">Path 01</span><h3>I run a hospital</h3><p>50 to 500 beds. You need to see where the money goes and know the business outlives you.</p></div><span class="go">See the hospital path &rarr;</span></a><a class="route reveal" href="who-we-serve.html"><div><span class="rk">Path 02</span><h3>I run a small practice</h3><p>A clinic, lab or pharmacy. You need something affordable you can run without an IT department.</p></div><span class="go">See the practice path &rarr;</span></a><a class="route reveal" href="who-we-serve.html"><div><span class="rk">Path 03</span><h3>I run a public health system</h3><p>A ministry or agency. You need scale across facilities and data you can govern.</p></div><span class="go">Book a consultation &rarr;</span></a><a class="route reveal" href="who-we-serve.html"><div><span class="rk">Path 04</span><h3>I am a payer</h3><p>An HMO or insurer. You need claims that arrive clean and on time.</p></div><span class="go">Book a consultation &rarr;</span></a></div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="eyebrow">Start where you sit</span>
+      <h2>Four ways in. One system underneath.</h2>
+      <p>The bleeds look different depending on where you stand. Pick your seat.</p></div>
+    <div class="grid-4"><a class="route reveal d1" href="who-we-serve.html"><div><span class="rk">Path 01</span><h3>I run a hospital</h3><p>50 to 500 beds. You need to see where the money goes and know the business outlives you.</p></div><span class="go">See the hospital path &rarr;</span></a><a class="route reveal d2" href="who-we-serve.html"><div><span class="rk">Path 02</span><h3>I run a small practice</h3><p>A clinic, lab or pharmacy. Affordable, and runs without an IT department.</p></div><span class="go">See the practice path &rarr;</span></a><a class="route reveal d3" href="who-we-serve.html"><div><span class="rk">Path 03</span><h3>I run a public health system</h3><p>A ministry or agency. Scale across facilities and data you can govern.</p></div><span class="go">Book a consultation &rarr;</span></a><a class="route reveal d4" href="who-we-serve.html"><div><span class="rk">Path 04</span><h3>I am a payer</h3><p>An HMO or insurer. Claims that arrive clean and on time.</p></div><span class="go">Book a consultation &rarr;</span></a></div>
   </div>
 </section>
 
 <section class="tight" id="chooser">
-  <div class="wrap">
-    <div class="chooser reveal">
-      <span class="eyebrow">Solution chooser</span>
-      <h3>How big is the practice you run?</h3>
-      <p class="q">Tell us the scale and we will point you to the Genesys system built for it.</p>
-      <div class="scale" role="group" aria-label="Choose your scale">
-        <button data-rec="emr" aria-pressed="false">1 to 20 beds</button>
-        <button data-rec="clinical" aria-pressed="false">20 to 100 beds</button>
-        <button data-rec="hmis" aria-pressed="false">100 to 500 beds</button>
-        <button data-rec="standalone" aria-pressed="false">Not a hospital</button>
-      </div>
-      <div class="rec empty" id="rec" aria-live="polite">Pick a scale to see your recommended system.</div>
+  <div class="wrap"><div class="chooser reveal">
+    <span class="eyebrow">Solution chooser</span>
+    <h3>How big is the practice you run?</h3>
+    <p class="q">Tell us the scale and we will point you to the Genesys system built for it.</p>
+    <div class="scale" role="group" aria-label="Choose your scale">
+      <button data-rec="emr" aria-pressed="false">1 to 20 beds</button>
+      <button data-rec="clinical" aria-pressed="false">20 to 100 beds</button>
+      <button data-rec="hmis" aria-pressed="false">100 to 500 beds</button>
+      <button data-rec="standalone" aria-pressed="false">Not a hospital</button>
     </div>
-  </div>
+    <div class="rec empty" id="rec" aria-live="polite">Pick a scale to see your recommended system.</div>
+  </div></div>
 </section>
 
-<section class="tight" style="background:var(--surface);border-block:1px solid var(--border)">
+<section class="band">
   <div class="wrap split wide-right">
     <div class="reveal">
       <span class="eyebrow">Why Genesys</span>
@@ -95,46 +230,44 @@
         <div class="pillar"><h3>Its own team, deep roots</h3><p>Genesys runs its own operation, drawing on software delivery at Vatebra and healthcare experience at Realms.</p></div>
       </div>
     </div>
-    <div class="figure reveal">
-      <img src="assets/img/analytics.jpg" alt="A clinician working with a live health data dashboard" width="1600" height="533">
+    <div class="figure reveal"><img src="assets/img/band_why.jpg" alt="A clinician working with a live health data dashboard"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="eyebrow">In their words</span><h2>What facilities tell us.</h2></div>
+    <div class="carou reveal"><div class="slide active"><p class="q">&ldquo;Our transition was eased by the assistance of the Genesys team. The software is quick and efficient, yet complete.&rdquo;</p><div class="attr"><b>[Name needed]</b>Role and facility to be confirmed</div></div><div class="slide"><p class="q">&ldquo;We can finally see which department earns and which one drains. That conversation used to be guesswork.&rdquo;</p><div class="attr"><b>[Name needed]</b>Hospital administrator, facility to be confirmed</div></div><div class="slide"><p class="q">&ldquo;Claims that used to sit for weeks now leave the same day the patient does.&rdquo;</p><div class="attr"><b>[Name needed]</b>Billing lead, facility to be confirmed</div></div>
+      <div class="carou-ctl"><button class="dot" aria-selected="true" aria-label="Quote 1"></button><button class="dot" aria-selected="false" aria-label="Quote 2"></button><button class="dot" aria-selected="false" aria-label="Quote 3"></button><button class="carou-pause">Pause</button></div>
     </div>
+    <p class="stat-note">Quotes are held with placeholder attribution until each facility confirms name and role for publication.</p>
   </div>
 </section>
 
 <section class="tight">
-  <div class="wrap">
-    <div class="cta reveal">
-      <h2>See Genesys running on your own facility's workflow.</h2>
-      <div style="display:flex;gap:11px;flex-wrap:wrap">
-        <a class="btn btn-white" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a>
-        <a class="btn btn-ghost" href="contact.html">Chat on WhatsApp</a>
-      </div>
-    </div>
-  </div>
+  <div class="wrap"><div class="cta reveal"><h2>See Genesys running on your own facility's workflow.</h2>
+    <div style="display:flex;gap:11px;flex-wrap:wrap">
+      <a class="btn btn-white" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a>
+      <a class="btn btn-ghost" href="contact.html">Chat on WhatsApp</a></div>
+  </div></div>
 </section>
 <footer>
   <div class="wrap">
     <div class="foot-grid">
-      <div>
-        <div class="brand" style="margin-bottom:12px"><img src="assets/genesys-logo.png" srcset="assets/genesys-logo.png 1x, assets/genesys-logo@2x.png 2x" alt="Genesys" height="30"></div>
-        <p class="addr">Genesys Health Information Systems Limited<br>21a Fatai Idowu Arobieke Street,<br>Off Admiralty Way, Lekki Phase 1, Lagos<br><br>+234 903 600 1000<br>info@genesys-health.com</p>
-      </div>
-      <div class="fcol"><h4>Solutions</h4>
-        <a href="solutions.html">Genesys HMIS</a><a href="solutions.html">Genesys EMR</a>
-        <a href="solutions.html">Clinical Packages</a><a href="solutions.html">Stand-alone Packages</a></div>
-      <div class="fcol"><h4>Company</h4>
-        <a href="about.html">About</a><a href="about.html">The team</a>
-        <a href="proof.html">Proof</a><a href="insights.html">Insights</a></div>
-      <div class="fcol"><h4>Stay in the loop</h4>
-        <p class="addr" style="margin-bottom:4px">News on Genesys and African health tech.</p>
+      <div><div class="brand" style="margin-bottom:12px"><img src="assets/genesys-logo.png" srcset="assets/genesys-logo.png 1x, assets/genesys-logo@2x.png 2x" alt="Genesys" height="30"></div>
+        <p class="addr">Genesys Health Information Systems Limited<br>21a Fatai Idowu Arobieke Street,<br>Off Admiralty Way, Lekki Phase 1, Lagos<br><br>+234 903 600 1000<br>info@genesys-health.com</p></div>
+      <div class="fcol"><h4>Solutions</h4><a href="solutions.html">Genesys HMIS</a><a href="solutions.html">Genesys EMR</a><a href="solutions.html">Clinical Packages</a><a href="solutions.html">Stand-alone Packages</a></div>
+      <div class="fcol"><h4>Company</h4><a href="about.html">About</a><a href="about.html">The team</a><a href="proof.html">Proof</a><a href="insights.html">Insights</a></div>
+      <div class="fcol"><h4>Stay in the loop</h4><p class="addr" style="margin-bottom:4px">News on Genesys and African health tech.</p>
         <div class="news"><input type="email" placeholder="Your email address" aria-label="Email address"><button type="button">&rarr;</button></div></div>
     </div>
-    <div class="foot-base">
-      <span>&copy; 2026 Genesys Health Information Systems Limited.</span>
-      <span>Privacy &middot; Terms &middot; Sitemap</span>
-    </div>
+    <div class="foot-base"><span>&copy; 2026 Genesys Health Information Systems Limited.</span><span>Privacy &middot; Terms &middot; Sitemap</span></div>
   </div>
 </footer>
+<div class="mobar">
+  <a class="btn btn-primary" href="contact.html">Request a demo</a>
+  <a class="btn btn-ghost" href="contact.html">WhatsApp</a>
+</div>
 <script src="assets/site.js"></script>
 </body>
 </html>

@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Solutions — Genesys Health</title>
-<meta name="description" content="Genesys HMIS, EMR, Clinical Specialized Packages and Stand-alone Packages, sized to the practice you run.">
+<meta name="description" content="Genesys HMIS, EMR, Clinical Specialized Packages and Stand-alone Packages.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -16,105 +16,139 @@
     <a class="brand" href="index.html" aria-label="Genesys Health home"><img src="assets/genesys-logo.png" srcset="assets/genesys-logo.png 1x, assets/genesys-logo@2x.png 2x" alt="Genesys" height="30"></a>
     <div class="nav-actions">
       <span class="lang" title="French coming soon"><b>EN</b> / FR</span>
+      <button class="iconbtn" id="themeBtn" aria-label="Switch colour theme"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg></button>
       <a class="btn btn-primary" href="contact.html">Request a demo</a>
     </div>
   </div>
-  <div class="wrap"><nav class="tabs" aria-label="Main"><a class="tab" href="index.html">Home</a><a class="tab" href="solutions.html" aria-current="page">Solutions</a><a class="tab" href="who-we-serve.html">Who we serve</a><a class="tab" href="proof.html">Proof</a><a class="tab" href="about.html">About</a><a class="tab" href="insights.html">Insights</a><a class="tab" href="contact.html">Contact</a></nav></div>
+  <div class="tabrow"><div class="wrap"><nav class="tabs" aria-label="Main"><a class="tab" href="index.html">Home</a><a class="tab has-mega" href="solutions.html" aria-current="page">Solutions</a><a class="tab" href="who-we-serve.html">Who we serve</a><a class="tab" href="proof.html">Proof</a><a class="tab" href="about.html">About</a><a class="tab" href="insights.html">Insights</a><a class="tab" href="contact.html">Contact</a></nav></div>
+    <div class="mega" id="mega">
+      <div class="mega-grid">
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Large practices</span><h4>Genesys HMIS</h4><p>ERP-class automation across every department on one spine.</p></a>
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Small to mid</span><h4>Genesys EMR</h4><p>A clean clinical record at the centre of the consultation.</p></a>
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Small to mid</span><h4>Clinical Packages</h4><p>Targeted modules for practices already running some IT.</p></a>
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Non-hospital</span><h4>Stand-alone</h4><p>For laboratories, pharmacies and imaging centres.</p></a>
+      </div>
+      <div class="mega-foot"><span>Not sure which fits? The chooser takes 10 seconds.</span>
+        <a class="btn btn-primary" href="index.html#chooser">Find my system <span class="arrow">&rarr;</span></a></div>
+    </div></div>
 </header>
 <section class="phead">
-  <div class="wrap">
-    <span class="eyebrow">Solutions</span>
+  <div class="wrap"><span class="eyebrow">Solutions</span>
     <h1>Sized to the practice, <em>from paper to full digital operations.</em></h1>
-    <p>One taxonomy, four fits. Each closes the same operational bleeds at the scale you actually run.</p>
-  </div>
+    <p>One taxonomy, four fits. Each closes the same operational bleeds at the scale you actually run.</p></div>
 </section>
 
 <section class="tight">
-  <div class="wrap"><div class="grid-2">
-      <article class="card reveal">
-        <div class="ph"><img src="assets/img/hmis.jpg" alt="A clinician and administrator reviewing a hospital-wide dashboard linked to pharmacy, laboratory and inpatient wards" width="1600" height="533"></div>
-        <div class="body"><span class="fit">Large practices</span><h3>Genesys HMIS</h3>
-          <p class="desc">An ERP-class system automating processes across every functional area and department. Records, finance, pharmacy, laboratory, claims and wards run on one spine, so the whole facility reports from a single source.</p>
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="eyebrow">Product tour</span><h2>Look inside the system.</h2>
+      <p>Four areas of the platform. Switch between them.</p></div>
+    <div class="tour reveal"><div class="tour-nav" role="tablist"><button aria-selected="true">Records</button><button aria-selected="false">Billing</button><button aria-selected="false">Claims</button><button aria-selected="false">Pharmacy</button></div>
+      <div class="tour-panel active">
+        <div class="tour-grid">
+          <div class="tour-copy"><span class="eyebrow">Records</span><h3>Genesys HMIS</h3>
+            <div class="tour-list"><div><span class="tick">&#10003;</span><span>Single record across wards, laboratory and pharmacy</span></div><div><span class="tick">&#10003;</span><span>Offline capture that syncs when the line returns</span></div><div><span class="tick">&#10003;</span><span>Role-based access with a full audit trail</span></div></div>
+          </div>
+          <div class="mock"><div class="mock-bar"><i></i><i></i><i></i><span>genesys / console</span></div><div class="mock-body"><div class="mock-row"><span><b>Adaeze Nwosu &middot; 34F</b><em>MRN A-40218 &middot; antenatal</em></span><span class="mock-pill ok">Active</span></div><div class="mock-row"><span><b>Chinedu Okafor &middot; 51M</b><em>MRN A-40219 &middot; cardiology</em></span><span class="mock-pill ">Admitted</span></div><div class="mock-row"><span><b>Fatima Bello &middot; 8F</b><em>MRN A-40220 &middot; paediatrics</em></span><span class="mock-pill ok">Discharged</span></div></div></div>
+        </div>
+      </div>
+      <div class="tour-panel">
+        <div class="tour-grid">
+          <div class="tour-copy"><span class="eyebrow">Billing</span><h3>Revenue capture</h3>
+            <div class="tour-list"><div><span class="tick">&#10003;</span><span>Services post to billing at the point of care</span></div><div><span class="tick">&#10003;</span><span>Departmental P&amp;L, not one lump figure</span></div><div><span class="tick">&#10003;</span><span>Reconciliation that shows where a naira went</span></div></div>
+          </div>
+          <div class="mock"><div class="mock-bar"><i></i><i></i><i></i><span>genesys / console</span></div><div class="mock-body"><div class="mock-row"><span><b>Consultation &middot; Dr Bello</b><em>Posted 09:14</em></span><span class="mock-pill ok">&#8358;15,000</span></div><div class="mock-row"><span><b>Full blood count</b><em>Posted 09:51</em></span><span class="mock-pill ok">&#8358;8,500</span></div><div class="mock-row"><span><b>Ward &middot; 2 nights</b><em>Posted 11:02</em></span><span class="mock-pill ">&#8358;60,000</span></div><div class="mock-chart"><i style="--h:38%"></i><i style="--h:55%"></i><i style="--h:47%"></i><i style="--h:72%"></i><i style="--h:64%"></i><i style="--h:88%"></i></div></div></div>
+        </div>
+      </div>
+      <div class="tour-panel">
+        <div class="tour-grid">
+          <div class="tour-copy"><span class="eyebrow">Claims</span><h3>HMO &amp; NHIA</h3>
+            <div class="tour-list"><div><span class="tick">&#10003;</span><span>e-Claim built from the encounter itself</span></div><div><span class="tick">&#10003;</span><span>Validation before submission, not after denial</span></div><div><span class="tick">&#10003;</span><span>Ageing view on every outstanding claim</span></div></div>
+          </div>
+          <div class="mock"><div class="mock-bar"><i></i><i></i><i></i><span>genesys / console</span></div><div class="mock-body"><div class="mock-row"><span><b>Claim 88213 &middot; HMO</b><em>Filed automatically</em></span><span class="mock-pill ok">Paid</span></div><div class="mock-row"><span><b>Claim 88214 &middot; NHIA</b><em>Awaiting response &middot; 3 days</em></span><span class="mock-pill ">Pending</span></div><div class="mock-row"><span><b>Claim 88215 &middot; HMO</b><em>Validation passed</em></span><span class="mock-pill ok">Filed</span></div></div></div>
+        </div>
+      </div>
+      <div class="tour-panel">
+        <div class="tour-grid">
+          <div class="tour-copy"><span class="eyebrow">Pharmacy</span><h3>Stock &amp; dispensing</h3>
+            <div class="tour-list"><div><span class="tick">&#10003;</span><span>Dispensing writes back to the patient record</span></div><div><span class="tick">&#10003;</span><span>Expiry and reorder alerts on real volumes</span></div><div><span class="tick">&#10003;</span><span>Batch tracking from delivery to patient</span></div></div>
+          </div>
+          <div class="mock"><div class="mock-bar"><i></i><i></i><i></i><span>genesys / console</span></div><div class="mock-body"><div class="mock-row"><span><b>Amoxicillin 500mg</b><em>Batch AX-2291 &middot; exp 03/27</em></span><span class="mock-pill ok">In stock</span></div><div class="mock-row"><span><b>Artemether inj.</b><em>Batch RT-1180 &middot; exp 11/26</em></span><span class="mock-pill ">Reorder</span></div><div class="mock-row"><span><b>Paracetamol IV</b><em>Batch PC-3320 &middot; exp 08/27</em></span><span class="mock-pill ok">In stock</span></div><div class="mock-chart"><i style="--h:62%"></i><i style="--h:48%"></i><i style="--h:70%"></i><i style="--h:55%"></i><i style="--h:80%"></i><i style="--h:66%"></i></div></div></div>
+        </div>
+      </div></div>
+    <p class="stat-note">Interfaces shown are illustrative mockups of Genesys workflows, not screenshots of live client data.</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap"><div class="sec-head reveal"><h2>The four systems.</h2></div>
+    <div class="grid-2">
+      <article class="card reveal d1"><div class="ph"><img src="assets/img/sol_hmis.jpg" alt="Clinician and administrator reviewing a hospital-wide dashboard"></div>
+        <div class="body"><span class="fit">Large practices</span><h3>Genesys HMIS</h3><p class="desc">An ERP-class system automating processes across every functional area and department. Records, finance, pharmacy, laboratory, claims and wards run on one spine.</p>
           <div class="meta"><span>Whole-facility automation</span><span class="needs">[deployment time: fact needed]</span></div>
-          <a class="go" href="contact.html">Request a demo &rarr;</a></div>
+          <a class="go" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a></div>
       </article>
-      <article class="card reveal">
-        <div class="ph"><img src="assets/img/emr.jpg" alt="A doctor sharing a tablet record with a mother and child during a consultation" width="1600" height="533"></div>
-        <div class="body"><span class="fit">Small to mid-scale</span><h3>Genesys EMR</h3>
-          <p class="desc">Mid-level process automation across clinical functional areas. Best suited to practices already running disparate IT that need a clean clinical record at the centre of the consultation.</p>
+      <article class="card reveal d2"><div class="ph"><img src="assets/img/sol_emr.jpg" alt="Doctor sharing a tablet record with a patient"></div>
+        <div class="body"><span class="fit">Small to mid-scale</span><h3>Genesys EMR</h3><p class="desc">Mid-level process automation across clinical functional areas. Best suited to practices already running disparate IT that need a clean clinical record at the centre.</p>
           <div class="meta"><span>Clinical workflow</span><span class="needs">[proof point: fact needed]</span></div>
-          <a class="go" href="contact.html">Request a demo &rarr;</a></div>
+          <a class="go" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a></div>
       </article>
-      <article class="card reveal">
-        <div class="ph"><img src="assets/img/clinical.jpg" alt="A multidisciplinary clinical team reviewing diagnostic imaging together" width="1600" height="533"></div>
-        <div class="body"><span class="fit">Small to mid-scale</span><h3>Clinical Specialized Packages</h3>
-          <p class="desc">Targeted automation for practices that already run IT in some areas and need specific clinical functions brought up to the same standard, without replacing everything at once.</p>
+      <article class="card reveal d3"><div class="ph"><img src="assets/img/sol_clinical.jpg" alt="Multidisciplinary clinical team reviewing diagnostic imaging"></div>
+        <div class="body"><span class="fit">Small to mid-scale</span><h3>Clinical Specialized Packages</h3><p class="desc">Targeted automation for practices that already run IT in some areas and need specific clinical functions brought up to the same standard.</p>
           <div class="meta"><span>Targeted modules</span><span class="needs">[module list: fact needed]</span></div>
-          <a class="go" href="contact.html">Request a demo &rarr;</a></div>
+          <a class="go" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a></div>
       </article>
-      <article class="card reveal">
-        <div class="ph"><img src="assets/img/lab.jpg" alt="Two laboratory scientists reviewing results on a diagnostic dashboard" width="1600" height="533"></div>
-        <div class="body"><span class="fit">Non-hospital</span><h3>Stand-alone Packages</h3>
-          <p class="desc">For independent players in the healthcare ecosystem, such as diagnostic laboratories, pharmacies and imaging centres, that do not fit routine hospital or clinic classification.</p>
+      <article class="card reveal d4"><div class="ph"><img src="assets/img/sol_lab.jpg" alt="Laboratory scientists reviewing results on a diagnostic dashboard"></div>
+        <div class="body"><span class="fit">Non-hospital</span><h3>Stand-alone Packages</h3><p class="desc">For independent players in the healthcare ecosystem, such as diagnostic laboratories, pharmacies and imaging centres.</p>
           <div class="meta"><span>Labs &middot; pharmacies &middot; imaging</span><span class="needs">[proof point: fact needed]</span></div>
-          <a class="go" href="contact.html">Request a demo &rarr;</a></div>
+          <a class="go" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a></div>
       </article></div></div>
 </section>
 
-<section class="tight" style="background:var(--surface);border-block:1px solid var(--border)">
+<section class="tight">
   <div class="wrap split">
-    <div class="reveal">
-      <span class="eyebrow">Also covered</span>
+    <div class="reveal"><span class="eyebrow">Also covered</span>
       <h2 style="font-size:clamp(24px,3.2vw,34px);margin:10px 0 12px">Pharmacy, dispensing and stock</h2>
-      <p>Stock movement, expiry and dispensing tracked against the same patient record, so procurement stops guessing and stockouts stop standing beside expiries.</p>
-    </div>
-    <div class="figure reveal"><img src="assets/img/pharmacy.jpg" alt="A pharmacist scanning medication stock into the system" width="1600" height="533"></div>
+      <p>Stock movement, expiry and dispensing tracked against the same patient record, so procurement stops guessing.</p></div>
+    <div class="figure reveal"><img src="assets/img/sol_pharmacy.jpg" alt="A pharmacist scanning medication stock into the system" style="aspect-ratio:2/1"></div>
   </div>
-  <div class="wrap split figure-xl">
-    <div class="figure reveal" style="order:-1"><img src="assets/img/telemed.jpg" alt="A mother and child on a video consultation with a doctor" width="1600" height="533"></div>
-    <div class="reveal">
-      <span class="eyebrow">Also covered</span>
+  <div class="wrap split" style="margin-top:clamp(20px,3vw,36px)">
+    <div class="figure reveal" style="order:-1"><img src="assets/img/sol_telemed.jpg" alt="A patient on a video consultation with a doctor" style="aspect-ratio:2/1"></div>
+    <div class="reveal"><span class="eyebrow">Also covered</span>
       <h2 style="font-size:clamp(24px,3.2vw,34px);margin:10px 0 12px">Telemedicine and remote consultation</h2>
       <p>Remote consultations that write back to the same record, so a visit from a phone is not a visit lost to paper.</p>
-      <p class="needs" style="margin-top:8px">[module detail: fact needed]</p>
-    </div>
+      <p class="needs" style="margin-top:8px">[module detail: fact needed]</p></div>
   </div>
 </section>
 
+<section class="band tight">
+  <div class="wrap"><div class="sec-head reveal"><span class="eyebrow">Questions</span><h2>What buyers ask first.</h2></div>
+    <div class="acc reveal"><div class="acc-item"><button class="acc-btn">How long does deployment take?<span class="lplus" aria-hidden="true"></span></button><div class="acc-body"><p>Timelines depend on the size of the facility and the state of existing records. We scope it before quoting rather than promising a number we cannot hold. [Exact ranges: fact needed]</p></div></div><div class="acc-item"><button class="acc-btn">Does it work when the power or network drops?<span class="lplus" aria-hidden="true"></span></button><div class="acc-body"><p>Yes. Genesys is offline-first: the facility keeps recording locally and synchronises once connectivity returns.</p></div></div><div class="acc-item"><button class="acc-btn">Can we move our existing records across?<span class="lplus" aria-hidden="true"></span></button><div class="acc-body"><p>Migration from paper and legacy systems is part of implementation, not an extra project you handle alone.</p></div></div><div class="acc-item"><button class="acc-btn">Who owns the data?<span class="lplus" aria-hidden="true"></span></button><div class="acc-body"><p>You do. Full ownership, with export available on request at any time.</p></div></div></div></div>
+</section>
+
 <section class="tight">
-  <div class="wrap">
-    <div class="cta reveal">
-      <h2>Not sure which system fits? We will tell you straight.</h2>
-      <div style="display:flex;gap:11px;flex-wrap:wrap">
-        <a class="btn btn-white" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a>
-        <a class="btn btn-ghost" href="contact.html">Chat on WhatsApp</a>
-      </div>
-    </div>
-  </div>
+  <div class="wrap"><div class="cta reveal"><h2>Not sure which system fits? We will tell you straight.</h2>
+    <div style="display:flex;gap:11px;flex-wrap:wrap">
+      <a class="btn btn-white" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a>
+      <a class="btn btn-ghost" href="contact.html">Chat on WhatsApp</a></div>
+  </div></div>
 </section>
 <footer>
   <div class="wrap">
     <div class="foot-grid">
-      <div>
-        <div class="brand" style="margin-bottom:12px"><img src="assets/genesys-logo.png" srcset="assets/genesys-logo.png 1x, assets/genesys-logo@2x.png 2x" alt="Genesys" height="30"></div>
-        <p class="addr">Genesys Health Information Systems Limited<br>21a Fatai Idowu Arobieke Street,<br>Off Admiralty Way, Lekki Phase 1, Lagos<br><br>+234 903 600 1000<br>info@genesys-health.com</p>
-      </div>
-      <div class="fcol"><h4>Solutions</h4>
-        <a href="solutions.html">Genesys HMIS</a><a href="solutions.html">Genesys EMR</a>
-        <a href="solutions.html">Clinical Packages</a><a href="solutions.html">Stand-alone Packages</a></div>
-      <div class="fcol"><h4>Company</h4>
-        <a href="about.html">About</a><a href="about.html">The team</a>
-        <a href="proof.html">Proof</a><a href="insights.html">Insights</a></div>
-      <div class="fcol"><h4>Stay in the loop</h4>
-        <p class="addr" style="margin-bottom:4px">News on Genesys and African health tech.</p>
+      <div><div class="brand" style="margin-bottom:12px"><img src="assets/genesys-logo.png" srcset="assets/genesys-logo.png 1x, assets/genesys-logo@2x.png 2x" alt="Genesys" height="30"></div>
+        <p class="addr">Genesys Health Information Systems Limited<br>21a Fatai Idowu Arobieke Street,<br>Off Admiralty Way, Lekki Phase 1, Lagos<br><br>+234 903 600 1000<br>info@genesys-health.com</p></div>
+      <div class="fcol"><h4>Solutions</h4><a href="solutions.html">Genesys HMIS</a><a href="solutions.html">Genesys EMR</a><a href="solutions.html">Clinical Packages</a><a href="solutions.html">Stand-alone Packages</a></div>
+      <div class="fcol"><h4>Company</h4><a href="about.html">About</a><a href="about.html">The team</a><a href="proof.html">Proof</a><a href="insights.html">Insights</a></div>
+      <div class="fcol"><h4>Stay in the loop</h4><p class="addr" style="margin-bottom:4px">News on Genesys and African health tech.</p>
         <div class="news"><input type="email" placeholder="Your email address" aria-label="Email address"><button type="button">&rarr;</button></div></div>
     </div>
-    <div class="foot-base">
-      <span>&copy; 2026 Genesys Health Information Systems Limited.</span>
-      <span>Privacy &middot; Terms &middot; Sitemap</span>
-    </div>
+    <div class="foot-base"><span>&copy; 2026 Genesys Health Information Systems Limited.</span><span>Privacy &middot; Terms &middot; Sitemap</span></div>
   </div>
 </footer>
+<div class="mobar">
+  <a class="btn btn-primary" href="contact.html">Request a demo</a>
+  <a class="btn btn-ghost" href="contact.html">WhatsApp</a>
+</div>
 <script src="assets/site.js"></script>
 </body>
 </html>

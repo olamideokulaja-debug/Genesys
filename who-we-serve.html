@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,84 +16,86 @@
     <a class="brand" href="index.html" aria-label="Genesys Health home"><img src="assets/genesys-logo.png" srcset="assets/genesys-logo.png 1x, assets/genesys-logo@2x.png 2x" alt="Genesys" height="30"></a>
     <div class="nav-actions">
       <span class="lang" title="French coming soon"><b>EN</b> / FR</span>
+      <button class="iconbtn" id="themeBtn" aria-label="Switch colour theme"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg></button>
       <a class="btn btn-primary" href="contact.html">Request a demo</a>
     </div>
   </div>
-  <div class="wrap"><nav class="tabs" aria-label="Main"><a class="tab" href="index.html">Home</a><a class="tab" href="solutions.html">Solutions</a><a class="tab" href="who-we-serve.html" aria-current="page">Who we serve</a><a class="tab" href="proof.html">Proof</a><a class="tab" href="about.html">About</a><a class="tab" href="insights.html">Insights</a><a class="tab" href="contact.html">Contact</a></nav></div>
+  <div class="tabrow"><div class="wrap"><nav class="tabs" aria-label="Main"><a class="tab" href="index.html">Home</a><a class="tab has-mega" href="solutions.html">Solutions</a><a class="tab" href="who-we-serve.html" aria-current="page">Who we serve</a><a class="tab" href="proof.html">Proof</a><a class="tab" href="about.html">About</a><a class="tab" href="insights.html">Insights</a><a class="tab" href="contact.html">Contact</a></nav></div>
+    <div class="mega" id="mega">
+      <div class="mega-grid">
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Large practices</span><h4>Genesys HMIS</h4><p>ERP-class automation across every department on one spine.</p></a>
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Small to mid</span><h4>Genesys EMR</h4><p>A clean clinical record at the centre of the consultation.</p></a>
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Small to mid</span><h4>Clinical Packages</h4><p>Targeted modules for practices already running some IT.</p></a>
+        <a class="mega-item" href="solutions.html"><span class="mi-k">Non-hospital</span><h4>Stand-alone</h4><p>For laboratories, pharmacies and imaging centres.</p></a>
+      </div>
+      <div class="mega-foot"><span>Not sure which fits? The chooser takes 10 seconds.</span>
+        <a class="btn btn-primary" href="index.html#chooser">Find my system <span class="arrow">&rarr;</span></a></div>
+    </div></div>
 </header>
 <section class="phead">
-  <div class="wrap">
-    <span class="eyebrow">Who we serve</span>
+  <div class="wrap"><span class="eyebrow">Who we serve</span>
     <h1>Four seats at the table, <em>one system underneath.</em></h1>
-    <p>The same operational bleeds look different depending on where you sit. Find the version of the problem that sounds like yours.</p>
-  </div>
+    <p>The same operational bleeds look different depending on where you sit. Find the version of the problem that sounds like yours.</p></div>
 </section>
-<section class="tight">
-  <div class="wrap"><div class="grid-2">
-      <article class="card reveal">
-        <div class="ph"><img src="assets/img/hmis.jpg" alt="Hospitals" width="1600" height="533"></div>
-        <div class="body"><span class="fit">50 to 500 beds</span><h3>Hospitals</h3>
-          <p class="desc">You need to see where the money goes, keep clinicians out of clerical work, and know the business survives its founder. Genesys HMIS puts every department on one spine.</p>
+<section class="tight"><div class="wrap"><div class="grid-2">
+      <article class="card reveal d1"><div class="ph"><img src="assets/img/srv_hospitals.jpg" alt="Hospitals"></div>
+        <div class="body"><span class="fit">50 to 500 beds</span><h3>Hospitals</h3><p class="desc">You need to see where the money goes, keep clinicians out of clerical work, and know the business survives its founder.</p>
           <div class="meta"><span>Recommended: Genesys HMIS</span></div>
-          <a class="go" href="contact.html">Talk to us &rarr;</a></div>
+          <a class="go" href="contact.html">Talk to us <span class="arrow">&rarr;</span></a></div>
       </article>
-      <article class="card reveal">
-        <div class="ph"><img src="assets/img/emr.jpg" alt="Clinics and practices" width="1600" height="533"></div>
-        <div class="body"><span class="fit">1 to 100 beds</span><h3>Clinics and practices</h3>
-          <p class="desc">You need something affordable that runs without an IT department, and a clean clinical record at the centre of every consultation.</p>
+      <article class="card reveal d2"><div class="ph"><img src="assets/img/srv_clinics.jpg" alt="Clinics and practices"></div>
+        <div class="body"><span class="fit">1 to 100 beds</span><h3>Clinics and practices</h3><p class="desc">You need something affordable that runs without an IT department, and a clean clinical record at the centre of every consultation.</p>
           <div class="meta"><span>Recommended: Genesys EMR or Clinical Packages</span></div>
-          <a class="go" href="contact.html">Talk to us &rarr;</a></div>
+          <a class="go" href="contact.html">Talk to us <span class="arrow">&rarr;</span></a></div>
       </article>
-      <article class="card reveal">
-        <div class="ph"><img src="assets/img/board.jpg" alt="Public health systems" width="1600" height="533"></div>
-        <div class="body"><span class="fit">Ministries and agencies</span><h3>Public health systems</h3>
-          <p class="desc">You need to scale across many facilities, govern the data, and report reliably. Interoperability and data residency are covered on our terms and yours.</p>
+      <article class="card reveal d3"><div class="ph"><img src="assets/img/srv_public.jpg" alt="Public health systems"></div>
+        <div class="body"><span class="fit">Ministries and agencies</span><h3>Public health systems</h3><p class="desc">You need to scale across many facilities, govern the data, and report reliably.</p>
           <div class="meta"><span>Recommended: Genesys HMIS, multi-facility</span></div>
-          <a class="go" href="contact.html">Talk to us &rarr;</a></div>
+          <a class="go" href="contact.html">Talk to us <span class="arrow">&rarr;</span></a></div>
       </article>
-      <article class="card reveal">
-        <div class="ph"><img src="assets/img/lab.jpg" alt="Payers and HMOs" width="1600" height="533"></div>
-        <div class="body"><span class="fit">Insurers and schemes</span><h3>Payers and HMOs</h3>
-          <p class="desc">You need claims that arrive clean and on time, with an audit trail that holds up. Claims workflow is built into the record, not bolted on.</p>
+      <article class="card reveal d4"><div class="ph"><img src="assets/img/srv_payers.jpg" alt="Payers and HMOs"></div>
+        <div class="body"><span class="fit">Insurers and schemes</span><h3>Payers and HMOs</h3><p class="desc">You need claims that arrive clean and on time, with an audit trail that holds up.</p>
           <div class="meta"><span>Recommended: Claims and e-Claim workflow</span></div>
-          <a class="go" href="contact.html">Talk to us &rarr;</a></div>
-      </article></div></div>
+          <a class="go" href="contact.html">Talk to us <span class="arrow">&rarr;</span></a></div>
+      </article></div></div></section>
+<div class="marquee"><div class="mq-track"><span class="mq-item">NDPR aligned</span><span class="mq-item">HL7 / FHIR ready</span><span class="mq-item">ICD-10 coded</span><span class="mq-item">Offline-first architecture</span><span class="mq-item">NHIA &amp; HMO claims</span><span class="mq-item">Multi-site reporting</span><span class="mq-item">Role-based access</span><span class="mq-item">Data export on request</span><span class="mq-item">NDPR aligned</span><span class="mq-item">HL7 / FHIR ready</span><span class="mq-item">ICD-10 coded</span><span class="mq-item">Offline-first architecture</span><span class="mq-item">NHIA &amp; HMO claims</span><span class="mq-item">Multi-site reporting</span><span class="mq-item">Role-based access</span><span class="mq-item">Data export on request</span></div></div>
+<section class="tight">
+  <div class="wrap"><div class="sec-head reveal"><h2>Whichever seat you take, the same spine.</h2>
+    <p>The four systems differ in scope, not in standard. Every one is offline-first, auditable and yours to export.</p></div>
+    <div class="grid-4">
+      <div class="stat reveal"><div class="num"><span data-to="1">0</span></div><div class="lab">patient record across every department</div></div>
+      <div class="stat reveal d1"><div class="num"><span data-to="24">0</span><sup>/7</sup></div><div class="lab">operation, including through outages</div></div>
+      <div class="stat reveal d2"><div class="num"><span data-to="100">0</span><sup>%</sup></div><div class="lab">data ownership retained by you</div></div>
+      <div class="stat reveal d3"><div class="num"><span data-to="4">0</span></div><div class="lab">systems to match your scale</div></div>
+    </div>
+    <p class="stat-note">Illustrative summary of product commitments, not audited performance figures.</p>
+  </div>
 </section>
 
 <section class="tight">
-  <div class="wrap">
-    <div class="cta reveal">
-      <h2>Tell us where you sit. We will show you the fit.</h2>
-      <div style="display:flex;gap:11px;flex-wrap:wrap">
-        <a class="btn btn-white" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a>
-        <a class="btn btn-ghost" href="contact.html">Chat on WhatsApp</a>
-      </div>
-    </div>
-  </div>
+  <div class="wrap"><div class="cta reveal"><h2>Tell us where you sit. We will show you the fit.</h2>
+    <div style="display:flex;gap:11px;flex-wrap:wrap">
+      <a class="btn btn-white" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a>
+      <a class="btn btn-ghost" href="contact.html">Chat on WhatsApp</a></div>
+  </div></div>
 </section>
 <footer>
   <div class="wrap">
     <div class="foot-grid">
-      <div>
-        <div class="brand" style="margin-bottom:12px"><img src="assets/genesys-logo.png" srcset="assets/genesys-logo.png 1x, assets/genesys-logo@2x.png 2x" alt="Genesys" height="30"></div>
-        <p class="addr">Genesys Health Information Systems Limited<br>21a Fatai Idowu Arobieke Street,<br>Off Admiralty Way, Lekki Phase 1, Lagos<br><br>+234 903 600 1000<br>info@genesys-health.com</p>
-      </div>
-      <div class="fcol"><h4>Solutions</h4>
-        <a href="solutions.html">Genesys HMIS</a><a href="solutions.html">Genesys EMR</a>
-        <a href="solutions.html">Clinical Packages</a><a href="solutions.html">Stand-alone Packages</a></div>
-      <div class="fcol"><h4>Company</h4>
-        <a href="about.html">About</a><a href="about.html">The team</a>
-        <a href="proof.html">Proof</a><a href="insights.html">Insights</a></div>
-      <div class="fcol"><h4>Stay in the loop</h4>
-        <p class="addr" style="margin-bottom:4px">News on Genesys and African health tech.</p>
+      <div><div class="brand" style="margin-bottom:12px"><img src="assets/genesys-logo.png" srcset="assets/genesys-logo.png 1x, assets/genesys-logo@2x.png 2x" alt="Genesys" height="30"></div>
+        <p class="addr">Genesys Health Information Systems Limited<br>21a Fatai Idowu Arobieke Street,<br>Off Admiralty Way, Lekki Phase 1, Lagos<br><br>+234 903 600 1000<br>info@genesys-health.com</p></div>
+      <div class="fcol"><h4>Solutions</h4><a href="solutions.html">Genesys HMIS</a><a href="solutions.html">Genesys EMR</a><a href="solutions.html">Clinical Packages</a><a href="solutions.html">Stand-alone Packages</a></div>
+      <div class="fcol"><h4>Company</h4><a href="about.html">About</a><a href="about.html">The team</a><a href="proof.html">Proof</a><a href="insights.html">Insights</a></div>
+      <div class="fcol"><h4>Stay in the loop</h4><p class="addr" style="margin-bottom:4px">News on Genesys and African health tech.</p>
         <div class="news"><input type="email" placeholder="Your email address" aria-label="Email address"><button type="button">&rarr;</button></div></div>
     </div>
-    <div class="foot-base">
-      <span>&copy; 2026 Genesys Health Information Systems Limited.</span>
-      <span>Privacy &middot; Terms &middot; Sitemap</span>
-    </div>
+    <div class="foot-base"><span>&copy; 2026 Genesys Health Information Systems Limited.</span><span>Privacy &middot; Terms &middot; Sitemap</span></div>
   </div>
 </footer>
+<div class="mobar">
+  <a class="btn btn-primary" href="contact.html">Request a demo</a>
+  <a class="btn btn-ghost" href="contact.html">WhatsApp</a>
+</div>
 <script src="assets/site.js"></script>
 </body>
 </html>
