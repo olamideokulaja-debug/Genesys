@@ -374,3 +374,118 @@
   });
   applyLang(lang);
 })();
+
+/* =================== PRODUCT WALKTHROUGH PLAYER =================== */
+(function(){
+  var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var pl = document.querySelector('.player');
+  if(!pl) return;
+  var $  = function(s,c){return (c||pl).querySelector(s);};
+  var $$ = function(s,c){return Array.prototype.slice.call((c||pl).querySelectorAll(s));};
+
+  var slides = $$('.pl-slide');
+  var segs   = $$('.pl-seg');
+  var chaps  = $$('.pl-chapters button');
+  var kick=$('.pl-kicker'), title=$('.pl-title'), desc=$('.pl-desc'), count=$('.pl-count');
+  var btnPlay=$('.pl-btn.play'), btnPrev=$('.pl-btn.prev'), btnNext=$('.pl-btn.next');
+  var DUR = 6500, i = 0, raf = null, t0 = null, playing = !RM, hovered = false;
+
+  function setChapter(idx){
+    var ch = slides[idx].getAttribute('data-chapter');
+    chaps.forEach(function(c){ c.setAttribute('aria-selected', c.getAttribute('data-chapter')===ch ? 'true':'false'); });
+  }
+  function render(idx){
+    slides.forEach(function(s,k){ s.classList.toggle('on', k===idx); });
+    segs.forEach(function(s,k){
+      s.classList.toggle('done', k<idx);
+      s.classList.toggle('now', k===idx);
+      if(k>idx){ s.classList.remove('done','now'); s.style.setProperty('--p','0%'); }
+      if(k===idx) s.style.setProperty('--p','0%');
+    });
+    var s = slides[idx];
+    kick.textContent  = s.getAttribute('data-kicker');
+    title.textContent = s.getAttribute('data-title');
+    desc.textContent  = s.getAttribute('data-desc');
+    count.textContent = 'Screen ' + (idx+1) + ' of ' + slides.length;
+    setChapter(idx);
+  }
+  function tick(ts){
+    if(!t0) t0 = ts;
+    var p = Math.min((ts - t0)/DUR, 1);
+    if(segs[i]) segs[i].style.setProperty('--p', (p*100)+'%');
+    if(p >= 1){ go(i+1); return; }
+    raf = requestAnimationFrame(tick);
+  }
+  function stop(){ if(raf) cancelAnimationFrame(raf); raf=null; t0=null; }
+  function start(){
+    stop();
+    if(!playing || RM) return;
+    raf = requestAnimationFrame(tick);
+  }
+  function go(n, manual){
+    i = (n + slides.length) % slides.length;
+    render(i);
+    if(manual){ /* keep current play state */ }
+    start();
+  }
+  function setPlaying(v){
+    playing = v;
+    btnPlay.innerHTML = v ? '&#10073;&#10073;' : '&#9658;';
+    btnPlay.setAttribute('aria-label', v ? 'Pause walkthrough' : 'Play walkthrough');
+    if(v) start(); else stop();
+  }
+
+  btnPrev.addEventListener('click', function(){ go(i-1, true); });
+  btnNext.addEventListener('click', function(){ go(i+1, true); });
+  btnPlay.addEventListener('click', function(){ setPlaying(!playing); });
+  segs.forEach(function(s,k){ s.addEventListener('click', function(){ go(k, true); }); });
+  chaps.forEach(function(c){
+    c.addEventListener('click', function(){
+      var ch=c.getAttribute('data-chapter');
+      for(var k=0;k<slides.length;k++){
+        if(slides[k].getAttribute('data-chapter')===ch){ go(k, true); break; }
+      }
+    });
+  });
+  $('.pl-zoom').addEventListener('click', function(){
+    var img = slides[i].querySelector('img'); if(img) img.click();
+  });
+
+  // pause while hovering the stage, resume after
+  var stage=$('.pl-stage');
+  stage.addEventListener('mouseenter', function(){ hovered=true; stop(); });
+  stage.addEventListener('mouseleave', function(){ hovered=false; if(playing) start(); });
+
+  // pause when the tab is hidden or the player is off-screen
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden) stop(); else if(playing && !hovered) start();
+  });
+  var vio = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){ if(playing && !hovered) start(); }
+      else stop();
+    });
+  },{threshold:.25});
+  vio.observe(pl);
+
+  // keyboard
+  pl.setAttribute('tabindex','0');
+  pl.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight'){ e.preventDefault(); go(i+1,true); }
+    if(e.key==='ArrowLeft'){ e.preventDefault(); go(i-1,true); }
+    if(e.key===' '){ e.preventDefault(); setPlaying(!playing); }
+  });
+
+  // touch swipe
+  var x0=null;
+  stage.addEventListener('touchstart', function(e){ x0=e.touches[0].clientX; stop(); }, {passive:true});
+  stage.addEventListener('touchend', function(e){
+    if(x0===null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if(Math.abs(dx) > 45) go(i + (dx<0?1:-1), true); else if(playing) start();
+    x0=null;
+  }, {passive:true});
+
+  render(0);
+  setPlaying(!RM);
+})();

@@ -8,10 +8,10 @@ NAV = [
  ("index.html","Home",None,None),
  ("how-it-works.html","How it works","g3",[
    ("how-it-works.html","The system itself","Screens","Real screens from a live Genesys deployment."),
-   ("how-it-works.html#frontdesk","Front desk &amp; records","Patients","Registration, search and the patient queue."),
-   ("how-it-works.html#clinical","Laboratory &amp; radiology","Diagnostics","Sample collection, imaging orders and scheduling."),
-   ("how-it-works.html#pharmacy","Pharmacy &amp; inventory","Stock","Dispensing history, stores and products."),
-   ("how-it-works.html#billing","Billing &amp; finance","Money","Outpatient bills, payments and claims."),
+   ("how-it-works.html","Front desk &amp; records","Chapter","Registration, search and the patient queue."),
+   ("how-it-works.html","Laboratory &amp; radiology","Chapter","Sample collection, imaging orders and scheduling."),
+   ("how-it-works.html","Pharmacy &amp; inventory","Chapter","Dispensing history, stores and products."),
+   ("how-it-works.html","Billing &amp; finance","Chapter","Outpatient bills, payments and claims."),
  ]),
  ("solutions.html","Solutions","g4",[
    ("solutions.html","All solutions","Overview","Compare the four systems side by side."),
@@ -799,43 +799,68 @@ news=phead("Industry news","What the sector <em>is reporting.</em>",
 
 
 # ============================================================ HOW IT WORKS
-GROUPS=[("frontdesk","Front desk &amp; records","Where every patient journey starts",["frontdesk"]),
- ("clinical","Laboratory &amp; radiology","Diagnostics ordered, tracked and resulted",["lab","radiology","radiology_sched"]),
- ("pharmacy","Pharmacy &amp; inventory","Dispensing tied to stock that tells the truth",["pharmacy","inventory","products"]),
- ("billing","Billing &amp; finance","Care delivered becomes money collected",["billing","billing_pay"])]
-SHOTMAP={k:(t,d) for k,t,d in SHOTS}
+# Sequenced walkthrough: chapter, key, kicker, title, description
+WALK=[
+ ("Sign in","login","Access","One login, one branch, one record",
+  "Staff sign in against a role. What they can see and change follows that role, and every action is attributable. Multi-branch groups switch site from the top bar without signing out."),
+ ("Front desk","frontdesk","Front desk &middot; Search patients","Every patient, findable in seconds",
+  "The whole patient list, filtered by number, name, phone, gender, sponsor, type, status or registration date. This is the front desk's working queue rather than a report they request."),
+ ("Diagnostics","lab","Laboratory &middot; Sample collection queue","Requests arrive ready to work",
+  "Orders reach the laboratory with the requesting doctor, category, priority and patient status already attached. The scientist takes the sample straight from the queue."),
+ ("Diagnostics","radiology","Radiology &middot; Test order queue","Emergencies surface at the top",
+  "Imaging orders carry categories, priority flags and request dates. Emergency and high-priority cases are visible without anyone having to ask."),
+ ("Diagnostics","radiology_sched","Radiology &middot; Scheduling","An order becomes an appointment",
+  "The request turns into a scheduled test against the patient record, with the doctor's requested date visible beside any rescheduling."),
+ ("Pharmacy &amp; stock","pharmacy","Pharmacy &middot; Drug dispense history","Every dose accounted for",
+  "Each dispensed medication tied to prescriber, dispenser, quantity and instruction, filterable by patient, doctor, sponsor and status."),
+ ("Pharmacy &amp; stock","inventory","Inventory &middot; Stock across stores","One product, several stores, live counts",
+  "Main store, pharmacy store and laboratory store counted separately and together, so nobody reorders what is already sitting in another room."),
+ ("Pharmacy &amp; stock","products","Inventory &middot; Product catalogue","Cost, price and variants in one place",
+  "Unit cost, selling price, variants and total quantity per item, with bulk upload so a facility can be set up quickly rather than typed in over weeks."),
+ ("Billing","billing","Billing &middot; Outpatient bills","Care delivered becomes money owed",
+  "Bills generated from the care actually delivered, showing sponsor, total amount, date generated and payment status across the facility."),
+ ("Billing","billing_pay","Billing &middot; Receive payment","The whole account on one screen",
+  "Accumulated bills, payment receipts, wallet balance and sponsorship type together, with discount requests and invoicing built into the same view."),
+]
+CHAPTERS=[]
+for c,_,_,_,_ in WALK:
+    if c not in CHAPTERS: CHAPTERS.append(c)
 
-def shot_block(key,delay=""):
-    t,d=SHOTMAP[key]
-    return f"""<div class="shot reveal {delay}">
-      <div class="shot-bar"><i></i><i></i><i></i><span>genesys &middot; live deployment</span></div>
-      <img class="zoomable" src="assets/shots/{key}.jpg" alt="{t}" data-cap="{t}">
-      <div class="shot-cap"><b>{t}.</b> {d}</div></div>"""
+pl_chaps="".join(f'<button data-chapter="{c}" aria-selected="{"true" if k==0 else "false"}">{c}</button>'
+                 for k,c in enumerate(CHAPTERS))
+pl_slides="".join(
+  f'<div class="pl-slide{" on" if k==0 else ""}" data-chapter="{c}" data-kicker="{kick}" '
+  f'data-title="{ttl}" data-desc="{desc}">'
+  f'<img class="zoomable" src="assets/shots/{key}.jpg" alt="{kick}" data-cap="{kick}"></div>'
+  for k,(c,key,kick,ttl,desc) in enumerate(WALK))
+pl_segs="".join('<span class="pl-seg" role="button" aria-label="Go to screen %d"><i></i></span>'%(k+1)
+                for k in range(len(WALK)))
 
-how_groups=""
-for gi,(anchor,title,sub,keys) in enumerate(GROUPS):
-    band=' class="band"' if gi%2==1 else ""
-    shots="".join(shot_block(k,f"d{i}") for i,k in enumerate(keys))
-    how_groups+=f"""
-<section id="{anchor}"{band}><div class="wrap">
-  <div class="sec-head reveal"><span class="eyebrow">{"0"+str(gi+1)}</span><h2>{title}</h2><p>{sub}</p></div>
-  <div style="display:grid;gap:18px">{shots}</div>
-</div></section>"""
-
-how=phead("How it works","This is the actual system, <em>not a mock-up.</em>",
- "Screens from a live Genesys deployment. Click any image to enlarge. Patient names and figures shown are demonstration data.")+f"""
-<section class="tight"><div class="wrap split wide-right">
-  <div class="reveal"><span class="eyebrow">Sign in</span>
-    <h2 style="font-size:clamp(24px,3.2vw,34px);margin:10px 0 12px">One login, one branch, one record.</h2>
-    <p style="margin-bottom:12px">Staff sign in against a role. What they can see and change follows that role, and every action is attributable.</p>
-    <p class="muted">Multi-branch facilities switch site from the top bar without signing out, so a group runs as one organisation.</p></div>
-  <div class="shot reveal">
-    <div class="shot-bar"><i></i><i></i><i></i><span>genesys &middot; sign in</span></div>
-    <img class="zoomable" src="assets/shots/login.jpg" alt="The Genesys sign-in screen" data-cap="Genesys sign-in">
+how=phead("How it works","The system itself, <em>one screen at a time.</em>",
+ "A walkthrough of a live Genesys deployment, from signing in to taking payment. It plays on its own; use the controls to pause or jump. Patient names and figures are demonstration data.")+f"""
+<section class="tight"><div class="wrap">
+  <div class="player reveal" aria-label="Genesys product walkthrough">
+    <div class="pl-chapters" role="tablist">{pl_chaps}</div>
+    <div class="pl-main">
+      <div class="pl-stage">{pl_slides}</div>
+      <div class="pl-side">
+        <span class="pl-kicker"></span>
+        <h3 class="pl-title"></h3>
+        <p class="pl-desc"></p>
+        <span class="pl-count"></span>
+        <div class="pl-ctl">
+          <button class="pl-btn prev" aria-label="Previous screen">&#8592;</button>
+          <button class="pl-btn play" aria-label="Pause walkthrough">&#10073;&#10073;</button>
+          <button class="pl-btn next" aria-label="Next screen">&#8594;</button>
+          <button class="pl-zoom">Enlarge</button>
+        </div>
+      </div>
+    </div>
+    <div class="pl-track">{pl_segs}</div>
   </div>
+  <p class="stat-note">Screens from a live deployment. Use the arrow keys, swipe, or click a segment to jump.</p>
 </div></section>
 {marquee()}
-{how_groups}
 <section class="band tight"><div class="wrap">
   <div class="sec-head reveal"><span class="eyebrow">Behind every screen</span><h2>What the screens have in common.</h2></div>
   <div class="grid-4">
