@@ -100,3 +100,40 @@ create policy "anyone can read published testimonials" on public.testimonials
 -- DONE. If this ran without a red error, your database is ready.
 -- Check: Table Editor (left sidebar) should list leads, chat_messages,
 -- subscribers, news_items, stories and testimonials.
+
+-- 7. CONSENT LOG (NDPA 2023 — documented, timestamped consent) -------------
+create table if not exists public.consent_log (
+  id            uuid primary key default gen_random_uuid(),
+  created_at    timestamptz not null default now(),
+  preferences   boolean not null default false,
+  analytics     boolean not null default false,
+  given_at      timestamptz,
+  source_page   text,
+  policy_version text
+);
+alter table public.consent_log enable row level security;
+drop policy if exists "anon can log consent" on public.consent_log;
+create policy "anon can log consent" on public.consent_log
+  for insert to anon with check (true);
+
+-- 8. DATA SUBJECT REQUESTS (access, rectification, erasure, portability) ---
+create table if not exists public.dsr_requests (
+  id           uuid primary key default gen_random_uuid(),
+  created_at   timestamptz not null default now(),
+  request_type text not null,
+  full_name    text not null,
+  email        text not null,
+  phone        text,
+  details      text,
+  status       text not null default 'received',
+  source_page  text
+);
+alter table public.dsr_requests enable row level security;
+drop policy if exists "anon can submit dsr" on public.dsr_requests;
+create policy "anon can submit dsr" on public.dsr_requests
+  for insert to anon with check (true);
+
+-- 9. CONSENT COLUMNS ON LEADS ---------------------------------------------
+alter table public.leads add column if not exists consent_given boolean default false;
+alter table public.leads add column if not exists consent_at timestamptz;
+alter table public.leads add column if not exists marketing_opt_in boolean default false;

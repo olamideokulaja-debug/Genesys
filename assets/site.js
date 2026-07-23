@@ -5,12 +5,16 @@
 
   /* ---------- theme ---------- */
   var root=document.documentElement;
-  try{ var saved=localStorage.getItem('gx-theme'); if(saved) root.setAttribute('data-theme',saved); }catch(e){}
+  window.gxPrefsAllowed=function(){
+    try{ var c=JSON.parse(localStorage.getItem('gx-consent')||'null'); return !!(c&&c.preferences); }
+    catch(e){ return false; }
+  };
+  try{ if(window.gxPrefsAllowed()){ var saved=localStorage.getItem('gx-theme'); if(saved) root.setAttribute('data-theme',saved); } }catch(e){}
   var tb=$('#themeBtn');
   if(tb) tb.addEventListener('click',function(){
     var next = root.getAttribute('data-theme')==='dark' ? 'light':'dark';
     root.setAttribute('data-theme',next);
-    try{ localStorage.setItem('gx-theme',next); }catch(e){}
+    if(window.gxPrefsAllowed()){ try{ localStorage.setItem('gx-theme',next); }catch(e){} }
   });
 
   /* ---------- sticky nav shadow ---------- */
@@ -367,8 +371,18 @@
     fb.addEventListener('click',function(){
       var name=val('name'), email=val('email'), phone=val('phone');
       var okName=!!name, okMail=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+      var tick=document.getElementById('consentTick');
+      var okConsent = tick ? tick.checked : true;
+      var cbox=document.getElementById('consentBox');
+      if(cbox) cbox.classList.toggle('bad', !okConsent);
       flag('name',!okName); flag('email',!okMail);
       var ok=$('#formOk');
+      if(okName&&okMail&&!okConsent){
+        if(ok){ ok.className='form-ok show';
+          ok.innerHTML='<span>!</span><span>Please tick the consent box so we may lawfully use your details to reply.</span>';
+          ok.style.background='rgba(196,52,31,.08)'; ok.style.color='#C4341F'; }
+        tick.focus(); return;
+      }
       if(!okName||!okMail){
         if(ok){ ok.className='form-ok show';
           ok.innerHTML='<span>!</span><span>Please add '+(!okName?'your name':'')+
@@ -379,7 +393,10 @@
       }
       var row={full_name:name,email:email,phone:phone,facility_name:val('facility'),
         facility_type:val('ftype'),beds_sites:val('beds'),product:val('product'),message:val('msg'),
-        source_page:location.pathname, locale:(function(){try{return localStorage.getItem('gx-lang')||'en';}catch(e){return 'en';}})()};
+        source_page:location.pathname,
+        locale:(function(){try{return (window.gxPrefsAllowed&&window.gxPrefsAllowed())?(localStorage.getItem('gx-lang')||'en'):'en';}catch(e){return 'en';}})(),
+        consent_given:true, consent_at:new Date().toISOString(),
+        marketing_opt_in:!!(document.getElementById('marketingTick')||{}).checked};
 
       var lines=['Demo request via genesys-health.com','',
         'Name: '+row.full_name,'Email: '+row.email,'Phone: '+(row.phone||'-'),
@@ -420,7 +437,49 @@
     b.addEventListener('click',function(){
       var inp=b.parentNode.querySelector('input'); if(!inp||!inp.value.trim()) return;
       sbInsert('subscribers',{email:inp.value.trim()});
-      inp.value=''; b.textContent='✓'; setTimeout(function(){b.innerHTML='&rarr;';},2200);
+      inp.value=''; b.textContent='✓';
+      var note=b.parentNode.parentNode.querySelector('.sub-note');
+      if(!note){ note=document.createElement('p'); note.className='sub-note';
+        note.style.cssText='font-size:12px;color:var(--text-muted);margin-top:7px;line-height:1.5';
+        b.parentNode.parentNode.appendChild(note); }
+      note.innerHTML='Thank you. You consented to occasional updates and can withdraw any time via '+
+        '<a href="data-request.html" style="color:var(--blue)">your data rights</a>.';
+      setTimeout(function(){b.innerHTML='&rarr;';},2200);
+    });
+  });
+
+  /* ---- DATA SUBJECT REQUEST FORM (NDPA rights) ---- */
+  var dsrBtn=$('#dsrBtn');
+  if(dsrBtn) dsrBtn.addEventListener('click',function(){
+    var g=function(id){var e=document.getElementById(id);return e?e.value.trim():'';};
+    var name=g('dsrName'), email=g('dsrEmail');
+    var tick=document.getElementById('dsrTick'), box=document.getElementById('dsrConsentBox');
+    var okMail=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+    var out=document.getElementById('dsrOk');
+    if(box) box.classList.toggle('bad', !(tick&&tick.checked));
+    if(!name||!okMail||!(tick&&tick.checked)){
+      if(out){ out.className='form-ok show';
+        out.style.background='rgba(196,52,31,.08)'; out.style.color='#C4341F';
+        out.innerHTML='<span>!</span><span>Please give your name, a valid email address, and tick the confirmation box.</span>'; }
+      return;
+    }
+    var row={request_type:g('dsrType'),full_name:name,email:email,phone:g('dsrPhone'),
+             details:g('dsrDetails'),source_page:location.pathname};
+    var lines=['Data rights request via genesys-health.com','','Request: '+row.request_type,
+      'Name: '+row.full_name,'Email: '+row.email,'Phone: '+(row.phone||'-'),'','Details:',(row.details||'-')].join('\n');
+    sbInsert('dsr_requests',row).then(function(res){
+      if(!out) return;
+      out.style.background=''; out.style.color=''; out.className='form-ok show';
+      if(res.ok){
+        out.innerHTML='<span>&#10003;</span><span>Request received. We will respond within 30 days, and may first ask you to verify your identity.</span>';
+      } else {
+        out.innerHTML='<span>&#10003;</span><span style="display:block">'+
+          '<b style="display:block;margin-bottom:6px">One more step.</b>Send it to our data protection contact:'+
+          '<span style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">'+
+          '<a class="btn btn-primary" style="font-size:14px;padding:.6em 1em" href="mailto:'+mail+
+          '?subject='+encodeURIComponent('Data rights request \u2014 '+row.request_type)+
+          '&body='+encodeURIComponent(lines)+'">Send by email</a></span></span>';
+      }
     });
   });
 
@@ -439,7 +498,7 @@
     "Payers &amp; HMOs":"Assureurs et HMO","Stay in the loop":"Restez informé",
     "Company":"Entreprise","Your email address":"Votre adresse e-mail"
   };
-  var lang = (function(){ try{return localStorage.getItem('gx-lang')||'en';}catch(e){return 'en';} })();
+  var lang = (function(){ try{return (window.gxPrefsAllowed&&window.gxPrefsAllowed()) ? (localStorage.getItem('gx-lang')||'en') : 'en';}catch(e){return 'en';} })();
   var banner=document.createElement('div');
   banner.className='fr-banner';
   banner.innerHTML='<div class="wrap"><b>Version française en cours.</b> La navigation est traduite; le contenu détaillé est en cours de traduction professionnelle. <a href="contact.html" style="color:var(--blue);font-weight:600">Contactez-nous en français</a>.</div>';
@@ -459,7 +518,7 @@
       b.innerHTML = fr ? 'EN / <b>FR</b>' : '<b>EN</b> / FR';
       b.setAttribute('aria-label', fr?'Switch to English':'Passer en français');
     });
-    try{ localStorage.setItem('gx-lang', l); }catch(e){}
+    if(window.gxPrefsAllowed&&window.gxPrefsAllowed()){ try{ localStorage.setItem('gx-lang', l); }catch(e){} }
   }
   $$('.langbtn').forEach(function(b){
     b.addEventListener('click',function(){ lang = (lang==='fr'?'en':'fr'); applyLang(lang); });
@@ -580,4 +639,102 @@
 
   render(0);
   setPlaying(!RM);
+})();
+
+/* =================== NDPA 2023 CONSENT MANAGEMENT ===================
+   Nigeria Data Protection Act 2023 + NDPC General Application and
+   Implementation Directive (GAID) 2025, Article 19.
+   - opt-in for everything except strictly necessary
+   - no pre-ticked boxes
+   - withdrawal as easy as giving consent
+   - each decision logged with a timestamp                                */
+(function(){
+  var KEY='gx-consent';
+  var $  = function(s,c){return (c||document).querySelector(s);};
+  var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
+
+  function read(){ try{ return JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){ return null; } }
+  function write(o){ try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){} }
+
+  var banner=document.createElement('div');
+  banner.className='cbanner'; banner.setAttribute('role','region');
+  banner.setAttribute('aria-label','Data and storage consent');
+  banner.innerHTML=
+    '<div class="wrap cb-in"><div class="cb-txt">'+
+      '<h4>Your privacy choices</h4>'+
+      '<p>We use storage that is strictly necessary for this site to work. Anything beyond that &mdash; '+
+      'remembering your theme and language, or measuring how the site is used &mdash; happens only if you agree. '+
+      'You can change or withdraw your choice at any time. Read our '+
+      '<a href="privacy.html">Privacy Notice</a> and <a href="cookies.html">Cookie Notice</a>.</p>'+
+    '</div><div class="cb-acts">'+
+      '<button class="btn btn-ghost" id="cbManage">Manage choices</button>'+
+      '<button class="btn btn-ghost" id="cbReject">Essential only</button>'+
+      '<button class="btn btn-primary" id="cbAccept">Accept all</button>'+
+    '</div></div>';
+
+  var modal=document.createElement('div');
+  modal.className='cmodal'; modal.setAttribute('role','dialog'); modal.setAttribute('aria-modal','true');
+  modal.setAttribute('aria-label','Manage privacy choices');
+  modal.innerHTML=
+    '<div class="cm-box"><div class="cm-head"><h3>Manage your privacy choices</h3>'+
+      '<button id="cmX" aria-label="Close">&times;</button></div>'+
+    '<div class="cm-body">'+
+      '<div class="copt"><div><b>Strictly necessary</b><p>Required for the site to load, stay secure and '+
+        'remember the privacy choice you make here. It cannot be switched off, and it is permitted without '+
+        'consent under Article 19 of the NDPC GAID.</p></div><span class="locked">Always on</span></div>'+
+      '<div class="copt"><div><b>Preferences</b><p>Remembers your colour theme and language between visits. '+
+        'Stored in your browser only. Nothing is shared with anyone.</p></div>'+
+        '<label class="sw"><input type="checkbox" id="cPrefs" aria-label="Allow preference storage"><span></span></label></div>'+
+      '<div class="copt"><div><b>Analytics</b><p>Would let us count visits and see which pages are useful. '+
+        '<b>We do not currently run any analytics.</b> This switch stays off unless we add it and tell you.</p></div>'+
+        '<label class="sw"><input type="checkbox" id="cStats" aria-label="Allow analytics"><span></span></label></div>'+
+      '<p style="font-size:13.5px;color:var(--text-muted)">Information you type into the demo form, the chat or the '+
+      'newsletter box is separate from this. That is handled under the consent you give at the point you send it, '+
+      'and is explained in our <a href="privacy.html" style="color:var(--blue);font-weight:600">Privacy Notice</a>.</p>'+
+    '</div>'+
+    '<div class="cm-foot"><button class="btn btn-ghost" id="cmReject">Essential only</button>'+
+      '<button class="btn btn-primary" id="cmSave">Save my choices</button></div></div>';
+
+  document.addEventListener('DOMContentLoaded', function(){
+    document.body.appendChild(banner); document.body.appendChild(modal);
+
+    function log(c){
+      if(window.gxInsert) window.gxInsert('consent_log',{
+        preferences:!!c.preferences, analytics:!!c.analytics,
+        given_at:c.at, source_page:location.pathname, policy_version:c.version });
+    }
+    function apply(c, doLog){
+      c.at = new Date().toISOString(); c.version='2026-07';
+      write(c); banner.classList.remove('show'); modal.classList.remove('show');
+      if(doLog) log(c);
+      if(!c.preferences){ try{ localStorage.removeItem('gx-theme'); localStorage.removeItem('gx-lang'); }catch(e){} }
+      document.dispatchEvent(new CustomEvent('gx-consent', {detail:c}));
+    }
+    function openModal(){
+      var c=read()||{};
+      $('#cPrefs',modal).checked=!!c.preferences;   // never pre-ticked unless already chosen
+      $('#cStats',modal).checked=!!c.analytics;
+      modal.classList.add('show');
+      setTimeout(function(){ $('#cPrefs',modal).focus(); },80);
+    }
+    window.gxPrivacyChoices = openModal;
+
+    $('#cbAccept',banner).addEventListener('click',function(){ apply({preferences:true, analytics:true}, true); });
+    $('#cbReject',banner).addEventListener('click',function(){ apply({preferences:false,analytics:false}, true); });
+    $('#cbManage',banner).addEventListener('click', openModal);
+    $('#cmX',modal).addEventListener('click',function(){ modal.classList.remove('show'); });
+    $('#cmReject',modal).addEventListener('click',function(){ apply({preferences:false,analytics:false}, true); });
+    $('#cmSave',modal).addEventListener('click',function(){
+      apply({preferences:$('#cPrefs',modal).checked, analytics:$('#cStats',modal).checked}, true);
+    });
+    modal.addEventListener('click',function(e){ if(e.target===modal) modal.classList.remove('show'); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') modal.classList.remove('show'); });
+
+    // any link or button marked data-privacy-choices reopens the panel (withdrawal path)
+    $$('[data-privacy-choices]').forEach(function(el){
+      el.addEventListener('click',function(e){ e.preventDefault(); openModal(); });
+    });
+
+    if(!read()) setTimeout(function(){ banner.classList.add('show'); }, 700);
+  });
 })();

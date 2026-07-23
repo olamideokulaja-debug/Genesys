@@ -39,6 +39,16 @@
       <div class="field"><label for="beds">Beds or sites</label><select id="beds"><option>1 to 20 beds</option><option>20 to 100 beds</option><option>100 to 500 beds</option><option>Multi-site group</option><option>Not a hospital</option></select></div></div>
     <div class="field"><label for="product">Product of interest</label><select id="product"><option>Not sure yet, advise me</option><option>Genesys HMIS</option><option>Genesys EMR</option><option>Clinical Specialized Packages</option><option>Stand-alone Packages</option></select></div>
     <div class="field"><label for="msg">Message</label><textarea id="msg" placeholder="Tell us what you are trying to fix."></textarea></div>
+    <div class="consent" id="consentBox">
+      <input type="checkbox" id="consentTick">
+      <label for="consentTick">I agree that Genesys may use the details above to respond to this enquiry, and
+        I have read the <a href="privacy.html">Privacy Notice</a>. Required.</label>
+    </div>
+    <div class="consent" style="background:transparent;border-style:dashed">
+      <input type="checkbox" id="marketingTick">
+      <label for="marketingTick">Optional: send me occasional updates about Genesys and African health technology.
+        I can withdraw at any time.</label>
+    </div>
     <button class="btn btn-primary" type="button" id="formBtn">Request a demo <span class="arrow">&rarr;</span></button>
     <div class="form-ok" id="formOk"></div>
     <p class="muted" style="margin-top:10px;font-size:13.5px">We reply within one business day. Enquiries reach
@@ -71,7 +81,7 @@
     <div class="fcol"><h4>Stay in the loop</h4><p class="addr" style="margin-bottom:4px">Stories from Genesys and news from the sector.</p>
       <div class="news"><input type="email" placeholder="Your email address" aria-label="Email address"><button type="button">&rarr;</button></div></div>
   </div>
-  <div class="foot-base"><span>&copy; 2026 Genesys Health Information Systems Limited.</span><span>Privacy &middot; Terms &middot; Sitemap</span></div>
+  <div class="foot-base"><span>&copy; 2026 Genesys Health Information Systems Limited.</span><span><a href="privacy.html">Privacy Notice</a> &middot; <a href="cookies.html">Cookies</a> &middot; <a href="terms.html">Terms</a> &middot; <a href="data-request.html">Your data rights</a> &middot; <a href="#" data-privacy-choices>Privacy choices</a></span></div>
 </div></footer>
 <div class="mobar"><a class="btn btn-primary" href="contact.html">Request a demo</a><a class="btn btn-ghost" href="contact.html">WhatsApp</a></div>
 <script src="assets/site.js"></script>

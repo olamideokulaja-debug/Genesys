@@ -130,7 +130,7 @@ FOOT=f"""
     <div class="fcol"><h4>Stay in the loop</h4><p class="addr" style="margin-bottom:4px">Stories from Genesys and news from the sector.</p>
       <div class="news"><input type="email" placeholder="Your email address" aria-label="Email address"><button type="button">&rarr;</button></div></div>
   </div>
-  <div class="foot-base"><span>&copy; 2026 Genesys Health Information Systems Limited.</span><span>Privacy &middot; Terms &middot; Sitemap</span></div>
+  <div class="foot-base"><span>&copy; 2026 Genesys Health Information Systems Limited.</span><span><a href="privacy.html">Privacy Notice</a> &middot; <a href="cookies.html">Cookies</a> &middot; <a href="terms.html">Terms</a> &middot; <a href="data-request.html">Your data rights</a> &middot; <a href="#" data-privacy-choices>Privacy choices</a></span></div>
 </div></footer>
 <div class="mobar"><a class="btn btn-primary" href="contact.html">Request a demo</a><a class="btn btn-ghost" href="contact.html">WhatsApp</a></div>
 <script src="assets/site.js"></script>
@@ -986,6 +986,250 @@ how=phead("How it works","The system itself, <em>one screen at a time.</em>",
 </div></section>
 {cta("Want to click through it yourself? Book a live demo.")}"""
 
+
+# ============================================================ LEGAL PAGES
+UPDATED = "Last updated 23 July 2026 &middot; Version 2026-07"
+CONTROLLER = """Genesys Health Information Systems Limited, 21a Fatai Idowu Arobieke Street,
+Off Admiralty Way, Lekki Phase 1, Lagos, Nigeria."""
+
+privacy = phead("Privacy","Privacy Notice","How Genesys collects, uses and protects personal data, under the Nigeria Data Protection Act 2023.")+f"""
+<section class="tight"><div class="wrap"><div class="legal reveal">
+<p class="updated">{UPDATED}</p>
+
+<div class="callout"><p><b>In short.</b> We collect only what you give us through the demo form, the chat, the
+newsletter box or a data rights request. We use it to reply to you and to run our business. We do not sell it.
+You can ask to see it, correct it or have it deleted at any time by emailing
+<a href="mailto:cordor@genesys-health.com" style="color:var(--blue);font-weight:600">cordor@genesys-health.com</a>.</p></div>
+
+<h2>1. Who we are</h2>
+<p>The data controller is {CONTROLLER}</p>
+<p>Questions about this notice, or about how we handle personal data, go to our data protection contact at
+<a href="mailto:cordor@genesys-health.com">cordor@genesys-health.com</a> or +234 704 799 9337.</p>
+<p class="needs">[Appointed Data Protection Officer name and NDPC registration number: to be confirmed and inserted here.]</p>
+
+<h2>2. What this notice covers</h2>
+<p>This notice covers personal data we collect through this website. It does not cover patient data held inside
+Genesys software at a client facility. In those deployments the health facility is the data controller and Genesys
+acts as a data processor under a written agreement with that facility. If you are a patient asking about your
+medical record, contact the facility that treated you.</p>
+
+<h2>3. What we collect, why, and on what lawful basis</h2>
+<table>
+  <tr><th>What</th><th>Why</th><th>Lawful basis (NDPA s.25)</th><th>Kept for</th></tr>
+  <tr><td>Name, email, phone, facility name and type, bed count, product interest, message</td>
+      <td>To answer your demo request or enquiry</td><td>Consent, and steps toward a contract at your request</td><td>24 months from last contact</td></tr>
+  <tr><td>Chat messages and the page you sent them from</td><td>To answer questions asked through the chat window</td>
+      <td>Consent</td><td>12 months</td></tr>
+  <tr><td>Email address for updates</td><td>To send occasional news, only if you tick the optional box</td>
+      <td>Consent, withdrawable at any time</td><td>Until you unsubscribe</td></tr>
+  <tr><td>Your privacy choices and the time you made them</td><td>To prove we respected your choice</td>
+      <td>Legal obligation</td><td>3 years</td></tr>
+  <tr><td>Details in a data rights request</td><td>To identify you and act on the request</td>
+      <td>Legal obligation</td><td>3 years</td></tr>
+</table>
+<p>We do not use this website to collect health data, and you should not send patient information through the
+demo form or the chat. Our chat assistant is automated, is not a clinician, and makes no decision that affects
+you legally or significantly, so section 37 of the NDPA on automated decision-making does not apply to it.</p>
+
+<h2>4. Storage on your device</h2>
+<p>We use a small amount of browser storage that is strictly necessary for the site to work and to record the
+privacy choice you make. Everything else &mdash; remembering your theme and language &mdash; happens only if you
+switch it on. We do not currently run analytics or advertising trackers of any kind. Full detail is in our
+<a href="cookies.html">Cookie Notice</a>, and you can change your choice at any time from
+<a href="#" data-privacy-choices>Privacy choices</a> in the footer of every page.</p>
+
+<h2>5. Who we share it with</h2>
+<p>We do not sell personal data and we do not share it for anyone else&rsquo;s marketing.</p>
+<ul>
+  <li><b>Supabase</b> &mdash; stores form, chat and consent records on our behalf as a data processor.</li>
+  <li><b>Vercel</b> &mdash; hosts this website and processes server logs.</li>
+  <li><b>Professional advisers or regulators</b> &mdash; only where the law requires it.</li>
+</ul>
+<p>Each processor is engaged under a written agreement requiring them to act only on our instructions and to keep
+the data secure.</p>
+
+<h2>6. Transfers outside Nigeria</h2>
+<p>Our hosting and database providers operate data centres outside Nigeria. Where personal data is transferred
+abroad we rely on the conditions in sections 41 to 43 of the NDPA, including your consent and contractual
+safeguards with the recipient that carry an adequate level of protection.</p>
+<p class="needs">[Confirm the exact Supabase and Vercel hosting regions and name them here.]</p>
+
+<h2>7. Your rights</h2>
+<p>Under the NDPA you have the right to:</p>
+<ul>
+  <li>be told how your data is used, which is what this notice does;</li>
+  <li>ask for a copy of the personal data we hold about you;</li>
+  <li>have inaccurate or incomplete data corrected;</li>
+  <li>ask us to delete your data where there is no longer a reason to keep it;</li>
+  <li>receive your data in a structured, commonly used, machine-readable format, and have it sent to another controller where technically feasible;</li>
+  <li>object to processing, including profiling, for direct marketing at any time;</li>
+  <li>restrict how we use your data while a concern is being resolved;</li>
+  <li>withdraw consent at any time, as easily as you gave it, without affecting anything done before you withdrew it;</li>
+  <li>complain to the Nigeria Data Protection Commission.</li>
+</ul>
+<p>Use our <a href="data-request.html">data rights request form</a> or email
+<a href="mailto:cordor@genesys-health.com">cordor@genesys-health.com</a>. We respond within 30 days and never
+charge for a first request.</p>
+
+<h2>8. How we protect it</h2>
+<p>Access is limited to staff who need it. Data is encrypted in transit and at rest by our processors, database
+access is governed by row-level security rules, and administrative access requires authentication. We review
+these measures periodically.</p>
+
+<h2>9. If something goes wrong</h2>
+<p>If a personal data breach occurs we will investigate immediately, notify the Nigeria Data Protection Commission
+within 72 hours of becoming aware where the breach is likely to result in a risk to your rights and freedoms, and
+tell affected people directly where the risk to them is high.</p>
+
+<h2>10. Children</h2>
+<p>This website is intended for healthcare professionals and organisations. We do not knowingly collect personal
+data from children through it. If you believe a child has sent us personal data, contact us and we will delete it.</p>
+
+<h2>11. Changes</h2>
+<p>If we change this notice we will update the version and date at the top. Material changes will be signposted
+on the site.</p>
+
+<h2>12. Complaints</h2>
+<p>Please raise concerns with us first at <a href="mailto:cordor@genesys-health.com">cordor@genesys-health.com</a>.
+You also have the right to complain directly to the Nigeria Data Protection Commission (NDPC).</p>
+
+<div class="callout"><p><b>Note.</b> This notice describes our actual practice and is drafted to align with the
+Nigeria Data Protection Act 2023 and the NDPC General Application and Implementation Directive 2025. It is not
+legal advice, and it should be reviewed by a qualified Nigerian data protection practitioner before you rely on
+it commercially.</p></div>
+</div></div></section>
+{cta("Questions about how we handle data? Ask us directly.")}"""
+
+cookies = phead("Cookies","Cookie and Storage Notice","What this website stores on your device, why, and how to change it.")+f"""
+<section class="tight"><div class="wrap"><div class="legal reveal">
+<p class="updated">{UPDATED}</p>
+<p>Article 19 of the NDPC General Application and Implementation Directive requires opt-in consent before a site
+uses cookies or similar tracking, other than those strictly necessary. We follow that rule: nothing beyond the
+strictly necessary is switched on until you say so, and no box is ticked for you in advance.</p>
+
+<h2>What we use</h2>
+<table>
+  <tr><th>Name</th><th>Type</th><th>Purpose</th><th>Consent</th><th>Kept</th></tr>
+  <tr><td><code>gx-consent</code></td><td>Local storage, first party</td>
+      <td>Records the privacy choice you made here, so we do not ask again on every page</td>
+      <td>Not required &mdash; strictly necessary</td><td>12 months</td></tr>
+  <tr><td><code>gx-theme</code></td><td>Local storage, first party</td>
+      <td>Remembers whether you chose the light or dark view</td><td>Preferences</td><td>12 months</td></tr>
+  <tr><td><code>gx-lang</code></td><td>Local storage, first party</td>
+      <td>Remembers whether you chose English or French</td><td>Preferences</td><td>12 months</td></tr>
+</table>
+
+<h2>What we do not use</h2>
+<p>No analytics, no advertising or retargeting pixels, no social media trackers, no third-party cookies, and no
+cross-site profiling. If that ever changes we will update this page and ask for your consent before switching
+anything on.</p>
+
+<h2>Third parties</h2>
+<p>Fonts are loaded from Google Fonts, which means your browser contacts Google&rsquo;s servers and Google receives
+your IP address as part of that request. Our host, Vercel, keeps standard server logs for security and
+reliability. Neither is used to profile you.</p>
+
+<h2>Changing your mind</h2>
+<p>Open <a href="#" data-privacy-choices>Privacy choices</a>, available in the footer of every page. Switching
+Preferences off deletes the stored values immediately. You can also clear site data in your browser settings.</p>
+</div></div></section>
+{cta()}"""
+
+terms = phead("Terms","Terms of Use","The terms on which this website is provided.")+f"""
+<section class="tight"><div class="wrap"><div class="legal reveal">
+<p class="updated">{UPDATED}</p>
+<h2>1. Who provides this site</h2>
+<p>This website is operated by {CONTROLLER}</p>
+<h2>2. What the site is for</h2>
+<p>It describes our products and services. Nothing on it is an offer capable of acceptance, and nothing on it is
+medical advice. Product descriptions, screenshots and figures are illustrative; the specification that binds us is
+the one in a signed agreement.</p>
+<h2>3. Demonstration content</h2>
+<p>Screens shown under <a href="how-it-works.html">How it works</a> come from a live deployment but contain
+demonstration data. Patient names, figures and records shown are not real people.</p>
+<h2>4. Case studies and client names</h2>
+<p>Client names and logos appear with permission. Case studies are published without naming the facility at the
+client&rsquo;s request, and the outcomes described are as reported by the facility rather than independently audited.</p>
+<h2>5. Acceptable use</h2>
+<p>Do not attempt to gain unauthorised access to this site or any system behind it, introduce malicious code,
+scrape it at a volume that degrades service, or use the chat or forms to send unlawful content or another
+person&rsquo;s health information.</p>
+<h2>6. Intellectual property</h2>
+<p>The Genesys name, logo, software, page content and design are owned by us or our licensors. Client logos remain
+the property of those organisations. You may not reproduce our content commercially without written permission.</p>
+<h2>7. Third-party links</h2>
+<p>Our Industry news page links to external publishers. We do not control those sites and are not responsible for
+their content or their privacy practices.</p>
+<h2>8. Availability</h2>
+<p>We aim to keep the site available but do not guarantee uninterrupted access, and we may change or withdraw
+content at any time.</p>
+<h2>9. Liability</h2>
+<p>To the extent permitted by Nigerian law, we are not liable for loss arising from reliance on information on
+this website. Nothing here limits liability that cannot lawfully be limited.</p>
+<h2>10. Governing law</h2>
+<p>These terms are governed by the laws of the Federal Republic of Nigeria, and the courts of Lagos State have
+jurisdiction.</p>
+<h2>11. Contact</h2>
+<p><a href="mailto:cordor@genesys-health.com">cordor@genesys-health.com</a> &middot; +234 704 799 9337</p>
+<div class="callout"><p><b>Note.</b> These terms are a working draft prepared alongside the site build. Have them
+reviewed by a Nigerian qualified lawyer before you rely on them.</p></div>
+</div></div></section>
+{cta()}"""
+
+data_request = phead("Your data rights","Ask us about <em>your data.</em>",
+ "Under the Nigeria Data Protection Act 2023 you can ask to see, correct, delete or move the personal data we hold about you. Tell us what you need and we will respond within 30 days.")+f"""
+<section class="tight"><div class="wrap split wide-left">
+  <div class="form reveal">
+    <div class="field"><label for="dsrType">What would you like us to do?</label>
+      <select id="dsrType">
+        <option>Send me a copy of my data (access)</option>
+        <option>Correct something that is wrong (rectification)</option>
+        <option>Delete my data (erasure)</option>
+        <option>Send my data to me or another provider (portability)</option>
+        <option>Stop using my data for marketing (objection)</option>
+        <option>Pause use of my data while we resolve a concern (restriction)</option>
+        <option>Withdraw a consent I previously gave</option>
+      </select></div>
+    <div class="row2">
+      <div class="field"><label for="dsrName">Full name</label><input id="dsrName" type="text" autocomplete="name"></div>
+      <div class="field"><label for="dsrEmail">Email address you used with us</label><input id="dsrEmail" type="email" autocomplete="email"></div>
+    </div>
+    <div class="field"><label for="dsrPhone">Phone number (optional)</label><input id="dsrPhone" type="tel"></div>
+    <div class="field"><label for="dsrDetails">Anything that helps us find your record</label>
+      <textarea id="dsrDetails" placeholder="For example the facility name you enquired about, or roughly when you contacted us."></textarea></div>
+    <div class="consent" id="dsrConsentBox">
+      <input type="checkbox" id="dsrTick">
+      <label for="dsrTick">I confirm this request is about my own personal data, and I have read the
+        <a href="privacy.html">Privacy Notice</a>. Required.</label>
+    </div>
+    <button class="btn btn-primary" type="button" id="dsrBtn">Send my request <span class="arrow">&rarr;</span></button>
+    <div class="form-ok" id="dsrOk"></div>
+    <p class="muted" style="margin-top:10px;font-size:13.5px">We may ask you to verify your identity before acting,
+      so that nobody else can obtain your data. There is no charge for a first request.</p>
+  </div>
+  <div class="reveal d1">
+    <div class="legal">
+      <h2 style="margin-top:0">What each right means</h2>
+      <p><b>Access.</b> A copy of the personal data we hold about you and an explanation of how we use it.</p>
+      <p><b>Rectification.</b> Correction of anything inaccurate or incomplete.</p>
+      <p><b>Erasure.</b> Deletion where we no longer have a reason to keep it. We may need to retain a minimal
+        record that you asked, so we can prove we complied.</p>
+      <p><b>Portability.</b> Your data in a structured, machine-readable format, sent to you or to another
+        controller where that is technically feasible.</p>
+      <p><b>Objection.</b> You can object to direct marketing at any time and we will stop.</p>
+      <p><b>Withdrawing consent.</b> As easy as giving it. It does not undo processing that already lawfully
+        happened. For website storage choices use
+        <a href="#" data-privacy-choices>Privacy choices</a> instead &mdash; that takes effect immediately.</p>
+      <h2>If you are a patient</h2>
+      <p>If your question is about a medical record held in Genesys software at a hospital or clinic, that facility
+        is the data controller. Please contact them directly. We will help them respond, but we cannot release
+        their patients&rsquo; records to third parties.</p>
+      <h2>Still not satisfied</h2>
+      <p>You may complain to the Nigeria Data Protection Commission at any time.</p>
+    </div>
+  </div>
+</div></section>"""
+
 # ============================================================ CONTACT
 contact=phead("Contact","See Genesys on <em>your own workflow.</em>",
  "Tell us about the facility you run and we will show you the system built for it. We respond within one business day.")+f"""
@@ -1002,6 +1246,16 @@ contact=phead("Contact","See Genesys on <em>your own workflow.</em>",
       <div class="field"><label for="beds">Beds or sites</label><select id="beds"><option>1 to 20 beds</option><option>20 to 100 beds</option><option>100 to 500 beds</option><option>Multi-site group</option><option>Not a hospital</option></select></div></div>
     <div class="field"><label for="product">Product of interest</label><select id="product"><option>Not sure yet, advise me</option><option>Genesys HMIS</option><option>Genesys EMR</option><option>Clinical Specialized Packages</option><option>Stand-alone Packages</option></select></div>
     <div class="field"><label for="msg">Message</label><textarea id="msg" placeholder="Tell us what you are trying to fix."></textarea></div>
+    <div class="consent" id="consentBox">
+      <input type="checkbox" id="consentTick">
+      <label for="consentTick">I agree that Genesys may use the details above to respond to this enquiry, and
+        I have read the <a href="privacy.html">Privacy Notice</a>. Required.</label>
+    </div>
+    <div class="consent" style="background:transparent;border-style:dashed">
+      <input type="checkbox" id="marketingTick">
+      <label for="marketingTick">Optional: send me occasional updates about Genesys and African health technology.
+        I can withdraw at any time.</label>
+    </div>
     <button class="btn btn-primary" type="button" id="formBtn">Request a demo <span class="arrow">&rarr;</span></button>
     <div class="form-ok" id="formOk"></div>
     <p class="muted" style="margin-top:10px;font-size:13.5px">We reply within one business day. Enquiries reach
@@ -1056,5 +1310,9 @@ if __name__=="__main__":
     for st in STORIES:
         page(st[0],f"{st[1]} — Genesys Health",st[4],story_page(*st))
     page("news.html","Industry news — Genesys Health","Curated digital health news from Nigeria and Africa, with sources.",news)
+    page("privacy.html","Privacy Notice — Genesys Health","How Genesys collects, uses and protects personal data under the Nigeria Data Protection Act 2023.",privacy)
+    page("cookies.html","Cookie and Storage Notice — Genesys Health","What this website stores on your device, why, and how to change it.",cookies)
+    page("terms.html","Terms of Use — Genesys Health","The terms on which the Genesys website is provided.",terms)
+    page("data-request.html","Your data rights — Genesys Health","Ask to see, correct, delete or move the personal data Genesys holds about you.",data_request)
     page("contact.html","Contact — Genesys Health","Request a demo of Genesys. Lekki Phase 1, Lagos.",contact)
     print(f"built {len(PAGES)} pages")

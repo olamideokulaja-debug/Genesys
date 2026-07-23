@@ -97,3 +97,22 @@ For email alerts on new leads, add a Database Webhook on `leads` pointing at you
 Demo requests, chat messages and the contact page all point to:
 **cordor@genesys-health.com** and **+234 704 799 9337** (also the WhatsApp number).
 Change both in `assets/config.js` and in the footer block of `build.py`.
+
+## Data protection (NDPA 2023)
+The site ships with:
+- `privacy.html`, `cookies.html`, `terms.html`, `data-request.html`
+- An opt-in consent banner. Nothing beyond strictly necessary storage runs until the visitor agrees,
+  no box is pre-ticked, and every decision is timestamped into the `consent_log` table.
+- **Privacy choices** in the footer of every page reopens the panel, so withdrawing is as easy as consenting.
+- A required consent tick on the demo form, and a separate optional marketing tick.
+- A data rights request form writing to `dsr_requests`.
+
+**Before you go live, you still need to do these yourself — a website cannot do them for you:**
+1. Appoint a Data Protection Officer if you qualify, and put the name in `privacy.html`.
+2. Register with the NDPC if you are a data controller of major importance, and add the number.
+3. Sign data processing agreements with Supabase and Vercel.
+4. Confirm the hosting regions and name them in section 6 of `privacy.html`.
+5. Have a Nigerian qualified data protection lawyer review all four legal pages.
+6. Write an internal breach response plan that meets the 72-hour notification duty.
+7. Run a DPIA if you begin any higher-risk processing.
+Search the legal pages for `[` to find every placeholder awaiting your input.
