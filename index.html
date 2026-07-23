@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Genesys Health — hospital and records systems for African health facilities</title>
+<meta name="description" content="Genesys builds the hospital management and electronic medical records systems that African health facilities run on, from single clinics to multi-site groups.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,800&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF; --surface:#F5F8FC; --surface-2:#EAF1FA; --border:#DBE6F2;
+  --text:#0B1626; --text-body:#2B3E56; --text-muted:#5C6F88;
+  --signal:#1466D8; --signal-strong:#0F51B0; --signal-ink:#FFFFFF;
+  --accent:#1466D8; --accent-soft:rgba(20,102,216,.08); --accent-line:rgba(20,102,216,.55);
+  --good:#128A62;
+  --maxw:1240px; --gutter:clamp(20px,5vw,64px);
+  --serif:"Fraunces",Georgia,serif; --sans:"Hanken Grotesk",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+html[data-theme="dark"]{
+  --bg:#0B1220; --surface:#111A2B; --surface-2:#16223A; --border:#22324D;
+  --text:#EAF0F7; --text-body:#C6D4E6; --text-muted:#93A6BF;
+  --signal:#4C9AFF; --signal-strong:#2F7BE6; --signal-ink:#04101F;
+  --accent:#5AA6FF; --accent-soft:rgba(90,166,255,.12); --accent-line:rgba(90,166,255,.5);
+  --good:#37D9A0;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text-body);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:var(--serif);color:var(--text);font-weight:600;line-height:1.05;margin:0;letter-spacing:-.01em}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted)}
+.accent{color:var(--accent)}
+
+.btn{display:inline-flex;align-items:center;gap:.55em;font-family:var(--sans);font-weight:600;font-size:15px;padding:.85em 1.4em;border-radius:10px;border:1px solid transparent;cursor:pointer;transition:transform .15s ease,background .15s ease,border-color .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--signal);color:var(--signal-ink);border-color:var(--signal)}
+.btn-primary:hover{background:var(--signal-strong)}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border)}
+.btn-ghost:hover{border-color:var(--signal)}
+.arrow{transition:transform .15s ease}.btn:hover .arrow{transform:translateX(3px)}
+
+header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.nav-in{display:flex;align-items:center;gap:28px;height:66px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--text);font-size:20px;letter-spacing:-.02em}
+.brand .mark{width:26px;height:26px;flex:none}
+.nav-links{display:flex;gap:22px;margin-left:8px}
+.nav-links a{font-size:14.5px;color:var(--text-muted);font-weight:500}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.lang{font-family:var(--mono);font-size:12px;color:var(--text-muted);letter-spacing:.08em}.lang b{color:var(--text)}
+.iconbtn{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--border);border-radius:9px;background:transparent;color:var(--text);cursor:pointer}
+.iconbtn:hover{border-color:var(--signal)}
+
+/* HERO split, full image */
+.hero{border-bottom:1px solid var(--border)}
+.hero-in{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(28px,5vw,64px);align-items:center;padding-block:clamp(48px,8vw,104px)}
+.hero h1{font-size:clamp(40px,5.6vw,72px);font-weight:600;margin:.5em 0 .4em}
+.hero h1 .lead{font-style:italic;font-weight:500;color:var(--accent)}
+.hero p.sub{font-size:clamp(17px,2vw,20px);color:var(--text-body);max-width:34em}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.trust{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:32px;padding-top:22px;border-top:1px solid var(--border)}
+.trust .jv{font-weight:600;color:var(--text);font-size:14px}
+.chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;color:var(--text-muted);border:1px solid var(--border);border-radius:999px;padding:5px 11px}
+.hero-figure{border-radius:18px;overflow:hidden;border:1px solid var(--border);aspect-ratio:5/5;box-shadow:0 30px 60px -40px rgba(11,40,80,.4)}
+.hero-figure img{width:100%;height:100%;object-fit:cover;object-position:65% center}
+
+section{padding-block:clamp(60px,8vw,110px)}
+.sec-head{max-width:640px;margin-bottom:52px}
+.sec-head h2{font-size:clamp(28px,4.2vw,46px);margin:14px 0 16px}
+.sec-head p{color:var(--text-muted);font-size:18px}
+
+/* LEDGER */
+.ledger-sec{background:var(--surface);border-block:1px solid var(--border)}
+.ledger-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,5vw,72px);align-items:start}
+.ledger-lead h2{font-size:clamp(28px,4vw,44px);margin-bottom:20px}
+.ledger-lead h2 em{font-style:italic;color:var(--accent)}
+.ledger-lead p{color:var(--text-body);margin-bottom:18px}
+.ledger-figure{margin-top:26px;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.ledger-figure img{width:100%;height:auto}
+.ledger-figure figcaption{font-family:var(--mono);font-size:11px;color:var(--text-muted);padding:9px 12px;border-top:1px solid var(--border);letter-spacing:.04em}
+.ledger{border-top:1px solid var(--border)}
+.ledger .row{display:grid;grid-template-columns:1fr auto;gap:14px 18px;align-items:baseline;padding:16px 4px 16px 18px;border-bottom:1px solid var(--border);position:relative;transition:background .18s ease}
+.ledger .row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:transparent;transition:background .18s ease}
+.ledger .row:hover{background:var(--accent-soft)}
+.ledger .row:hover::before{background:var(--accent-line)}
+.ledger .name{font-weight:600;color:var(--text);font-size:16.5px}
+.ledger .csq{display:block;color:var(--accent);font-size:14px;margin-top:3px;font-weight:500}
+.ledger .tag{font-family:var(--mono);font-size:11px;color:var(--text-muted);white-space:nowrap;letter-spacing:.05em}
+.ledger-foot{margin-top:22px;font-size:15px;color:var(--text-muted)}
+
+/* ROUTER */
+.router-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.route{display:flex;flex-direction:column;justify-content:space-between;min-height:200px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}
+.route:hover{transform:translateY(-4px);border-color:var(--signal);box-shadow:0 20px 40px -30px rgba(20,102,216,.5)}
+.route .rk{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted)}
+.route h3{font-family:var(--serif);font-size:23px;margin:14px 0 8px;font-weight:600}
+.route p{font-size:14px;color:var(--text-muted)}
+.route .go{margin-top:16px;color:var(--signal);font-weight:600;font-size:14px;display:inline-flex;gap:.5em;align-items:center}
+
+/* CHOOSER */
+.chooser{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:clamp(24px,4vw,42px)}
+.chooser h3{font-family:var(--serif);font-size:clamp(22px,3vw,30px);margin-bottom:8px;font-weight:600}
+.chooser .q{color:var(--text-muted);margin-bottom:22px}
+.scale{display:flex;flex-wrap:wrap;gap:10px}
+.scale button{font-family:var(--sans);font-weight:600;font-size:14.5px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:11px;padding:.8em 1.15em;cursor:pointer;transition:all .15s ease}
+.scale button:hover{border-color:var(--signal)}
+.scale button[aria-pressed="true"]{background:var(--signal);color:var(--signal-ink);border-color:var(--signal)}
+.rec{margin-top:26px;border-top:1px dashed var(--border);padding-top:24px;min-height:96px}
+.rec.empty{color:var(--text-muted);font-size:15px;display:flex;align-items:center}
+.rec .pk{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.rec h4{font-family:var(--serif);font-size:26px;color:var(--text);margin:8px 0 8px;font-weight:600}
+.rec p{color:var(--text-body);font-size:15.5px;max-width:52em}
+.rec a{color:var(--signal);font-weight:600;font-size:14.5px;display:inline-flex;gap:.5em;margin-top:12px}
+
+/* SOLUTIONS */
+.sol-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.sol{background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .16s ease,border-color .16s ease}
+.sol:hover{transform:translateY(-3px);border-color:var(--signal)}
+.sol .ph{aspect-ratio:16/9;overflow:hidden;border-bottom:1px solid var(--border)}
+.sol .ph img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.sol:hover .ph img{transform:scale(1.04)}
+.sol .body{padding:24px;display:flex;flex-direction:column;gap:10px;flex:1}
+.sol .fit{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.sol h3{font-family:var(--serif);font-size:25px;font-weight:600}
+.sol .desc{font-size:15px;color:var(--text-body)}
+.sol .meta{margin-top:auto;padding-top:14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.sol .meta span{font-family:var(--mono);font-size:11.5px;color:var(--text-muted)}
+.needs{color:var(--accent);font-family:var(--mono);font-size:11px}
+
+/* WHY, full image panel */
+.why-sec{background:var(--surface);border-block:1px solid var(--border)}
+.why-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,64px);align-items:center}
+.why-figure{border-radius:18px;overflow:hidden;border:1px solid var(--border);aspect-ratio:4/3}
+.why-figure img{width:100%;height:100%;object-fit:cover}
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:30px}
+.pillar{border-top:2px solid var(--signal);padding-top:16px}
+.pillar h3{font-family:var(--serif);font-size:20px;font-weight:600;margin-bottom:8px}
+.pillar p{font-size:14px;color:var(--text-muted)}
+.pillar.lead{border-top-color:var(--accent)}
+
+/* PROOF */
+.proof-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:stretch}
+.quote{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:clamp(26px,4vw,40px);display:flex;flex-direction:column}
+.quote .q{font-family:var(--serif);font-size:clamp(20px,2.6vw,27px);color:var(--text);line-height:1.3;font-weight:500}
+.quote .attr{margin-top:auto;padding-top:22px;color:var(--text-muted);font-size:14px}
+.quote .attr b{color:var(--text);display:block;font-weight:600}
+.marks{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.marks .ml{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+.mkrow{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--border)}
+.mkrow:first-of-type{border-top:none}
+.mkrow .dot{width:9px;height:9px;border-radius:50%;background:var(--good);flex:none}
+.mkrow span{font-size:15px;color:var(--text-body)}
+
+/* IMPLEMENT, full image */
+.impl-sec{background:var(--bg)}
+.impl-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,5vw,64px);align-items:center}
+.impl-media{border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.impl-media img{width:100%;height:auto;display:block}
+.steps{display:grid;gap:2px;margin-top:26px}
+.step{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:16px 0;border-top:1px solid var(--border)}
+.step .n{font-family:var(--mono);color:var(--signal);font-size:14px}
+.step b{color:var(--text);font-weight:600;display:block;margin-bottom:3px}
+.step p{font-size:14.5px;color:var(--text-muted)}
+
+/* INSIGHTS */
+.ins-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.ins{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px;transition:border-color .16s ease}
+.ins:hover{border-color:var(--signal)}
+.ins .k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.ins h3{font-family:var(--serif);font-size:20px;font-weight:600;line-height:1.2}
+.ins p{font-size:14px;color:var(--text-muted)}
+
+/* CTA + FOOTER */
+.cta-band{background:linear-gradient(120deg,var(--signal-strong),var(--signal));color:#fff;border-radius:22px;padding:clamp(34px,5vw,60px);display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between}
+.cta-band h2{color:#fff;font-size:clamp(26px,3.6vw,40px);max-width:16em}
+.cta-band .btn-primary{background:#fff;color:var(--signal)}
+.cta-band .btn-primary:hover{background:#EAF1FA}
+footer{border-top:1px solid var(--border);padding-block:56px 40px;background:var(--surface)}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:32px}
+.foot h4{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px}
+.foot a{display:block;color:var(--text-body);font-size:14.5px;padding:5px 0}.foot a:hover{color:var(--signal)}
+.foot .brand{margin-bottom:14px}
+.addr{font-size:14px;color:var(--text-muted);line-height:1.7}
+.news{display:flex;gap:8px;margin-top:12px}
+.news input{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:.7em .8em;color:var(--text);font-family:var(--sans);font-size:14px}
+.news input::placeholder{color:var(--text-muted)}
+.news button{background:var(--signal);color:var(--signal-ink);border:none;border-radius:9px;padding:0 14px;font-weight:600;cursor:pointer}
+.foot-base{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;margin-top:44px;padding-top:22px;border-top:1px solid var(--border);color:var(--text-muted);font-size:13px}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:1000px){
+  .hero-in,.ledger-grid,.impl-grid,.proof-grid,.why-grid{grid-template-columns:1fr}
+  .hero-figure{aspect-ratio:16/10;order:-1}
+  .router-grid{grid-template-columns:repeat(2,1fr)}
+  .ins-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  .nav-links,.lang{display:none}
+  .sol-grid,.router-grid,.pillars,.ins-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html" aria-label="Genesys Health home">
+      <svg class="mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="14" stroke="var(--signal)" stroke-width="2.5"/><circle cx="16" cy="16" r="6.5" fill="var(--signal)"/><circle cx="16" cy="16" r="6.5" fill="none" stroke="var(--bg)" stroke-width="1.5"/></svg>
+      genesys
+    </a>
+    <nav class="nav-links">
+      <a href="#solutions">Solutions</a>
+      <a href="#serve">Who we serve</a>
+      <a href="#proof">Proof</a>
+      <a href="leadership.html">About</a>
+      <a href="#insights">Insights</a>
+    </nav>
+    <div class="nav-right">
+      <span class="lang" title="French coming soon"><b>EN</b> / FR</span>
+      <button class="iconbtn" id="themeBtn" aria-label="Switch colour theme" title="Switch theme">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg>
+      </button>
+      <a class="btn btn-primary" href="#contact">Request a demo</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <span class="eyebrow">Health information systems · Lekki, Lagos</span>
+      <h1>Run the whole hospital <span class="lead">from one record.</span></h1>
+      <p class="sub">Genesys builds the hospital management and electronic medical records systems that African health facilities run on, from a single clinic to a multi-site group. Engineered for real power and real bandwidth.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#contact">Request a demo <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href="#chooser">Find the system that fits my practice</a>
+      </div>
+      <div class="trust">
+        <span class="jv">Backed by Vatebra and Realms</span>
+        <span class="chip">Offline-first</span>
+        <span class="chip">NDPR-aligned</span>
+        <span class="chip">HL7 / FHIR</span>
+        <span class="chip">ICD-10 ready</span>
+      </div>
+    </div>
+    <figure class="hero-figure">
+      <img src="assets/img/hero.jpg" alt="Two Genesys specialists reviewing connected hospital, laboratory, pharmacy and records data across a map of Africa">
+    </figure>
+  </div>
+</section>
+
+<section class="ledger-sec" id="about">
+  <div class="wrap ledger-grid">
+    <div class="ledger-lead reveal">
+      <span class="eyebrow">The real diagnosis</span>
+      <h2>African healthcare rarely fails for want of skill. It fails for want of <em>information.</em></h2>
+      <p>Records sit in paper, spreadsheets and disconnected systems. Managers cannot see what is happening in their own facility until it has already cost them. It is why so many African health businesses do not survive past the first generation.</p>
+      <p>Every line below is a place a facility loses money, time or trust. Genesys is built to close them.</p>
+      <figure class="ledger-figure reveal">
+        <img src="assets/img/problem.jpg" alt="A hospital administrator presenting facility performance data to a management board">
+        <figcaption>Where the numbers finally add up: management with a single, current view.</figcaption>
+      </figure>
+    </div>
+    <div class="ledger reveal" aria-label="Operational losses Genesys addresses">
+      <div class="row"><div><span class="name">Fragmented record management</span><span class="csq">The history exists; nobody can find it in time.</span></div><span class="tag">record loss</span></div>
+      <div class="row"><div><span class="name">No reliable data for decisions</span><span class="csq">The facility is flown blind.</span></div><span class="tag">blind spend</span></div>
+      <div class="row"><div><span class="name">Financial misappropriation</span><span class="csq">Revenue leaks between the point of service and the ledger.</span></div><span class="tag">revenue leak</span></div>
+      <div class="row"><div><span class="name">Time management</span><span class="csq">Clinician hours consumed by clerical work.</span></div><span class="tag">lost hours</span></div>
+      <div class="row"><div><span class="name">Unmanaged cost centres</span><span class="csq">Nobody knows which department loses money.</span></div><span class="tag">hidden cost</span></div>
+      <div class="row"><div><span class="name">Procurement management</span><span class="csq">Stockouts standing beside expiries.</span></div><span class="tag">dead stock</span></div>
+      <div class="row"><div><span class="name">HMO management</span><span class="csq">Claims delayed, denied, or never filed.</span></div><span class="tag">unpaid claims</span></div>
+      <div class="row"><div><span class="name">Quality of care management</span><span class="csq">Outcomes unmeasured, therefore unimproved.</span></div><span class="tag">flat outcomes</span></div>
+      <p class="ledger-foot">8 bleeds. One system built to close each one.</p>
+    </div>
+  </div>
+</section>
+
+<section id="serve">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Start where you sit</span>
+      <h2>Four ways in. One system underneath.</h2>
+      <p>The bleeds above look different depending on where you stand. Pick your seat and we will show you the path that fits.</p>
+    </div>
+    <div class="router-grid">
+      <a class="route reveal" href="#contact"><div><span class="rk">Path 01</span><h3>I run a hospital</h3><p>50 to 500 beds. You need to see where the money goes and know the business outlives you.</p></div><span class="go">See the hospital path →</span></a>
+      <a class="route reveal" href="#contact"><div><span class="rk">Path 02</span><h3>I run a small practice</h3><p>A clinic, lab or pharmacy. You need something affordable you can run without an IT department.</p></div><span class="go">See the practice path →</span></a>
+      <a class="route reveal" href="#contact"><div><span class="rk">Path 03</span><h3>I run a public health system</h3><p>A ministry or agency. You need scale across facilities and data you can govern.</p></div><span class="go">Book a consultation →</span></a>
+      <a class="route reveal" href="#contact"><div><span class="rk">Path 04</span><h3>I am a payer</h3><p>An HMO or insurer. You need claims that arrive clean and on time.</p></div><span class="go">Book a consultation →</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="chooser" style="padding-top:0">
+  <div class="wrap">
+    <div class="chooser reveal">
+      <span class="eyebrow">Solution chooser</span>
+      <h3>How big is the practice you run?</h3>
+      <p class="q">Tell us the scale and we will point you to the Genesys system built for it.</p>
+      <div class="scale" role="group" aria-label="Choose your scale">
+        <button data-rec="emr" aria-pressed="false">1 to 20 beds</button>
+        <button data-rec="clinical" aria-pressed="false">20 to 100 beds</button>
+        <button data-rec="hmis" aria-pressed="false">100 to 500 beds</button>
+        <button data-rec="standalone" aria-pressed="false">Not a hospital</button>
+      </div>
+      <div class="rec empty" id="rec" aria-live="polite">Pick a scale to see your recommended system.</div>
+    </div>
+  </div>
+</section>
+
+<section id="solutions" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The systems</span>
+      <h2>Sized to the practice, from paper to full digital operations.</h2>
+      <p>One taxonomy, four fits. Each closes the same bleeds at the scale you run.</p>
+    </div>
+    <div class="sol-grid">
+      <article class="sol reveal">
+        <div class="ph"><img src="assets/img/sol_hmis.jpg" alt="A clinician and administrator reviewing a hospital-wide dashboard linked to pharmacy, laboratory and inpatient wards"></div>
+        <div class="body"><span class="fit">Large practices</span><h3>Genesys HMIS</h3>
+          <p class="desc">An ERP-class system automating processes across every functional area and department. Records, finance, pharmacy, laboratory, claims and wards on one spine.</p>
+          <div class="meta"><span>Whole-facility automation</span><span class="needs">[deployment time: fact needed]</span></div></div>
+      </article>
+      <article class="sol reveal">
+        <div class="ph"><img src="assets/img/sol_emr.jpg" alt="A doctor sharing a tablet record with a mother and child during a consultation"></div>
+        <div class="body"><span class="fit">Small to mid-scale</span><h3>Genesys EMR</h3>
+          <p class="desc">Mid-level process automation across clinical functional areas. Best suited to practices already running disparate IT that need a clean clinical record at the centre.</p>
+          <div class="meta"><span>Clinical workflow</span><span class="needs">[proof point: fact needed]</span></div></div>
+      </article>
+      <article class="sol reveal">
+        <div class="ph"><img src="assets/img/sol_clinical.jpg" alt="A multidisciplinary clinical team reviewing diagnostic imaging together"></div>
+        <div class="body"><span class="fit">Small to mid-scale</span><h3>Clinical Specialized Packages</h3>
+          <p class="desc">Targeted automation for practices that already run IT in some areas and need specific clinical functions brought up to the same standard.</p>
+          <div class="meta"><span>Targeted modules</span><span class="needs">[module list: fact needed]</span></div></div>
+      </article>
+      <article class="sol reveal">
+        <div class="ph"><img src="assets/img/sol_standalone.jpg" alt="Two laboratory scientists reviewing results on a diagnostic dashboard"></div>
+        <div class="body"><span class="fit">Non-hospital</span><h3>Stand-alone Packages</h3>
+          <p class="desc">For independent players in the healthcare ecosystem, such as diagnostic labs and pharmacies, that do not fit routine hospital or clinic classification.</p>
+          <div class="meta"><span>Labs · pharmacies · imaging</span><span class="needs">[proof point: fact needed]</span></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="why-sec" id="why">
+  <div class="wrap why-grid">
+    <div class="reveal">
+      <span class="eyebrow">Why Genesys</span>
+      <h2 style="font-size:clamp(28px,4vw,44px);margin:14px 0 6px">Software that survives the conditions it runs in.</h2>
+      <div class="pillars">
+        <div class="pillar lead"><h3>Offline-first</h3><p>Built for intermittent power and low bandwidth. The clinic keeps working through a power cut, then syncs.</p></div>
+        <div class="pillar"><h3>Simple by design</h3><p>Rich interfaces that generate records by clicking and dragging, so a facility runs without an IT department.</p></div>
+        <div class="pillar"><h3>Affordable</h3><p>A staged path from paper to full digital operations, priced to the scale of the practice.</p></div>
+        <div class="pillar"><h3>Its own team, deep roots</h3><p>Genesys runs its own operation, drawing on software delivery at Vatebra and healthcare experience at Realms.</p></div>
+      </div>
+    </div>
+    <figure class="why-figure reveal"><img src="assets/img/why.jpg" alt="Genesys specialists working on connected health systems"></figure>
+  </div>
+</section>
+
+<section id="proof">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Proof</span>
+      <h2>The record is the argument.</h2>
+      <p>Named clients, certifications and quantified case studies belong here. We publish only what we can stand behind.</p>
+    </div>
+    <div class="proof-grid">
+      <div class="quote reveal">
+        <p class="q">"Our transition was eased by the assistance of the Genesys team. The software is quick and efficient, yet complete."</p>
+        <div class="attr"><b>[Attribution needed: name, role, facility]</b>A testimonial ships only with a full name, role and facility. The placeholder holds the slot until that is confirmed.</div>
+      </div>
+      <div class="marks reveal">
+        <span class="ml">What we can show</span>
+        <div class="mkrow"><span class="dot"></span><span>Named client logos <span class="needs">[permission needed]</span></span></div>
+        <div class="mkrow"><span class="dot"></span><span>Certifications: NDPR · ISO · HL7 <span class="needs">[numbers needed]</span></span></div>
+        <div class="mkrow"><span class="dot"></span><span>Anonymised case studies, quantified</span></div>
+        <div class="mkrow"><span class="dot"></span><span>Established 2017, Lagos</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="impl-sec" id="implement">
+  <div class="wrap impl-grid">
+    <figure class="impl-media reveal"><img src="assets/img/implement.jpg" alt="A Genesys specialist guiding a practice manager through the system at a clinic reception desk"></figure>
+    <div class="reveal">
+      <span class="eyebrow">Getting there</span>
+      <h2 style="font-size:clamp(26px,3.6vw,40px);margin:12px 0 8px">You are not left to install it alone.</h2>
+      <p style="color:var(--text-muted)">The objection that kills most health-IT deals is what happens after the contract. Here is how Genesys handles it.</p>
+      <div class="steps">
+        <div class="step"><span class="n">01</span><div><b>Migration</b><p>Your paper and legacy records are brought across, not abandoned.</p></div></div>
+        <div class="step"><span class="n">02</span><div><b>Training</b><p>Staff are trained on the real workflows they will use every day.</p></div></div>
+        <div class="step"><span class="n">03</span><div><b>Support</b><p>A response commitment and a named line. <span class="needs">[SLA tiers: fact needed]</span></p></div></div>
+        <div class="step"><span class="n">04</span><div><b>Your data stays yours</b><p>Full ownership and export, on request, at any time.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="insights">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Insights</span>
+      <h2>From the sector we work in.</h2>
+      <p>Editable without a developer. These three cards hold the newest posts.</p>
+    </div>
+    <div class="ins-grid">
+      <a class="ins reveal" href="#"><span class="k">Article · fact needed</span><h3>Closing the revenue leak between service and ledger</h3><p>[Insight content pending. Managed from the admin panel in a later stage.]</p></a>
+      <a class="ins reveal" href="#"><span class="k">Article · fact needed</span><h3>What offline-first really means in a Nigerian clinic</h3><p>[Insight content pending. Managed from the admin panel in a later stage.]</p></a>
+      <a class="ins reveal" href="#"><span class="k">Article · fact needed</span><h3>Preparing a facility for its first digital records system</h3><p>[Insight content pending. Managed from the admin panel in a later stage.]</p></a>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <h2>See Genesys running on your own facility's workflow.</h2>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="#">Request a demo <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href="#" style="color:#fff;border-color:rgba(255,255,255,.6)">Chat on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="brand" style="color:var(--text)">
+          <svg class="mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="14" stroke="var(--signal)" stroke-width="2.5"/><circle cx="16" cy="16" r="6.5" fill="var(--signal)"/><circle cx="16" cy="16" r="6.5" fill="none" stroke="var(--bg)" stroke-width="1.5"/></svg>
+          genesys
+        </div>
+        <p class="addr">Genesys Health Information Systems Limited<br>21a Fatai Idowu Arobieke Street,<br>Off Admiralty Way, Lekki Phase 1, Lagos<br><br>+234 903 600 1000<br>info@genesys-health.com</p>
+      </div>
+      <div class="foot"><h4>Solutions</h4><a href="#solutions">Genesys HMIS</a><a href="#solutions">Genesys EMR</a><a href="#solutions">Clinical Packages</a><a href="#solutions">Stand-alone Packages</a></div>
+      <div class="foot"><h4>Company</h4><a href="leadership.html">About</a><a href="leadership.html">The team</a><a href="#proof">Proof</a><a href="#insights">Insights</a></div>
+      <div class="foot">
+        <h4>Stay in the loop</h4>
+        <p class="addr" style="margin-bottom:4px">News on Genesys and African health tech.</p>
+        <div class="news"><input type="email" placeholder="Your email address" aria-label="Email address"><button type="button">→</button></div>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© 2026 Genesys Health Information Systems Limited.</span>
+      <span>Privacy · Terms · Sitemap</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  document.getElementById('themeBtn').addEventListener('click',function(){
+    root.setAttribute('data-theme', root.getAttribute('data-theme')==='light'?'dark':'light');
+  });
+  var recData={
+    emr:{pk:'Recommended · 1 to 20 beds',h:'Genesys EMR',p:'A clean clinical record at the centre of a small practice, with mid-level automation across the areas you run. Simple enough to operate without an IT department.'},
+    clinical:{pk:'Recommended · 20 to 100 beds',h:'Clinical Specialized Packages',p:'Targeted automation that brings the functions you already part-run up to one standard, without replacing everything at once.'},
+    hmis:{pk:'Recommended · 100 to 500 beds',h:'Genesys HMIS',p:'The ERP-class system: records, finance, pharmacy, laboratory, claims and wards automated across every department on one spine.'},
+    standalone:{pk:'Recommended · Not a hospital',h:'Stand-alone Packages',p:'Built for labs, pharmacies and imaging centres in the healthcare ecosystem that do not fit routine hospital or clinic classification.'}
+  };
+  var rec=document.getElementById('rec'), btns=document.querySelectorAll('.scale button');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      btns.forEach(function(x){x.setAttribute('aria-pressed','false')});
+      b.setAttribute('aria-pressed','true');
+      var d=recData[b.getAttribute('data-rec')];
+      rec.classList.remove('empty');
+      rec.innerHTML='<span class="pk">'+d.pk+'</span><h4>'+d.h+'</h4><p>'+d.p+'</p><a href="#contact">Request a demo of '+d.h+' →</a>';
+    });
+  });
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+})();
+</script>
+</body>
+</html>
