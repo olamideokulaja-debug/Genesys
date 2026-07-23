@@ -13,10 +13,7 @@ TABS = [
     ("contact.html",     "Contact"),
 ]
 
-MARK = ('<svg class="mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">'
-        '<circle cx="16" cy="16" r="14" stroke="var(--blue)" stroke-width="2.5"/>'
-        '<circle cx="16" cy="16" r="6.5" fill="var(--blue)"/>'
-        '<circle cx="16" cy="16" r="6.5" fill="none" stroke="#fff" stroke-width="1.5"/></svg>')
+LOGO = '<img src="assets/genesys-logo.png" srcset="assets/genesys-logo.png 1x, assets/genesys-logo@2x.png 2x" alt="Genesys" height="30">'
 
 def head(title, desc):
     return f"""<!doctype html>
@@ -40,7 +37,7 @@ def nav(current):
     return f"""
 <header class="nav">
   <div class="wrap nav-top">
-    <a class="brand" href="index.html" aria-label="Genesys Health home">{MARK}genesys</a>
+    <a class="brand" href="index.html" aria-label="Genesys Health home">{LOGO}</a>
     <div class="nav-actions">
       <span class="lang" title="French coming soon"><b>EN</b> / FR</span>
       <a class="btn btn-primary" href="contact.html">Request a demo</a>
@@ -68,7 +65,7 @@ FOOT = f"""
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <div class="brand" style="margin-bottom:12px">{MARK}genesys</div>
+        <div class="brand" style="margin-bottom:12px">{LOGO}</div>
         <p class="addr">Genesys Health Information Systems Limited<br>21a Fatai Idowu Arobieke Street,<br>Off Admiralty Way, Lekki Phase 1, Lagos<br><br>+234 903 600 1000<br>info@genesys-health.com</p>
       </div>
       <div class="fcol"><h4>Solutions</h4>
@@ -132,7 +129,7 @@ home = f"""
       <a class="btn btn-ghost" href="#chooser">Find the system that fits my practice</a>
     </div>
     <div class="figure hero-band">
-      <img src="assets/img/hero.jpg" alt="Genesys specialists reviewing connected hospital, laboratory, pharmacy and records data across a map of Africa" width="1800" height="1013">
+      <img src="assets/img/hero.jpg" alt="Genesys specialists reviewing connected hospital, laboratory, pharmacy and records data across a map of Africa" width="1600" height="533">
     </div>
     <div class="trust">
       <span class="jv">Backed by Vatebra and Realms</span>
@@ -152,12 +149,6 @@ home = f"""
     </div>
     <div class="ledger reveal">{ledger_rows}
       <p class="ledger-foot">8 bleeds. One system built to close each one.</p>
-    </div>
-  </div>
-  <div class="wrap figure-xl">
-    <div class="figure reveal">
-      <img src="assets/img/board.jpg" alt="A hospital administrator presenting facility performance data to a management board" width="1800" height="1013">
-      <figcaption>Where the numbers finally add up: management with a single, current view.</figcaption>
     </div>
   </div>
 </section>
@@ -203,7 +194,7 @@ home = f"""
       </div>
     </div>
     <div class="figure reveal">
-      <img src="assets/img/analytics.jpg" alt="A clinician working with a live health data dashboard" width="1800" height="1013">
+      <img src="assets/img/analytics.jpg" alt="A clinician working with a live health data dashboard" width="1600" height="533">
     </div>
   </div>
 </section>
@@ -230,7 +221,7 @@ SOLS = [
 ]
 sol_cards = "".join(f"""
       <article class="card reveal">
-        <div class="ph"><img src="assets/img/{img}.jpg" alt="{alt}" width="1800" height="1013"></div>
+        <div class="ph"><img src="assets/img/{img}.jpg" alt="{alt}" width="1600" height="533"></div>
         <div class="body"><span class="fit">{fit}</span><h3>{name}</h3>
           <p class="desc">{desc}</p>
           <div class="meta"><span>{meta}</span><span class="needs">{need}</span></div>
@@ -257,10 +248,10 @@ solutions = f"""
       <h2 style="font-size:clamp(24px,3.2vw,34px);margin:10px 0 12px">Pharmacy, dispensing and stock</h2>
       <p>Stock movement, expiry and dispensing tracked against the same patient record, so procurement stops guessing and stockouts stop standing beside expiries.</p>
     </div>
-    <div class="figure reveal"><img src="assets/img/pharmacy.jpg" alt="A pharmacist scanning medication stock into the system" width="1800" height="1013"></div>
+    <div class="figure reveal"><img src="assets/img/pharmacy.jpg" alt="A pharmacist scanning medication stock into the system" width="1600" height="533"></div>
   </div>
   <div class="wrap split figure-xl">
-    <div class="figure reveal" style="order:-1"><img src="assets/img/telemed.jpg" alt="A mother and child on a video consultation with a doctor" width="1800" height="1013"></div>
+    <div class="figure reveal" style="order:-1"><img src="assets/img/telemed.jpg" alt="A mother and child on a video consultation with a doctor" width="1600" height="533"></div>
     <div class="reveal">
       <span class="eyebrow">Also covered</span>
       <h2 style="font-size:clamp(24px,3.2vw,34px);margin:10px 0 12px">Telemedicine and remote consultation</h2>
@@ -288,7 +279,7 @@ SERVE = [
 ]
 serve_cards = "".join(f"""
       <article class="card reveal">
-        <div class="ph"><img src="assets/img/{img}.jpg" alt="{name}" width="1800" height="1013"></div>
+        <div class="ph"><img src="assets/img/{img}.jpg" alt="{name}" width="1600" height="533"></div>
         <div class="body"><span class="fit">{scale}</span><h3>{name}</h3>
           <p class="desc">{desc}</p>
           <div class="meta"><span>Recommended: {rec}</span></div>
@@ -337,7 +328,7 @@ proof = f"""
   </div>
   <div class="wrap figure-xl">
     <div class="figure reveal">
-      <img src="assets/img/datacentre.jpg" alt="Genesys specialists monitoring connected health facility data across Africa" width="1800" height="1013">
+      <img src="assets/img/datacentre.jpg" alt="Genesys specialists monitoring connected health facility data across Africa" width="1600" height="533">
       <figcaption>Systems running across facilities, monitored centrally.</figcaption>
     </div>
   </div>
@@ -382,7 +373,7 @@ MEMBERS = [
 member_cards = "".join(f"""
       <article class="card member reveal">
         <div class="portrait" style="border:none;border-bottom:1px solid var(--border);border-radius:0">
-          <img src="assets/team/{img}.jpg" alt="{name}, board member" width="900" height="1125"></div>
+          <img src="assets/team/{img}.jpg" alt="{name}, board member" width="560" height="560"></div>
         <div class="body"><span class="mtag">Board member</span><h3>{name}</h3>
           <span class="aff">{role}</span><p class="bio">{bio}</p>
           {f'<span class="todo">{todo}</span>' if todo else ''}</div>
@@ -405,7 +396,7 @@ about = f"""
       <p style="margin-bottom:12px">The consequence is blunt. Inefficiencies in management are why so many health businesses do not survive past the first generation.</p>
       <p class="muted">The answer is the same one that transformed engineering, banking, finance and audit: put the information in one place, and let the facility see itself clearly.</p>
     </div>
-    <div class="figure reveal"><img src="assets/img/team.jpg" alt="A hospital management team meeting beside a ward" width="1800" height="1013"></div>
+    <div class="figure reveal"><img src="assets/img/team.jpg" alt="A hospital management team meeting beside a ward" width="1600" height="533"></div>
   </div>
 </section>
 
@@ -431,9 +422,9 @@ about = f"""
       <h2>The people building Genesys.</h2>
       <p>Our board brings together enterprise software leadership and healthcare operating experience, and sets the direction the company builds against.</p>
     </div>
-    <div class="split wide-right reveal" style="margin-bottom:26px">
-      <div class="portrait"><span class="role-tag">Chairman</span>
-        <img src="assets/team/kunle.jpg" alt="Kunle Akinniran, Chairman of the Genesys board" width="900" height="1125"></div>
+    <div class="split wide-right reveal" style="margin-bottom:22px;align-items:start">
+      <div class="portrait chair"><span class="role-tag">Chairman</span>
+        <img src="assets/team/kunle.jpg" alt="Kunle Akinniran, Chairman of the Genesys board" width="560" height="560"></div>
       <div>
         <span class="eyebrow">Chairman of the board</span>
         <h2 style="font-size:clamp(27px,3.6vw,40px);margin:10px 0 4px">Kunle Akinniran</h2>
@@ -521,7 +512,7 @@ contact = f"""
       <p class="needs" style="margin-top:10px">[Form is visual. Wiring to Supabase and email is a later stage.]</p>
     </div>
     <div class="reveal">
-      <div class="figure"><img src="assets/img/reception.jpg" alt="A Genesys specialist guiding a practice manager at a clinic reception desk" width="1800" height="1013"></div>
+      <div class="figure"><img src="assets/img/reception.jpg" alt="A Genesys specialist guiding a practice manager at a clinic reception desk" width="1600" height="533"></div>
       <div style="margin-top:20px">
         <span class="eyebrow">Come and see us</span>
         <p class="addr" style="margin-top:10px;font-size:15px">Genesys Health Information Systems Limited<br>21a Fatai Idowu Arobieke Street,<br>Off Admiralty Way, Lekki Phase 1, Lagos</p>

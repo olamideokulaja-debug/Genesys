@@ -24,6 +24,9 @@
   },{threshold:.1});
   document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
   // keep the active tab in view on mobile
+  var tabs=document.querySelector('.tabs');
   var cur=document.querySelector('.tab[aria-current="page"]');
-  if(cur&&cur.scrollIntoView){cur.scrollIntoView({block:'nearest',inline:'center'});}
+  if(tabs&&cur&&tabs.scrollWidth>tabs.clientWidth+4){
+    tabs.scrollLeft=cur.offsetLeft-(tabs.clientWidth-cur.offsetWidth)/2;
+  }
 })();
