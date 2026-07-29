@@ -426,9 +426,9 @@ footer{border-top:1px solid var(--border);padding-block:28px 20px;background:var
 .client{display:flex;flex-direction:column;justify-content:center;gap:5px;min-height:96px;padding:16px 18px;
   background:var(--surface);border:1px solid var(--border);border-radius:12px;transition:all .2s var(--ease)}
 .client:hover{border-color:var(--blue);transform:translateY(-3px);box-shadow:var(--shadow)}
-.client .cname{font-size:16.5px;font-weight:600;color:var(--text);line-height:1.2;letter-spacing:-.01em}
-.client .cmeta{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--text-muted)}
-.client .cmark{width:26px;height:26px;border-radius:7px;background:var(--blue-soft);color:var(--blue);
+.client .cname{display:block;font-size:16.5px;font-weight:600;color:var(--text);line-height:1.2;letter-spacing:-.01em}
+.client .cmeta{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--text-muted)}
+.client .cmark{display:grid;place-items:center;width:26px;height:26px;border-radius:7px;background:var(--blue-soft);color:var(--blue);
   display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:600;margin-bottom:7px}
 @media(max-width:1040px){.clients{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.clients{grid-template-columns:1fr}}
@@ -635,3 +635,5 @@ footer{border-top:1px solid var(--border);padding-block:28px 20px;background:var
   letter-spacing:.11em;text-transform:uppercase;color:var(--blue);background:var(--blue-soft);
   padding:6px 12px;border-radius:99px}
 [data-theme="dark"] .cs-logo{background:#fff;padding:4px 7px;border-radius:6px}
+
+.client br{display:none}

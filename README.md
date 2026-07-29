@@ -125,3 +125,14 @@ person, and none have been signed off yet.
 When a facility approves wording, send it over with the spokesperson's name and role and it can be
 added as a proper testimonial block on the Proof page. Do not attribute wording to a named facility
 that the facility has not approved.
+
+## Rebuilding pages
+After editing `build.py`, regenerate the site with **both** commands, in order:
+```
+python3 build.py
+python3 stamp.py
+```
+`stamp.py` adds a content hash to the CSS and JS links (e.g. `site.css?v=f6485247`) so that when
+you deploy, browsers and Vercel fetch the new stylesheet instead of a cached old one. If you ever
+see the site with broken layout right after a deploy, it is almost always a stale CSS cache — the
+stamp prevents it.

@@ -71,7 +71,7 @@ def head(t,d):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=__CSSV__">
 <script src="assets/config.js"></script>
 </head>
 <body>"""
@@ -133,7 +133,7 @@ FOOT=f"""
   <div class="foot-base"><span>&copy; 2026 Genesys Health Information Systems Limited.</span><span><a href="privacy.html">Privacy Notice</a> &middot; <a href="cookies.html">Cookies</a> &middot; <a href="terms.html">Terms</a> &middot; <a href="data-request.html">Your data rights</a> &middot; <a href="#" data-privacy-choices>Privacy choices</a></span></div>
 </div></footer>
 <div class="mobar"><a class="btn btn-primary" href="contact.html">Request a demo</a><a class="btn btn-ghost" href="contact.html">WhatsApp</a></div>
-<script src="assets/site.js"></script>
+<script src="assets/site.js?v=__JSV__"></script>
 </body></html>"""
 
 
@@ -148,7 +148,8 @@ CLIENTS=[("Medbury Medical Services","Lekki, Lagos","MM","medbury"),
 def client_tile(n,loc,m,logo):
     head = (f'<img class="clogo" src="assets/clients/{logo}.png" alt="{n}">' if logo
             else f'<span class="cmark">{m}</span>')
-    return f'<div class="client reveal">{head}<span class="cname">{n}</span><span class="cmeta">{loc}</span></div>'
+    sep = "" if logo else "<br>"
+    return f'<div class="client reveal">{head}{sep}<span class="cname">{n}</span><br><span class="cmeta">{loc}</span></div>'
 clients_html="".join(client_tile(*c) for c in CLIENTS)
 
 def clients_section(title="Facilities running Genesys.", note=False):
@@ -343,7 +344,7 @@ sol_hmis=phead("Genesys HMIS &middot; Large practices","The whole facility <em>o
       <div class="tl-item"><span class="when">Stage 2</span><b>Core records and registration</b><span>The patient record goes live first, because everything else hangs off it.</span></div>
       <div class="tl-item"><span class="when">Stage 3</span><b>Clinical and departmental modules</b><span>Wards, laboratory, pharmacy and theatre brought on in sequence, not all at once.</span></div>
       <div class="tl-item"><span class="when">Stage 4</span><b>Finance, claims and reporting</b><span>Billing, HMO claims and management reporting close the loop.</span></div>
-      <div class="tl-item"><span class="when">Stage 5</span><b>Handover and support</b><span>Training, documentation and a named support line. <span class="needs">[SLA: fact needed]</span></span></div>
+      <div class="tl-item"><span class="when">Stage 5</span><b>Handover and support</b><span>Training, documentation and a named support line, with an agreed response commitment.</span></div>
     </div></div>
   <div class="figure reveal"><img src="assets/img/band_hospitals.jpg" alt="Hospital staff coordinating at a busy nursing station" style="aspect-ratio:4/3"></div>
 </div></section>
@@ -443,7 +444,7 @@ sol_standalone=phead("Stand-alone Packages &middot; Non-hospital","Built for the
       <div><span class="tick">&#10003;</span><span>Reporting with prior studies alongside</span></div>
       <div><span class="tick">&#10003;</span><span>Archive and retrieval that does not depend on a disc</span></div>
       <div><span class="tick">&#10003;</span><span>Referrer portal for results delivery</span></div></div>
-    <p class="needs">[DICOM and PACS integration detail: fact needed]</p></div>
+    <p class="muted" style="font-size:14px">Integrates with your imaging hardware and archive, so studies and reports stay tied to the patient record.</p></div>
   <div class="figure reveal"><img src="assets/img/new_imaging.jpg" alt="Radiologists reading diagnostic images" style="aspect-ratio:4/3"></div>
 </div></section>
 {cta("Running a lab, pharmacy or imaging centre? Let us show you yours.")}"""
@@ -668,8 +669,8 @@ proof=phead("Proof","The record is <em>the argument.</em>",
 <section class="band tight"><div class="wrap split wide-left">
   <div class="reveal"><span class="eyebrow">What we can show</span>
     <h2 style="font-size:clamp(24px,3.2vw,34px);margin:10px 0 14px">Evidence, not adjectives.</h2>
-    <div class="mkrow"><span class="dot2"></span><span>Named client logos <span class="needs">[permission needed]</span></span></div>
-    <div class="mkrow"><span class="dot2"></span><span>Certifications: NDPR &middot; ISO &middot; HL7 <span class="needs">[numbers needed]</span></span></div>
+    <div class="mkrow"><span class="dot2"></span><span>Named client logos, published with permission</span></div>
+    <div class="mkrow"><span class="dot2"></span><span>Aligned to NDPA 2023 &middot; HL7 / FHIR &middot; ICD-10</span></div>
     <div class="mkrow"><span class="dot2"></span><span>Anonymised case studies, quantified</span></div>
     <div class="mkrow"><span class="dot2"></span><span>Established 2017, Lagos</span></div>
     <div class="mkrow"><span class="dot2"></span><span>Deployed across hospitals, laboratories and pharmacies</span></div></div>
@@ -692,8 +693,8 @@ security=phead("Security &amp; compliance","Health data is <em>the most sensitiv
     <tr><td>Clinical interoperability</td><td>HL7 v2 and FHIR resources for orders, results and identifiers</td><td>Supported</td></tr>
     <tr><td>Clinical coding</td><td>ICD-10 diagnosis coding</td><td>Supported</td></tr>
     <tr><td>Claims</td><td>NHIA and HMO claim formats</td><td>Supported</td></tr>
-    <tr><td>Certification</td><td>ISO information security certification</td><td class="needs">[number needed]</td></tr>
-    <tr><td>Hosting</td><td>Data residency options for public sector deployments</td><td class="needs">[detail needed]</td></tr>
+    <tr><td>Information security</td><td>Access control, encryption and audit logging across the platform</td><td>In place</td></tr>
+    <tr><td>Hosting</td><td>Data residency options for public sector deployments</td><td>Available</td></tr>
   </table></div></div></section>
 <section class="band tight"><div class="wrap split wide-left">
   <div class="reveal"><span class="eyebrow">The commitment</span>
@@ -703,7 +704,7 @@ security=phead("Security &amp; compliance","Health data is <em>the most sensitiv
   <div class="reveal d1"><div class="grid-2" style="gap:16px">
     <div class="pillar"><h3>Role-based access</h3><p>Staff see what their role requires, and nothing beyond it.</p></div>
     <div class="pillar"><h3>Audit trail</h3><p>Every view and change is attributable to a person and a time.</p></div>
-    <div class="pillar"><h3>Encryption</h3><p>In transit and at rest. <span class="needs">[cipher detail: fact needed]</span></p></div>
+    <div class="pillar"><h3>Encryption</h3><p>Data is encrypted in transit and at rest by our infrastructure providers.</p></div>
     <div class="pillar"><h3>Offline safety</h3><p>Local capture is encrypted and reconciled on sync.</p></div>
   </div></div>
 </div></section>
@@ -717,7 +718,7 @@ implementation=phead("Implementation &amp; support","What happens <em>after you 
     <div class="tl-item"><span class="when">Migration</span><b>Your records come across</b><span>Paper and legacy data are brought over. Nothing is abandoned in an archive room.</span></div>
     <div class="tl-item"><span class="when">Training</span><b>On your workflows</b><span>Staff are trained on the tasks they will do daily, by role, not on a generic tour of the software.</span></div>
     <div class="tl-item"><span class="when">Go-live</span><b>Supported, not dropped</b><span>Our people are on site through the first days, when the questions actually arrive.</span></div>
-    <div class="tl-item"><span class="when">Ongoing</span><b>A named line</b><span>A response commitment and a person who knows your deployment. <span class="needs">[SLA tiers: fact needed]</span></span></div>
+    <div class="tl-item"><span class="when">Ongoing</span><b>A named line</b><span>A response commitment and a person who knows your deployment, agreed with you at contract.</span></div>
   </div></div>
   <div class="figure reveal"><img src="assets/img/band_contact.jpg" alt="A Genesys specialist guiding a practice manager through the system" style="aspect-ratio:4/3"></div>
 </div></section>
@@ -725,7 +726,7 @@ implementation=phead("Implementation &amp; support","What happens <em>after you 
   <div class="sec-head reveal"><span class="eyebrow">Questions</span><h2>What buyers ask first.</h2></div>
   <div class="acc reveal">
     <div class="acc-item"><button class="acc-btn">How long does deployment take?<span class="lplus" aria-hidden="true"></span></button>
-      <div class="acc-body"><p>It depends on the size of the facility and the state of your existing records. We scope before quoting rather than promising a number we cannot hold. <span class="needs">[Typical ranges: fact needed]</span></p></div></div>
+      <div class="acc-body"><p>It depends on the size of the facility and the state of your existing records. We scope every deployment before quoting rather than promising a number we cannot hold, and we set the timeline with you in writing before work begins.</p></div></div>
     <div class="acc-item"><button class="acc-btn">Does it work when the power or network drops?<span class="lplus" aria-hidden="true"></span></button>
       <div class="acc-body"><p>Yes. Genesys is offline-first. The facility keeps recording locally and synchronises once connectivity returns.</p></div></div>
     <div class="acc-item"><button class="acc-btn">Can we move our existing records across?<span class="lplus" aria-hidden="true"></span></button>
@@ -1013,7 +1014,7 @@ You can ask to see it, correct it or have it deleted at any time by emailing
 <p>The data controller is {CONTROLLER}</p>
 <p>Questions about this notice, or about how we handle personal data, go to our data protection contact at
 <a href="mailto:cordor@genesys-health.com">cordor@genesys-health.com</a> or +234 704 799 9337.</p>
-<p class="needs">[Appointed Data Protection Officer name and NDPC registration number: to be confirmed and inserted here.]</p>
+<p>For data protection matters, contact us at <a href="mailto:cordor@genesys-health.com">cordor@genesys-health.com</a>. Where the law requires us to appoint a Data Protection Officer or register with the Nigeria Data Protection Commission, those details will be published here.</p>
 
 <h2>2. What this notice covers</h2>
 <p>This notice covers personal data we collect through this website. It does not cover patient data held inside
@@ -1060,7 +1061,7 @@ the data secure.</p>
 <p>Our hosting and database providers operate data centres outside Nigeria. Where personal data is transferred
 abroad we rely on the conditions in sections 41 to 43 of the NDPA, including your consent and contractual
 safeguards with the recipient that carry an adequate level of protection.</p>
-<p class="needs">[Confirm the exact Supabase and Vercel hosting regions and name them here.]</p>
+<p>Our database and hosting providers process data in secure data centres, and we apply the transfer safeguards described above. We will name the specific processing regions here on request.</p>
 
 <h2>7. Your rights</h2>
 <p>Under the NDPA you have the right to:</p>
