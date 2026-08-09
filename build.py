@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from exp_page import EXP_BODY, EXP_SCRIPTS
 """Genesys site generator: dropdown navigation, sub-pages, stories, real industry news."""
 import pathlib
 OUT = pathlib.Path(__file__).parent
@@ -13,6 +14,7 @@ NAV = [
    ("how-it-works.html","Pharmacy &amp; inventory","Chapter","Dispensing history, stores and products."),
    ("how-it-works.html","Billing &amp; finance","Chapter","Outpatient bills, payments and claims."),
  ]),
+ ("experience.html","See it live",None,None),
  ("the-problem.html","Why Genesys","g4",[
    ("the-problem.html","The problem","Diagnosis","The eight places a facility loses money and time."),
    ("paper-vs-genesys.html","Paper vs Genesys","Compare","The same patient history, held two ways."),
@@ -75,6 +77,14 @@ def head(t,d):
 <script src="assets/config.js"></script>
 </head>
 <body>"""
+
+def head_x(t,d):
+    # dark-themed head for the immersive experience page; adds experience.css
+    h = head(t,d)
+    h = h.replace('data-theme="light"', 'data-theme="dark"')
+    h = h.replace('<link rel="stylesheet" href="assets/site.css?v=__CSSV__">',
+                  '<link rel="stylesheet" href="assets/site.css?v=__CSSV__">\n<link rel="stylesheet" href="assets/experience.css?v=__XCSSV__">')
+    return h
 
 def nav(cur):
     active_top = PARENT.get(cur, cur)
@@ -175,6 +185,8 @@ SHOTS=[("frontdesk","Front desk &middot; Search patients","Every patient in the 
 PAGES=[]
 def page(f,t,d,body):
     (OUT/f).write_text(head(t,d)+nav(f)+body+FOOT); PAGES.append(f)
+def page_x(f,t,d,body,scripts):
+    (OUT/f).write_text(head_x(t,d)+nav(f)+body+scripts+FOOT); PAGES.append(f)
 
 # ================================================================= HOME
 BLEEDS=[("Fragmented record management","The history exists; nobody can find it in time.","record loss","A single patient record, searchable across every department and site.","78%"),
@@ -204,6 +216,7 @@ home=f"""
   <h1>Run the whole hospital <em>from one record.</em></h1>
   <p class="sub">Genesys builds the hospital management and electronic medical records systems that African health facilities run on, from a single clinic to a multi-site group. Engineered for real power and real bandwidth.</p>
   <div class="hero-cta"><a class="btn btn-primary" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a>
+    <a class="btn btn-ghost" href="experience.html">See it live <span class="arrow">&rarr;</span></a>
     <a class="btn btn-ghost" href="#chooser">Find the system that fits my practice</a></div>
   <div class="hero-stage">
     <div class="hero-photo"><img src="assets/img/hero.jpg" alt="Genesys specialists reviewing connected hospital, laboratory, pharmacy and records data across a map of Africa"></div>
@@ -1292,6 +1305,7 @@ contact=phead("Contact","See Genesys on <em>your own workflow.</em>",
 # ---------------------------------------------------------------- BUILD
 if __name__=="__main__":
     page("index.html","Genesys Health — hospital and records systems for African health facilities","Genesys builds the hospital management and electronic medical records systems that African health facilities run on.",home)
+    page_x("experience.html","See it live — Genesys Health, the whole facility on one record","An interactive walkthrough of Genesys: one patient record moving through every department, the module set, pricing, rollout and data protection.",EXP_BODY, EXP_SCRIPTS)
     page("the-problem.html","The problem — Genesys Health","The eight places an African health facility quietly loses money, time and trust.",the_problem)
     page("paper-vs-genesys.html","Paper vs Genesys — Genesys Health","The same patient history held on paper and in Genesys, side by side.",paper_vs)
     page("why-genesys.html","Why Genesys — Genesys Health","Offline-first, simple by design, affordable, and built by people who have run facilities.",why_genesys)
