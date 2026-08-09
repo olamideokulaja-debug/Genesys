@@ -129,6 +129,15 @@ def phead(k,title,sub):
 <section class="phead"><div class="wrap"><span class="eyebrow">{k}</span>
   <h1>{title}</h1><p>{sub}</p></div></section>"""
 
+def scene_band(mode, kicker, title, sub, hint=""):
+    hint_html = f'<div class="hint">{hint}</div>' if hint else ""
+    return f"""
+<section class="scene3d-band">
+  <canvas class="s3d-canvas" data-scene3d="{mode}" aria-hidden="true"></canvas>
+  <div class="wrap s3d-cap"><span class="eyebrow">{kicker}</span>
+    <h2>{title}</h2><p>{sub}</p>{hint_html}</div>
+</section>"""
+
 FOOT=f"""
 <footer><div class="wrap">
   <div class="foot-grid">
@@ -143,6 +152,7 @@ FOOT=f"""
 </div></footer>
 <div class="mobar"><a class="btn btn-primary" href="contact.html">Request a demo</a><a class="btn btn-ghost" href="contact.html">WhatsApp</a></div>
 <script src="assets/site.js?v=__JSV__"></script>
+<script type="module" src="assets/scene-init.js?v=__S3DINITV__"></script>
 </body></html>"""
 
 
@@ -215,7 +225,7 @@ home=f"""
   <h1>Run the whole hospital <em>from one record.</em></h1>
   <p class="sub">Genesys builds the hospital management and electronic medical records systems that African health facilities run on, from a single clinic to a multi-site group. Engineered for real power and real bandwidth.</p>
   <div class="hero-cta"><a class="btn btn-primary" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a>
-    <a class="btn btn-ghost" href="#chooser">Find the system that fits my practice</a></div>
+    <a class="btn btn-ghost" href="find-your-system.html">Find the system that fits my practice</a></div>
   <div class="hero-stage">
     <div class="hero-frame" id="heroFrame">
       <img class="hero-fallback" src="assets/img/hero.jpg" alt="Genesys specialists reviewing connected hospital, laboratory, pharmacy and records data across a map of Africa">
@@ -298,7 +308,7 @@ sol_cards="".join(f"""<article class="card reveal d{i}"><div class="ph"><img src
  for i,(im,n,fit,u,d) in enumerate(SOLS,1))
 
 solutions=phead("Solutions","Four systems, <em>four different jobs.</em>",
- "They are not tiers of the same product. Each is shaped around a different kind of facility and a different set of problems. Pick the one that matches how you actually operate.")+f"""
+ "They are not tiers of the same product. Each is shaped around a different kind of facility and a different set of problems. Pick the one that matches how you actually operate.")+scene_band("constellation","One record underneath","Every module, on the same patient record.","Twelve functional areas share one spine. Drag to turn the constellation and see how the departments connect.","Drag to rotate")+f"""
 <section class="tight"><div class="wrap"><div class="grid-2">{sol_cards}</div></div></section>
 <section class="band tight"><div class="wrap">
   <div class="sec-head reveal"><span class="eyebrow">Side by side</span><h2>How they differ.</h2></div>
@@ -974,7 +984,7 @@ pl_segs="".join('<span class="pl-seg" role="button" aria-label="Go to screen %d"
                 for k in range(len(WALK)))
 
 how=phead("How it works","The system itself, <em>one screen at a time.</em>",
- "A walkthrough of a live Genesys deployment, from signing in to taking payment. It plays on its own; use the controls to pause or jump. Patient names and figures are demonstration data.")+f"""
+ "A walkthrough of a live Genesys deployment, from signing in to taking payment. It plays on its own; use the controls to pause or jump. Patient names and figures are demonstration data.")+scene_band("journey","The journey of one record","Watch a record light up the whole facility.","One patient record moves from registration to discharge. Each department it touches stays lit, so the whole facility is illuminated by one journey through it.")+f"""
 <section class="tight"><div class="wrap">
   <div class="player reveal" aria-label="Genesys product walkthrough">
     <div class="pl-chapters" role="tablist">{pl_chaps}</div>
@@ -1305,7 +1315,6 @@ contact=phead("Contact","See Genesys on <em>your own workflow.</em>",
 
 # ---------------------------------------------------------------- BUILD
 if __name__=="__main__":
-    home = home + '\n<script type="module" src="assets/home-hero.js?v=__HEROV__"></script>'
     PRICING_BODY = (
       '<section class="tight"><div class="wrap prose">'
       '<span class="eyebrow">Commercial model</span>'
