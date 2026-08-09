@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-from exp_page import EXP_BODY, EXP_SCRIPTS
 """Genesys site generator: dropdown navigation, sub-pages, stories, real industry news."""
 import pathlib
 OUT = pathlib.Path(__file__).parent
@@ -14,7 +13,6 @@ NAV = [
    ("how-it-works.html","Pharmacy &amp; inventory","Chapter","Dispensing history, stores and products."),
    ("how-it-works.html","Billing &amp; finance","Chapter","Outpatient bills, payments and claims."),
  ]),
- ("experience.html","See it live",None,None),
  ("the-problem.html","Why Genesys","g4",[
    ("the-problem.html","The problem","Diagnosis","The eight places a facility loses money and time."),
    ("paper-vs-genesys.html","Paper vs Genesys","Compare","The same patient history, held two ways."),
@@ -49,6 +47,7 @@ NAV = [
    ("insights.html","Stories by Genesys","Our writing","Field notes on health information systems."),
    ("news.html","Industry news","Curated","What the sector is reporting, with sources."),
  ]),
+ ("pricing.html","Pricing",None,None),
  ("contact.html","Contact",None,None),
 ]
 CHILDREN = {p for _,_,_,kids in NAV if kids for p,_,_,_ in kids}
@@ -216,10 +215,12 @@ home=f"""
   <h1>Run the whole hospital <em>from one record.</em></h1>
   <p class="sub">Genesys builds the hospital management and electronic medical records systems that African health facilities run on, from a single clinic to a multi-site group. Engineered for real power and real bandwidth.</p>
   <div class="hero-cta"><a class="btn btn-primary" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a>
-    <a class="btn btn-ghost" href="experience.html">See it live <span class="arrow">&rarr;</span></a>
     <a class="btn btn-ghost" href="#chooser">Find the system that fits my practice</a></div>
   <div class="hero-stage">
-    <div class="hero-photo"><img src="assets/img/hero.jpg" alt="Genesys specialists reviewing connected hospital, laboratory, pharmacy and records data across a map of Africa"></div>
+    <div class="hero-frame" id="heroFrame">
+      <img class="hero-fallback" src="assets/img/hero.jpg" alt="Genesys specialists reviewing connected hospital, laboratory, pharmacy and records data across a map of Africa">
+      <canvas id="heroField" aria-hidden="true"></canvas>
+    </div>
     <div class="uicard">
       <div class="uc-top"><span class="uc-title">Facility overview</span><span class="uc-live"><span class="uc-dot"></span>Live</span></div>
       <div class="uc-rows">
@@ -1304,8 +1305,22 @@ contact=phead("Contact","See Genesys on <em>your own workflow.</em>",
 
 # ---------------------------------------------------------------- BUILD
 if __name__=="__main__":
+    home = home + '\n<script type="module" src="assets/home-hero.js?v=__HEROV__"></script>'
+    PRICING_BODY = (
+      '<section class="tight"><div class="wrap prose">'
+      '<span class="eyebrow">Commercial model</span>'
+      '<h1 style="font-size:clamp(28px,4vw,44px);margin:.15em 0 .3em">Setup and subscription, as separate lines.</h1>'
+      '<p class="sub" style="font-size:clamp(16px,1.8vw,19px);color:var(--text-body);max-width:70ch">A facility budgets capital and operating spend from different envelopes, so the one-time setup fee and the recurring subscription are shown separately, never collapsed. Recurring cost is banded by active users rather than charged per individual seat. Figures are indicative and confirmed at scoping.</p>'
+      '</div></section>'
+      '<section class="tight" style="padding-top:0"><div class="wrap"><div id="priceRoot"></div>'
+      '<div style="margin-top:26px" class="hero-cta"><a class="btn btn-primary" href="contact.html">Request a quote <span class="arrow">&rarr;</span></a>'
+      '<a class="btn btn-ghost" href="how-it-works.html">See it working</a></div>'
+      '</div></section>'
+      '<script src="assets/pricing.config.js?v=__XPRICEV__"></script>'
+      '<script src="assets/pricing-page.js?v=__PPV__"></script>'
+    )
+    page("pricing.html","Pricing — Genesys Health HMIS subscription and setup","Genesys HMIS pricing: one-time setup and recurring subscription shown as separate lines, banded by active users. Indicative figures in naira, confirmed at scoping.",PRICING_BODY)
     page("index.html","Genesys Health — hospital and records systems for African health facilities","Genesys builds the hospital management and electronic medical records systems that African health facilities run on.",home)
-    page_x("experience.html","See it live — Genesys Health, the whole facility on one record","An interactive walkthrough of Genesys: one patient record moving through every department, the module set, pricing, rollout and data protection.",EXP_BODY, EXP_SCRIPTS)
     page("the-problem.html","The problem — Genesys Health","The eight places an African health facility quietly loses money, time and trust.",the_problem)
     page("paper-vs-genesys.html","Paper vs Genesys — Genesys Health","The same patient history held on paper and in Genesys, side by side.",paper_vs)
     page("why-genesys.html","Why Genesys — Genesys Health","Offline-first, simple by design, affordable, and built by people who have run facilities.",why_genesys)
