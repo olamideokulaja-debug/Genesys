@@ -21,6 +21,13 @@ alter table public.leads enable row level security;
 drop policy if exists "anon can insert leads" on public.leads;
 create policy "anon can insert leads" on public.leads
   for insert to anon with check (true);
+-- consent + scheduling columns (idempotent; fixes inserts that send these fields)
+alter table public.leads add column if not exists consent_given   boolean;
+alter table public.leads add column if not exists consent_at       timestamptz;
+alter table public.leads add column if not exists marketing_opt_in boolean;
+alter table public.leads add column if not exists preferred_date   date;
+alter table public.leads add column if not exists preferred_time   text;
+alter table public.leads add column if not exists booking_status   text default 'requested';
 
 -- 2. CHAT MESSAGES ---------------------------------------------------------
 create table if not exists public.chat_messages (
