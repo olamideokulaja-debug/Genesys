@@ -808,3 +808,7 @@ html[data-lite] .device-stage canvas{display:none!important}
   padding:4px 9px;white-space:nowrap;transform:translate(-50%,-140%);transition:opacity .25s;
   box-shadow:0 6px 18px -10px rgba(0,0,0,.8);backdrop-filter:blur(4px)}
 @media(max-width:767px){.gx-pins{display:none}}
+
+/* optional-field tag on the demo form */
+.field .opt{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text-muted);border:1px solid var(--border);border-radius:99px;padding:1px 7px;margin-left:6px;vertical-align:middle}

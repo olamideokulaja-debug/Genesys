@@ -246,6 +246,23 @@
   }
   window.gxInsert = sbInsert;
 
+  /* ---- Vercel Web Analytics, only with analytics consent ---- */
+  (function(){
+    function analyticsAllowed(){
+      try{ var c=JSON.parse(localStorage.getItem('gx-consent')||'null'); return !!(c&&c.analytics); }catch(e){ return false; }
+    }
+    var loaded=false;
+    function load(){
+      if(loaded || !CFG.VERCEL_ANALYTICS || !analyticsAllowed()) return;
+      loaded=true;
+      window.va = window.va || function(){ (window.vaq = window.vaq || []).push(arguments); };
+      var s=document.createElement('script'); s.defer=true; s.src='/_vercel/insights/script.js';
+      document.head.appendChild(s);
+    }
+    load();
+    document.addEventListener('gx-consent', load);   // load if consent is granted later
+  })();
+
   /* Diagnostic: type gxCheck() in the browser console on the live site */
   window.gxCheck = function(){
     var u=(CFG.SUPABASE_URL||'').trim(), k=(CFG.SUPABASE_ANON_KEY||'').trim();
@@ -393,6 +410,7 @@
       }
       var row={full_name:name,email:email,phone:phone,facility_name:val('facility'),
         facility_type:val('ftype'),beds_sites:val('beds'),product:val('product'),message:val('msg'),
+        preferred_date:val('pdate')||null, preferred_time:val('ptime')||null,
         source_page:location.pathname,
         locale:(function(){try{return (window.gxPrefsAllowed&&window.gxPrefsAllowed())?(localStorage.getItem('gx-lang')||'en'):'en';}catch(e){return 'en';}})(),
         consent_given:true, consent_at:new Date().toISOString(),
@@ -408,6 +426,14 @@
       var waLink='https://wa.me/'+wa+'?text='+encodeURIComponent(lines);
 
       sbInsert('leads',row).then(function(res){
+        // if a booking function is configured, ask it to create a calendar hold + send confirmation
+        try{
+          var fn=(CFG.BOOK_FN_URL||'').trim();
+          if(fn && res && res.ok && (row.preferred_date || row.product)){
+            fetch(fn,{method:'POST',headers:{'Content-Type':'application/json'},
+              body:JSON.stringify(row)}).catch(function(){});
+          }
+        }catch(e){}
         if(!ok) return;
         ok.style.background=''; ok.style.color='';
         ok.className='form-ok show';

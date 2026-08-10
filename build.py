@@ -1327,6 +1327,9 @@ contact=phead("Contact","See Genesys on <em>your own workflow.</em>",
       <div class="field"><label for="beds">Beds or sites</label><select id="beds"><option>1 to 20 beds</option><option>20 to 100 beds</option><option>100 to 500 beds</option><option>Multi-site group</option><option>Not a hospital</option></select></div></div>
     <div class="field"><label for="product">Product of interest</label><select id="product"><option>Not sure yet, advise me</option><option>Genesys HMIS</option><option>Genesys EMR</option><option>Clinical Specialized Packages</option><option>Stand-alone Packages</option></select></div>
     <div class="field"><label for="msg">Message</label><textarea id="msg" placeholder="Tell us what you are trying to fix."></textarea></div>
+    <div class="grid-2">
+      <div class="field"><label for="pdate">Preferred demo date <span class="opt">optional</span></label><input id="pdate" type="date"></div>
+      <div class="field"><label for="ptime">Preferred time <span class="opt">optional</span></label><select id="ptime"><option value="">No preference</option><option>Morning (9&ndash;12)</option><option>Early afternoon (12&ndash;3)</option><option>Late afternoon (3&ndash;5)</option></select></div></div>
     <div class="consent" id="consentBox">
       <input type="checkbox" id="consentTick">
       <label for="consentTick">I agree that Genesys may use the details above to respond to this enquiry, and
