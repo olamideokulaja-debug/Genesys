@@ -61,6 +61,8 @@ SUN=('<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="curren
      'stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2'
      'M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg>')
 
+NOFLASH = r'''<script>(function(){try{var c=JSON.parse(localStorage.getItem("gx-consent")||"null");if(c&&c.preferences){var t=localStorage.getItem("gx-theme");if(t)document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("gx-lite")==="1")document.documentElement.setAttribute("data-lite","");if(localStorage.getItem("gx-motion")==="off")document.documentElement.setAttribute("data-motion","off");}}catch(e){}})();</script>'''
+
 def head(t,d):
     return f"""<!doctype html>
 <html lang="en" data-theme="light">
@@ -74,6 +76,7 @@ def head(t,d):
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css?v=__CSSV__">
 <script src="assets/config.js"></script>
+{NOFLASH}
 </head>
 <body>"""
 
@@ -104,7 +107,22 @@ def nav(cur):
     <nav class="tabs" aria-label="Main">{tabs}</nav>
     <div class="nav-actions">
       <button class="langbtn" aria-label="Passer en fran&ccedil;ais"><b>EN</b> / FR</button>
-      <button class="iconbtn" id="themeBtn" aria-label="Switch colour theme">{SUN}</button>
+      <div class="thememenu">
+      <button class="iconbtn" id="themeMenuBtn" aria-label="Theme and display options" aria-haspopup="true" aria-expanded="false">{SUN}</button>
+      <div class="theme-pop" id="themePop" role="menu" aria-label="Theme and display">
+        <h4>Theme</h4>
+        <div class="swatches">
+          <button class="swatch sw-light" role="menuitemradio" data-theme-set="light" aria-pressed="false"><span class="dot"></span>Light</button>
+          <button class="swatch sw-midnight" role="menuitemradio" data-theme-set="midnight" aria-pressed="false"><span class="dot"></span>Midnight</button>
+          <button class="swatch sw-contrast" role="menuitemradio" data-theme-set="contrast" aria-pressed="false"><span class="dot"></span>Contrast</button>
+          <button class="swatch sw-warm" role="menuitemradio" data-theme-set="warm" aria-pressed="false"><span class="dot"></span>Warm</button>
+        </div>
+        <div class="theme-toggles">
+          <label class="tgl"><span class="lbl"><b>Lite mode</b><span>Turn off 3D for low bandwidth</span></span><input type="checkbox" id="liteToggle"></label>
+          <label class="tgl"><span class="lbl"><b>Reduce motion</b><span>Minimise animation</span></span><input type="checkbox" id="motionToggle"></label>
+        </div>
+      </div>
+    </div>
       <a class="btn btn-primary" href="contact.html">Request a demo</a>
     </div>
   </div>
@@ -152,6 +170,7 @@ FOOT=f"""
 </div></footer>
 <div class="mobar"><a class="btn btn-primary" href="contact.html">Request a demo</a><a class="btn btn-ghost" href="contact.html">WhatsApp</a></div>
 <script src="assets/site.js?v=__JSV__"></script>
+<script src="assets/themes.js?v=__THEMEV__"></script>
 <script type="module" src="assets/scene-init.js?v=__S3DINITV__"></script>
 </body></html>"""
 

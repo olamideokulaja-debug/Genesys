@@ -8,7 +8,15 @@
    =========================================================================== */
 import * as THREE from "./vendor/three.module.js";
 
-export function createScene({ canvas, mode="journey", reduceMotion=false, onError }){
+export function createScene({ canvas, mode="journey", reduceMotion=false, colors={}, onError }){
+  const C = {
+    accent: colors.accent || "#39e0ff",
+    dim:    colors.dim    || "#2b4a7a",
+    particle: colors.particle || "#39e0ff",
+    particleOpacity: (colors.particleOpacity!=null?colors.particleOpacity:0.5),
+    shell:  colors.shell  || "#1c3358"
+  };
+  const cx0 = s => new THREE.Color().setStyle((s||"#39e0ff").trim());
   const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:"high-performance" });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.setClearColor(0x000000, 0);
@@ -20,8 +28,8 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, onErro
 
   canvas.addEventListener("webglcontextlost", e => { e.preventDefault(); running=false; onError && onError(); }, false);
 
-  const COL_DIM = new THREE.Color(0x2b4a7a);
-  const COL_LIT = new THREE.Color(0x39e0ff);
+  const COL_DIM = cx0(C.dim);
+  const COL_LIT = cx0(C.accent);
 
   const DEPTS = [
     new THREE.Vector3(-8.2, 0.9, 0.2), new THREE.Vector3(-4.9,-0.7, 1.6),
@@ -37,10 +45,12 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, onErro
     m.add(halo); m.userData.halo=halo; m.userData.lit = mode==="constellation"?1:0;
     group.add(m); return m;
   });
+  const shellMats=[];
   for (let i=0;i<9;i++){
     const s=0.8+Math.random()*1.5;
-    const box=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(s,s*.7,s)),
-      new THREE.LineBasicMaterial({ color:0x1c3358, transparent:true, opacity:.55 }));
+    const sm=new THREE.LineBasicMaterial({ color:cx0(C.shell), transparent:true, opacity:.55 });
+    shellMats.push(sm);
+    const box=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(s,s*.7,s)), sm);
     box.position.set((Math.random()-.5)*20,(Math.random()-.5)*6,(Math.random()-.5)*10-2);
     box.rotation.set(Math.random(),Math.random(),Math.random());
     group.add(box);
@@ -64,7 +74,7 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, onErro
   pGeo.setAttribute("position",new THREE.BufferAttribute(pos,3));
   pGeo.setAttribute("seed",new THREE.BufferAttribute(seed,1));
   const pMat=new THREE.ShaderMaterial({
-    uniforms:{ uTime:{value:0}, uOpacity:{value:.5}, uColor:{value:new THREE.Color(0x39e0ff)} },
+    uniforms:{ uTime:{value:0}, uOpacity:{value:C.particleOpacity}, uColor:{value:cx0(C.particle)} },
     transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
     vertexShader:`attribute float seed; uniform float uTime; varying float vA;
       void main(){ vec3 p=position; float t=uTime;
@@ -147,6 +157,16 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, onErro
   function resume(){ if(!hidden){ running=true; start(); } }
   document.addEventListener("visibilitychange", ()=>{ hidden=document.hidden; if(hidden) pause(); else resume(); });
 
+  function setTheme(nc){
+    if(nc.accent){ COL_LIT.setStyle(nc.accent.trim()); threadMat.color.copy(COL_LIT);
+      nodes.forEach(m=>m.userData.halo.material.color.copy(COL_LIT)); }
+    if(nc.dim) COL_DIM.setStyle(nc.dim.trim());
+    if(nc.particle) pMat.uniforms.uColor.value.setStyle(nc.particle.trim());
+    if(nc.particleOpacity!=null) pMat.uniforms.uOpacity.value=parseFloat(nc.particleOpacity);
+    if(nc.shell) shellMats.forEach(sm=>sm.color.setStyle(nc.shell.trim()));
+  }
+
   resize(); running=true; start();
-  return { setPointer, pause, resume, stop:pause, setVisible(v){ if(v){ running=true; start(); } else pause(); } };
+  return { setPointer, pause, resume, stop:pause, setTheme,
+    setVisible(v){ if(v){ running=true; start(); } else pause(); } };
 }

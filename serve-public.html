@@ -8,8 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=595e5e02">
+<link rel="stylesheet" href="assets/site.css?v=8036fad4">
 <script src="assets/config.js"></script>
+<script>(function(){try{var c=JSON.parse(localStorage.getItem("gx-consent")||"null");if(c&&c.preferences){var t=localStorage.getItem("gx-theme");if(t)document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("gx-lite")==="1")document.documentElement.setAttribute("data-lite","");if(localStorage.getItem("gx-motion")==="off")document.documentElement.setAttribute("data-motion","off");}}catch(e){}})();</script>
 </head>
 <body>
 <header class="nav">
@@ -18,7 +19,22 @@
     <nav class="tabs" aria-label="Main"><a class="tab" href="index.html" data-drop="d0" data-i18n="Home">Home</a><a class="tab has-mega" href="how-it-works.html" data-drop="d1" data-i18n="How it works">How it works</a><a class="tab has-mega" href="the-problem.html" data-drop="d2" data-i18n="Why Genesys">Why Genesys</a><a class="tab has-mega" href="solutions.html" data-drop="d3" data-i18n="Solutions">Solutions</a><a class="tab has-mega" href="who-we-serve.html" data-drop="d4" aria-current="page" data-i18n="Who we serve">Who we serve</a><a class="tab has-mega" href="proof.html" data-drop="d5" data-i18n="Proof">Proof</a><a class="tab has-mega" href="about.html" data-drop="d6" data-i18n="About">About</a><a class="tab has-mega" href="insights.html" data-drop="d7" data-i18n="Insights">Insights</a><a class="tab" href="pricing.html" data-drop="d8" data-i18n="Pricing">Pricing</a><a class="tab" href="contact.html" data-drop="d9" data-i18n="Contact">Contact</a></nav>
     <div class="nav-actions">
       <button class="langbtn" aria-label="Passer en fran&ccedil;ais"><b>EN</b> / FR</button>
-      <button class="iconbtn" id="themeBtn" aria-label="Switch colour theme"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg></button>
+      <div class="thememenu">
+      <button class="iconbtn" id="themeMenuBtn" aria-label="Theme and display options" aria-haspopup="true" aria-expanded="false"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg></button>
+      <div class="theme-pop" id="themePop" role="menu" aria-label="Theme and display">
+        <h4>Theme</h4>
+        <div class="swatches">
+          <button class="swatch sw-light" role="menuitemradio" data-theme-set="light" aria-pressed="false"><span class="dot"></span>Light</button>
+          <button class="swatch sw-midnight" role="menuitemradio" data-theme-set="midnight" aria-pressed="false"><span class="dot"></span>Midnight</button>
+          <button class="swatch sw-contrast" role="menuitemradio" data-theme-set="contrast" aria-pressed="false"><span class="dot"></span>Contrast</button>
+          <button class="swatch sw-warm" role="menuitemradio" data-theme-set="warm" aria-pressed="false"><span class="dot"></span>Warm</button>
+        </div>
+        <div class="theme-toggles">
+          <label class="tgl"><span class="lbl"><b>Lite mode</b><span>Turn off 3D for low bandwidth</span></span><input type="checkbox" id="liteToggle"></label>
+          <label class="tgl"><span class="lbl"><b>Reduce motion</b><span>Minimise animation</span></span><input type="checkbox" id="motionToggle"></label>
+        </div>
+      </div>
+    </div>
       <a class="btn btn-primary" href="contact.html">Request a demo</a>
     </div>
   </div>
@@ -57,5 +73,6 @@
 </div></footer>
 <div class="mobar"><a class="btn btn-primary" href="contact.html">Request a demo</a><a class="btn btn-ghost" href="contact.html">WhatsApp</a></div>
 <script src="assets/site.js?v=64e2d00e"></script>
-<script type="module" src="assets/scene-init.js?v=d8d8f0b6"></script>
+<script src="assets/themes.js?v=00e76049"></script>
+<script type="module" src="assets/scene-init.js?v=1d48360e"></script>
 </body></html>
