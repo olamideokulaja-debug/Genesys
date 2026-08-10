@@ -1,0 +1,35 @@
+name: Build & verify
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build site
+        run: |
+          python3 build.py
+          python3 stamp.py
+
+      - name: Verify links, assets & cache-busting
+        run: python3 tools/check_site.py
+
+      - name: Upload built site
+        uses: actions/upload-artifact@v4
+        with:
+          name: genesys-site
+          path: |
+            *.html
+            assets/**
+            supabase/**
+          if-no-files-found: error
