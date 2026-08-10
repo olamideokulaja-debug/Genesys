@@ -6,5 +6,5 @@ window.GENESYS_CONFIG = {
   WHATSAPP: "2347047999337",     // enquiries line, international format, no plus
   EMAIL: "cordor@genesys-health.com",
   BOOK_FN_URL: "https://msddckzkfubwuuylznah.supabase.co/functions/v1/book-demo",
-  VERCEL_ANALYTICS: true        // set true after enabling Web Analytics in Vercel; only loads with analytics consent
+  VERCEL_ANALYTICS: false        // set true after enabling Web Analytics in Vercel; only loads with analytics consent
 };

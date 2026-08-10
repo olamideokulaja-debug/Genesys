@@ -812,3 +812,45 @@ html[data-lite] .device-stage canvas{display:none!important}
 /* optional-field tag on the demo form */
 .field .opt{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--text-muted);border:1px solid var(--border);border-radius:99px;padding:1px 7px;margin-left:6px;vertical-align:middle}
+
+/* ===================== COMMAND PALETTE (⌘K) ===================== */
+.cmdk{position:fixed;inset:0;z-index:200;display:none;align-items:flex-start;justify-content:center;
+  background:color-mix(in srgb, var(--blue-deep) 55%, transparent);backdrop-filter:blur(4px);padding-top:12vh}
+.cmdk.show{display:flex}
+.cmdk-box{width:min(560px,92vw);background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  box-shadow:var(--shadow-lg);overflow:hidden;animation:cmdkin .16s var(--ease)}
+@keyframes cmdkin{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.cmdk-top{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border)}
+.cmdk-ico{color:var(--text-muted);font-size:16px}
+.cmdk-input{flex:1;border:0;background:transparent;font-family:var(--font);font-size:17px;color:var(--text);outline:none}
+.cmdk-esc{font-family:var(--mono);font-size:10px;color:var(--text-muted);border:1px solid var(--border);border-radius:6px;padding:2px 6px}
+.cmdk-list{list-style:none;margin:0;padding:6px;max-height:52vh;overflow:auto}
+.cmdk-item{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:10px;cursor:pointer}
+.cmdk-item.on{background:var(--blue-soft)}
+.cmdk-label{font-weight:600;color:var(--text);font-size:15px}
+.cmdk-hint{font-size:12px;color:var(--text-muted);font-family:var(--mono)}
+.cmdk-empty{padding:16px 12px;color:var(--text-muted);text-align:center}
+.nav-search{gap:6px}
+.nav-search kbd{font-family:var(--mono);font-size:9.5px;border:1px solid var(--border);border-radius:5px;padding:1px 5px;color:var(--text-muted)}
+
+/* ===================== PRICING CALCULATOR ===================== */
+#priceCalc{margin-top:8px}
+.calc-head{max-width:60ch}
+.calc-head h2{font-size:clamp(22px,3vw,32px);margin:6px 0 8px}
+.calc-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:22px;margin-top:20px;align-items:stretch}
+@media(max-width:820px){.calc-grid{grid-template-columns:1fr}}
+.calc-controls{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;box-shadow:var(--shadow-sm)}
+.calc-seatlab{font-size:15px;color:var(--text-body)}.calc-seatlab b{color:var(--text);font-size:18px;font-variant-numeric:tabular-nums}
+.calc-slider{width:100%;margin:16px 0 6px;accent-color:var(--blue);height:6px}
+.calc-scale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--text-muted)}
+.calc-toggle{display:inline-flex;margin-top:20px;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.calc-toggle button{font-family:var(--font);font-size:14px;font-weight:600;padding:9px 16px;background:transparent;color:var(--text-muted);border:0;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.calc-toggle button.on{background:var(--blue);color:var(--ink)}
+.calc-save{font-family:var(--mono);font-size:10px;letter-spacing:.03em;opacity:.9}
+.calc-out{background:linear-gradient(160deg,var(--tint),var(--surface));border:1px solid var(--border);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.calc-tier{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+.calc-figure{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.calc-amt{font-size:clamp(26px,4.4vw,40px);font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;line-height:1.05}
+.calc-per{font-family:var(--mono);font-size:12px;color:var(--text-muted)}
+.calc-setup{font-size:14px;color:var(--text-body)}.calc-setup b{color:var(--text)}
+.calc-out .btn{margin-top:8px;align-self:flex-start}

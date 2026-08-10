@@ -63,6 +63,8 @@ SUN=('<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="curren
 
 NOFLASH = r'''<script>(function(){try{var c=JSON.parse(localStorage.getItem("gx-consent")||"null");if(c&&c.preferences){var t=localStorage.getItem("gx-theme");if(t)document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("gx-lite")==="1")document.documentElement.setAttribute("data-lite","");if(localStorage.getItem("gx-motion")==="off")document.documentElement.setAttribute("data-motion","off");}}catch(e){}})();</script>'''
 
+JSONLD = '<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Genesys Health Information Systems Limited","url":"https://www.genesys-health.com/","logo":"https://www.genesys-health.com/assets/genesys-logo@2x.png","email":"cordor@genesys-health.com","telephone":"+2347047999337","foundingDate":"2017","address":{"@type":"PostalAddress","streetAddress":"21a Fatai Idowu Arobieke Street, Off Admiralty Way, Lekki Phase 1","addressLocality":"Lagos","addressRegion":"Lagos","addressCountry":"NG"},"areaServed":"NG"}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Genesys Health","url":"https://www.genesys-health.com/"}</script>'
+
 def head(t,d):
     return f"""<!doctype html>
 <html lang="en" data-theme="light">
@@ -77,6 +79,22 @@ def head(t,d):
 <link rel="stylesheet" href="assets/site.css?v=__CSSV__">
 <script src="assets/config.js"></script>
 {NOFLASH}
+<link rel="canonical" href="__CANON__">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Genesys Health">
+<meta property="og:title" content="{t}">
+<meta property="og:description" content="{d}">
+<meta property="og:url" content="__CANON__">
+<meta property="og:image" content="https://www.genesys-health.com/assets/img/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{t}">
+<meta name="twitter:description" content="{d}">
+<meta name="twitter:image" content="https://www.genesys-health.com/assets/img/hero.jpg">
+<meta name="theme-color" content="#0B4FC4">
+<link rel="icon" type="image/png" href="assets/img/favicon-48.png">
+<link rel="apple-touch-icon" href="assets/img/icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+{JSONLD}
 </head>
 <body>"""
 
@@ -106,6 +124,7 @@ def nav(cur):
     <a class="brand" href="index.html" aria-label="Genesys Health home">{LOGO}</a>
     <nav class="tabs" aria-label="Main">{tabs}</nav>
     <div class="nav-actions">
+      <button class="iconbtn nav-search" data-cmdk-open aria-label="Search the site" title="Search (Ctrl/Cmd K)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg></button>
       <button class="langbtn" aria-label="Passer en fran&ccedil;ais"><b>EN</b> / FR</button>
       <div class="thememenu">
       <button class="iconbtn" id="themeMenuBtn" aria-label="Theme and display options" aria-haspopup="true" aria-expanded="false">{SUN}</button>
@@ -171,6 +190,7 @@ FOOT=f"""
 <div class="mobar"><a class="btn btn-primary" href="contact.html">Request a demo</a><a class="btn btn-ghost" href="contact.html">WhatsApp</a></div>
 <script src="assets/site.js?v=__JSV__"></script>
 <script src="assets/themes.js?v=__THEMEV__"></script>
+<script src="assets/palette.js?v=__PALV__"></script>
 <script type="module" src="assets/scene-init.js?v=__S3DINITV__"></script>
 </body></html>"""
 
@@ -1372,12 +1392,13 @@ if __name__=="__main__":
       '<h1 style="font-size:clamp(28px,4vw,44px);margin:.15em 0 .3em">Setup and subscription, as separate lines.</h1>'
       '<p class="sub" style="font-size:clamp(16px,1.8vw,19px);color:var(--text-body);max-width:70ch">A facility budgets capital and operating spend from different envelopes, so the one-time setup fee and the recurring subscription are shown separately, never collapsed. Recurring cost is banded by active users rather than charged per individual seat. Figures are indicative and confirmed at scoping.</p>'
       '</div></section>'
-      '<section class="tight" style="padding-top:0"><div class="wrap"><div id="priceRoot"></div>'
+      '<section class="tight" style="padding-top:0"><div class="wrap"><div id="priceCalc"></div><div id="priceRoot" style="margin-top:40px"></div>'
       '<div style="margin-top:26px" class="hero-cta"><a class="btn btn-primary" href="contact.html">Request a quote <span class="arrow">&rarr;</span></a>'
       '<a class="btn btn-ghost" href="how-it-works.html">See it working</a></div>'
       '</div></section>'
       '<script src="assets/pricing.config.js?v=__XPRICEV__"></script>'
       '<script src="assets/pricing-page.js?v=__PPV__"></script>'
+      '<script src="assets/pricing-calc.js?v=__PCALCV__"></script>'
     )
     page("pricing.html","Pricing — Genesys Health HMIS subscription and setup","Genesys HMIS pricing: one-time setup and recurring subscription shown as separate lines, banded by active users. Indicative figures in naira, confirmed at scoping.",PRICING_BODY)
     page("index.html","Genesys Health — hospital and records systems for African health facilities","Genesys builds the hospital management and electronic medical records systems that African health facilities run on.",home)
@@ -1413,4 +1434,9 @@ if __name__=="__main__":
     page("terms.html","Terms of Use — Genesys Health","The terms on which the Genesys website is provided.",terms)
     page("data-request.html","Your data rights — Genesys Health","Ask to see, correct, delete or move the personal data Genesys holds about you.",data_request)
     page("contact.html","Contact — Genesys Health","Request a demo of Genesys. Lekki Phase 1, Lagos.",contact)
-    print(f"built {len(PAGES)} pages")
+    # sitemap + robots
+    base="https://www.genesys-health.com/"
+    urls="".join(f"<url><loc>{base}{f}</loc></url>" for f in PAGES)
+    (OUT/"sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+urls+"</urlset>\n")
+    (OUT/"robots.txt").write_text("User-agent: *\nAllow: /\nSitemap: "+base+"sitemap.xml\n")
+    print(f"built {len(PAGES)} pages + sitemap.xml + robots.txt")

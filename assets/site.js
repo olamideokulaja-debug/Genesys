@@ -711,8 +711,8 @@
       '<div class="copt"><div><b>Preferences</b><p>Remembers your colour theme and language between visits. '+
         'Stored in your browser only. Nothing is shared with anyone.</p></div>'+
         '<label class="sw"><input type="checkbox" id="cPrefs" aria-label="Allow preference storage"><span></span></label></div>'+
-      '<div class="copt"><div><b>Analytics</b><p>Would let us count visits and see which pages are useful. '+
-        '<b>We do not currently run any analytics.</b> This switch stays off unless we add it and tell you.</p></div>'+
+      '<div class="copt"><div><b>Analytics</b><p>Privacy-friendly Vercel Web Analytics &mdash; counts visits and which pages are useful. '+
+        'Cookieless, no personal data, no cross-site tracking. It loads <b>only</b> if you allow it here.</p></div>'+
         '<label class="sw"><input type="checkbox" id="cStats" aria-label="Allow analytics"><span></span></label></div>'+
       '<p style="font-size:13.5px;color:var(--text-muted)">Information you type into the demo form, the chat or the '+
       'newsletter box is separate from this. That is handled under the consent you give at the point you send it, '+
@@ -764,3 +764,7 @@
     if(!read()) setTimeout(function(){ banner.classList.add('show'); }, 700);
   });
 })();
+
+/* ---------- PWA service worker ---------- */
+(function(){ if('serviceWorker' in navigator){ window.addEventListener('load', function(){
+  navigator.serviceWorker.register('/sw.js').catch(function(){}); }); } })();
