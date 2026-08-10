@@ -65,6 +65,8 @@ NOFLASH = r'''<script>(function(){try{var c=JSON.parse(localStorage.getItem("gx-
 
 JSONLD = '<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Genesys Health Information Systems Limited","url":"https://www.genesys-health.com/","logo":"https://www.genesys-health.com/assets/genesys-logo@2x.png","email":"cordor@genesys-health.com","telephone":"+2347047999337","foundingDate":"2017","address":{"@type":"PostalAddress","streetAddress":"21a Fatai Idowu Arobieke Street, Off Admiralty Way, Lekki Phase 1","addressLocality":"Lagos","addressRegion":"Lagos","addressCountry":"NG"},"areaServed":"NG"}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Genesys Health","url":"https://www.genesys-health.com/"}</script>'
 
+IMPORTMAP = '<script type="importmap">{"imports":{"three":"assets/vendor/three.module.js"}}</script>'
+
 def head(t,d):
     return f"""<!doctype html>
 <html lang="en" data-theme="light">
@@ -77,6 +79,7 @@ def head(t,d):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css?v=__CSSV__">
+{IMPORTMAP}
 <script src="assets/config.js"></script>
 {NOFLASH}
 <link rel="canonical" href="__CANON__">
@@ -125,7 +128,16 @@ def nav(cur):
     <nav class="tabs" aria-label="Main">{tabs}</nav>
     <div class="nav-actions">
       <button class="iconbtn nav-search" data-cmdk-open aria-label="Search the site" title="Search (Ctrl/Cmd K)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg></button>
-      <button class="langbtn" aria-label="Passer en fran&ccedil;ais"><b>EN</b> / FR</button>
+      <div class="langmenu">
+      <button class="langbtn" id="langBtn" aria-haspopup="true" aria-expanded="false" aria-label="Choose language"><span class="langcode">EN</span> <span class="langcaret">&#9662;</span></button>
+      <div class="lang-pop" id="langPop" role="menu" aria-label="Language">
+        <button data-lang="en" role="menuitemradio">English</button>
+        <button data-lang="fr" role="menuitemradio">Fran&ccedil;ais</button>
+        <button data-lang="yo" role="menuitemradio">Yor&ugrave;b&aacute;</button>
+        <button data-lang="ha" role="menuitemradio">Hausa</button>
+        <button data-lang="ig" role="menuitemradio">Igbo</button>
+      </div>
+      </div>
       <div class="thememenu">
       <button class="iconbtn" id="themeMenuBtn" aria-label="Theme and display options" aria-haspopup="true" aria-expanded="false">{SUN}</button>
       <div class="theme-pop" id="themePop" role="menu" aria-label="Theme and display">
@@ -191,6 +203,7 @@ FOOT=f"""
 <script src="assets/site.js?v=__JSV__"></script>
 <script src="assets/themes.js?v=__THEMEV__"></script>
 <script src="assets/palette.js?v=__PALV__"></script>
+<script src="assets/home-dyn.js?v=__DYNV__"></script>
 <script type="module" src="assets/scene-init.js?v=__S3DINITV__"></script>
 </body></html>"""
 
@@ -261,7 +274,7 @@ def cluster_band():
 
 PAGES=[]
 def page(f,t,d,body):
-    (OUT/f).write_text(head(t,d)+nav(f)+body+FOOT); PAGES.append(f)
+    (OUT/f).write_text(head(t,d)+nav(f)+"<main id=\"main\">"+body+"</main>"+FOOT); PAGES.append(f)
 def page_x(f,t,d,body,scripts):
     (OUT/f).write_text(head_x(t,d)+nav(f)+body+scripts+FOOT); PAGES.append(f)
 
@@ -290,13 +303,16 @@ routes="".join(f'<a class="route reveal d{i}" href="{u}"><div><span class="rk">{
 home=f"""
 <section class="hero"><div class="wrap">
   <span class="eyebrow">Health information systems &middot; Lekki, Lagos</span>
-  <h1>Run the whole hospital <em>from one record.</em></h1>
+  <h1>Run the whole <span class="rotword" data-words="hospital,clinic,laboratory,pharmacy,practice">hospital</span> <em>from one record.</em></h1>
   <p class="sub">Genesys builds the hospital management and electronic medical records systems that African health facilities run on, from a single clinic to a multi-site group. Engineered for real power and real bandwidth.</p>
   <div class="hero-cta"><a class="btn btn-primary" href="contact.html">Request a demo <span class="arrow">&rarr;</span></a>
     <a class="btn btn-ghost" href="find-your-system.html">Find the system that fits my practice</a></div>
   <div class="hero-stage">
     <div class="hero-frame" id="heroFrame">
-      <img class="hero-fallback" src="assets/img/hero.jpg" alt="Genesys specialists reviewing connected hospital, laboratory, pharmacy and records data across a map of Africa">
+      <picture>
+        <source srcset="assets/img/hero.webp" type="image/webp">
+        <img class="hero-fallback" src="assets/img/hero.jpg" width="1600" height="667" fetchpriority="high" decoding="async" alt="Genesys specialists reviewing connected hospital, laboratory, pharmacy and records data across a map of Africa">
+      </picture>
       <canvas id="heroField" aria-hidden="true"></canvas>
     </div>
     <div class="uicard">
@@ -313,6 +329,8 @@ home=f"""
     <span class="chip">Offline-first</span><span class="chip">NDPR-aligned</span><span class="chip">HL7 / FHIR</span><span class="chip">ICD-10 ready</span></div>
 </div></section>
 {marquee()}
+
+<section class="ticker"><div class="wrap"><span class="ticker-live"><span class="dot"></span>Live system activity</span><div class="ticker-track"><div class="ticker-row"><span class="ev"><span class="evd"></span><b>Lab result verified</b> &middot; Chemistry <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Front-desk check-in</b> &middot; Outpatient <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>NHIA claim submitted</b> &middot; e-Claim <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Pharmacy dispense logged</b> &middot; Store 2 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Bed assigned</b> &middot; Ward 3 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Radiology order scheduled</b> &middot; CT <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Payment captured</b> &middot; POS <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Record synced</b> &middot; offline → cloud <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Triage completed</b> &middot; A&amp;E <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Prescription e-signed</b> &middot; Clinic <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Lab result verified</b> &middot; Chemistry <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Front-desk check-in</b> &middot; Outpatient <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>NHIA claim submitted</b> &middot; e-Claim <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Pharmacy dispense logged</b> &middot; Store 2 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Bed assigned</b> &middot; Ward 3 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Radiology order scheduled</b> &middot; CT <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Payment captured</b> &middot; POS <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Record synced</b> &middot; offline → cloud <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Triage completed</b> &middot; A&amp;E <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Prescription e-signed</b> &middot; Clinic <span class="evt">now</span></span></div></div></div></section>
 <section class="tight"><div class="wrap">
   <div class="stats">
     <div class="stat reveal"><div class="num"><span data-to="8">0</span></div><div class="lab">operational bleeds closed by one system</div></div>
@@ -321,6 +339,18 @@ home=f"""
     <div class="stat reveal d3"><div class="num"><span data-to="2017" data-sep="0">0</span></div><div class="lab">building health systems in Lagos since</div></div>
   </div>
   <p class="stat-note">Figures shown are illustrative targets, not audited client results.</p>
+</div></section>
+<section class="io-band"><div class="wrap io-grid">
+  <div class="io-copy">
+    <span class="eyebrow">Built to connect</span>
+    <h2>An open, standards-based platform.</h2>
+    <p>Genesys speaks the languages your other systems already use, so records move cleanly between the front desk, the laboratory, the pharmacy and your payers &mdash; online or off.</p>
+    <div class="io-tags"><span>HL7 / FHIR R4</span><span>ICD-10</span><span>NHIA / HMO e-Claims</span><span>REST API</span><span>Offline-first sync</span></div>
+  </div>
+  <div class="term" id="ioTerm" aria-hidden="true">
+    <div class="term-bar"><i></i><i></i><i></i><span>genesys &mdash; interoperability</span></div>
+    <div class="term-body"></div>
+  </div>
 </div></section>
 <section class="band"><div class="wrap">
   <div class="sec-head reveal"><span class="eyebrow">Start where you sit</span>

@@ -14,7 +14,9 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, colors
     dim:    colors.dim    || "#2b4a7a",
     particle: colors.particle || "#39e0ff",
     particleOpacity: (colors.particleOpacity!=null?colors.particleOpacity:0.5),
-    shell:  colors.shell  || "#1c3358"
+    shell:  colors.shell  || "#1c3358",
+    bg:     colors.bg     || "#0b3e92",
+    bg2:    colors.bg2    || "#03215c"
   };
   const cx0 = s => new THREE.Color().setStyle((s||"#39e0ff").trim());
 
@@ -99,6 +101,30 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, colors
   });
   const points=new THREE.Points(pGeo,pMat); scene.add(points);
 
+  /* ---- opaque themed background + post-processing bloom (with graceful fallback) ---- */
+  let lastW=800, lastH=400, composer=null, useBloom=false, bgTex=null;
+  function makeBgTex(){
+    const c=document.createElement("canvas"); c.width=8; c.height=256; const g=c.getContext("2d");
+    const gr=g.createLinearGradient(0,0,0,256); gr.addColorStop(0,C.bg); gr.addColorStop(1,C.bg2);
+    g.fillStyle=gr; g.fillRect(0,0,8,256);
+    const t=new THREE.CanvasTexture(c); if("colorSpace" in t) t.colorSpace=THREE.SRGBColorSpace; return t;
+  }
+  bgTex=makeBgTex(); scene.background=bgTex;
+  (async function initBloom(){
+    try{
+      const m=await Promise.all([
+        import("./vendor/three-addons/postprocessing/EffectComposer.js"),
+        import("./vendor/three-addons/postprocessing/RenderPass.js"),
+        import("./vendor/three-addons/postprocessing/UnrealBloomPass.js")
+      ]);
+      composer=new m[0].EffectComposer(renderer);
+      composer.addPass(new m[1].RenderPass(scene,camera));
+      composer.addPass(new m[2].UnrealBloomPass(new THREE.Vector2(lastW,lastH), 0.9, 0.55, 0.18));
+      composer.setSize(lastW,lastH);
+      useBloom=true;
+    }catch(e){ useBloom=false; }   // no bloom → the sprite glow already carries the look
+  })();
+
   /* journey */
   let jp = mode==="journey"?0:1, phase="run", phaseT=0;
   function setJourney(p){
@@ -129,7 +155,9 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, colors
     const r=canvas.getBoundingClientRect(); let w=Math.round(r.width),h=Math.round(r.height);
     if(w<2||h<2){ const pr=canvas.parentElement.getBoundingClientRect(); w=Math.round(pr.width); h=Math.round(pr.height); }
     if(w<2||h<2) return;
+    lastW=w; lastH=h;
     renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
+    if(composer) composer.setSize(w,h);
   }
   window.addEventListener("resize", resize);
   if(window.ResizeObserver){ try{ new ResizeObserver(resize).observe(canvas); }catch(e){} }
@@ -166,7 +194,9 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, colors
       m.scale.setScalar(1 + (m.userData.lit?0.12:0)*Math.sin(t*3));
     });
 
-    camera.lookAt(camTarget); renderer.render(scene,camera); raf=requestAnimationFrame(frame);
+    camera.lookAt(camTarget);
+    if(useBloom && composer) composer.render(); else renderer.render(scene,camera);
+    raf=requestAnimationFrame(frame);
   }
   function start(){ if(!raf && running){ last=performance.now(); raf=requestAnimationFrame(frame); } }
   function pause(){ running=false; if(raf){cancelAnimationFrame(raf); raf=null;} }
@@ -180,6 +210,8 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, colors
     if(nc.particle) pMat.uniforms.uColor.value.setStyle(nc.particle.trim());
     if(nc.particleOpacity!=null) pMat.uniforms.uOpacity.value=parseFloat(nc.particleOpacity);
     if(nc.shell) shellMats.forEach(sm=>sm.color.setStyle(nc.shell.trim()));
+    if(nc.bg) C.bg=nc.bg.trim(); if(nc.bg2) C.bg2=nc.bg2.trim();
+    if(bgTex && (nc.bg||nc.bg2)){ const nb=makeBgTex(); scene.background=nb; bgTex.dispose(); bgTex=nb; }
   }
 
   resize(); running=true; start();

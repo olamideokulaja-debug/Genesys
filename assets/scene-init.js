@@ -18,7 +18,8 @@ function themeColors(){
   return { accent:g("--s3d-accent")||"#39e0ff", dim:g("--s3d-dim")||"#2b4a7a",
            particle:g("--s3d-particle")||"#39e0ff",
            particleOpacity:parseFloat(g("--s3d-particle-opacity"))||0.5,
-           shell:g("--s3d-shell")||"#1c3358" };
+           shell:g("--s3d-shell")||"#1c3358",
+           bg:g("--s3d-bg")||"#0b3e92", bg2:g("--s3d-bg2")||"#03215c" };
 }
 function onView(el, cb){
   if(!("IntersectionObserver" in window)){ cb(true); return; }

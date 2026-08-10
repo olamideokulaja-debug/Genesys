@@ -509,46 +509,65 @@
     });
   });
 
-  /* ---- LANGUAGE TOGGLE (EN / FR) ---- */
-  var FR={
-    "Home":"Accueil","How it works":"Comment ça marche","Solutions":"Solutions","Who we serve":"Qui nous servons",
-    "Proof":"Références","About":"À propos","Insights":"Analyses","Contact":"Contact",
-    "Request a demo":"Demander une démo","Chat on WhatsApp":"Discuter sur WhatsApp",
-    "Book a consultation":"Réserver une consultation","Read more":"En savoir plus",
-    "All solutions":"Toutes les solutions","Everyone we serve":"Tous nos clients",
-    "Case studies":"Études de cas","Security &amp; compliance":"Sécurité et conformité",
-    "Implementation":"Mise en œuvre","Our story":"Notre histoire","The team":"L'équipe",
-    "Vision &amp; values":"Vision et valeurs","Stories by Genesys":"Récits de Genesys",
-    "Industry news":"Actualité du secteur","Hospitals":"Hôpitaux",
-    "Clinics &amp; practices":"Cliniques et cabinets","Public health systems":"Systèmes de santé publique",
-    "Payers &amp; HMOs":"Assureurs et HMO","Stay in the loop":"Restez informé",
-    "Company":"Entreprise","Your email address":"Votre adresse e-mail"
+  /* ---- LANGUAGE MENU (EN / FR / Yoruba / Hausa / Igbo) ----
+     Interface chrome is translated here; full body content is professionally
+     translated (a per-language banner makes that clear). Missing keys fall
+     back to English, so partial dictionaries degrade gracefully. */
+  var DICT = {
+    fr:{ "Home":"Accueil","How it works":"Comment ça marche","Why Genesys":"Pourquoi Genesys","Solutions":"Solutions","Who we serve":"Qui nous servons",
+      "Proof":"Références","About":"À propos","Insights":"Analyses","Pricing":"Tarifs","Contact":"Contact",
+      "Request a demo":"Demander une démo","Chat on WhatsApp":"Discuter sur WhatsApp","Book a consultation":"Réserver une consultation","Read more":"En savoir plus",
+      "All solutions":"Toutes les solutions","Everyone we serve":"Tous nos clients","Case studies":"Études de cas","Security &amp; compliance":"Sécurité et conformité",
+      "Implementation":"Mise en œuvre","Our story":"Notre histoire","The team":"L'équipe","Vision &amp; values":"Vision et valeurs","Stories by Genesys":"Récits de Genesys",
+      "Industry news":"Actualité du secteur","Hospitals":"Hôpitaux","Clinics &amp; practices":"Cliniques et cabinets","Public health systems":"Systèmes de santé publique",
+      "Payers &amp; HMOs":"Assureurs et HMO","Stay in the loop":"Restez informé","Company":"Entreprise","Your email address":"Votre adresse e-mail" },
+    yo:{ "Home":"Ilé","How it works":"Bí ó ṣe ń ṣiṣẹ́","Why Genesys":"Ìdí Genesys","Solutions":"Àwọn ojútùú","Who we serve":"Àwọn tí a ń sìn",
+      "Proof":"Ẹ̀rí","About":"Nípa wa","Insights":"Ìjìnlẹ̀ ìmọ̀","Pricing":"Iye owó","Contact":"Kàn sí wa",
+      "Request a demo":"Béèrè fún àfihàn","Chat on WhatsApp":"Bá wa sọ̀rọ̀ lórí WhatsApp","Hospitals":"Àwọn ilé ìwòsàn","Company":"Ilé-iṣẹ́" },
+    ha:{ "Home":"Gida","How it works":"Yadda yake aiki","Why Genesys":"Me ya sa Genesys","Solutions":"Mafita","Who we serve":"Waɗanda muke bautar",
+      "Proof":"Tabbaci","About":"Game da mu","Insights":"Bayanai","Pricing":"Farashi","Contact":"Tuntuɓe mu",
+      "Request a demo":"Nemi nuni","Chat on WhatsApp":"Yi hira a WhatsApp","Hospitals":"Asibitoci","Company":"Kamfani" },
+    ig:{ "Home":"Ụlọ","How it works":"Otú o si arụ ọrụ","Why Genesys":"Gịnị mere Genesys","Solutions":"Ngwọta","Who we serve":"Ndị anyị na-ejere ozi",
+      "Proof":"Ihe àkàebe","About":"Banyere anyị","Insights":"Nghọta","Pricing":"Ọnụahịa","Contact":"Kpọtụrụ anyị",
+      "Request a demo":"Rịọ maka ngosi","Chat on WhatsApp":"Kparịta na WhatsApp","Hospitals":"Ụlọ ọgwụ","Company":"Ụlọ ọrụ" }
+  };
+  var LABEL = {en:"EN",fr:"FR",yo:"YO",ha:"HA",ig:"IG"};
+  var BANNER = {
+    fr:'<b>Version française en cours.</b> La navigation est traduite; le contenu détaillé est en cours de traduction professionnelle.',
+    yo:'<b>Ẹ̀dà Yorùbá ń bọ̀.</b> A ti túmọ̀ atọ́ka; àkóónú kíkún wà lábẹ́ ìtúmọ̀ ọ̀jọ̀gbọ́n.',
+    ha:'<b>Sigar Hausa tana zuwa.</b> An fassara kewayawa; cikakken abun ciki yana kan fassarar ƙwararru.',
+    ig:'<b>Ụdị Igbo na-abịa.</b> A sụgharịala njikwa; ọdịnaya zuru ezu nọ n\'okpuru nsụgharị ọkachamara.'
   };
   var lang = (function(){ try{return (window.gxPrefsAllowed&&window.gxPrefsAllowed()) ? (localStorage.getItem('gx-lang')||'en') : 'en';}catch(e){return 'en';} })();
-  var banner=document.createElement('div');
-  banner.className='fr-banner';
-  banner.innerHTML='<div class="wrap"><b>Version française en cours.</b> La navigation est traduite; le contenu détaillé est en cours de traduction professionnelle. <a href="contact.html" style="color:var(--blue);font-weight:600">Contactez-nous en français</a>.</div>';
+
+  var banner=document.createElement('div'); banner.className='fr-banner';
+  banner.innerHTML='<div class="wrap"><span class="fr-msg"></span> <a href="contact.html" style="color:var(--blue);font-weight:600">Contact</a></div>';
   var hdr=document.querySelector('header.nav');
   if(hdr && hdr.parentNode) hdr.parentNode.insertBefore(banner, hdr.nextSibling);
+  var msgEl=banner.querySelector('.fr-msg');
 
   function applyLang(l){
-    var fr = (l==='fr');
-    banner.classList.toggle('show', fr);
-    document.documentElement.setAttribute('lang', fr?'fr':'en');
+    var d = DICT[l], isTr = !!d;
+    banner.classList.toggle('show', isTr);
+    if(isTr && msgEl) msgEl.innerHTML = BANNER[l]||'';
+    document.documentElement.setAttribute('lang', l);
     $$('[data-i18n]').forEach(function(el){
       var k=el.getAttribute('data-i18n');
-      if(fr && FR[k]) el.textContent=FR[k];
-      else el.textContent=k.replace(/&amp;/g,'&');
+      el.textContent = (d && d[k]) ? d[k] : k.replace(/&amp;/g,'&');
     });
-    $$('.langbtn').forEach(function(b){
-      b.innerHTML = fr ? 'EN / <b>FR</b>' : '<b>EN</b> / FR';
-      b.setAttribute('aria-label', fr?'Switch to English':'Passer en français');
-    });
+    $$('.langcode').forEach(function(c){ c.textContent = LABEL[l]||'EN'; });
+    $$('#langPop [data-lang]').forEach(function(b){ b.setAttribute('aria-checked', b.getAttribute('data-lang')===l?'true':'false'); });
     if(window.gxPrefsAllowed&&window.gxPrefsAllowed()){ try{ localStorage.setItem('gx-lang', l); }catch(e){} }
   }
-  $$('.langbtn').forEach(function(b){
-    b.addEventListener('click',function(){ lang = (lang==='fr'?'en':'fr'); applyLang(lang); });
-  });
+
+  var lb=document.getElementById('langBtn'), lp=document.getElementById('langPop');
+  if(lb && lp){
+    lb.addEventListener('click', function(e){ e.stopPropagation(); var o=lp.classList.toggle('open'); lb.setAttribute('aria-expanded', o?'true':'false'); });
+    document.addEventListener('click', function(e){ if(!lp.contains(e.target) && e.target!==lb){ lp.classList.remove('open'); lb.setAttribute('aria-expanded','false'); } });
+    lp.querySelectorAll('[data-lang]').forEach(function(b){
+      b.addEventListener('click', function(){ lang=b.getAttribute('data-lang'); applyLang(lang); lp.classList.remove('open'); lb.setAttribute('aria-expanded','false'); });
+    });
+  }
   applyLang(lang);
 })();
 
