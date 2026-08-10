@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=8036fad4">
+<link rel="stylesheet" href="assets/site.css?v=3ebaddb0">
 <script src="assets/config.js"></script>
 <script>(function(){try{var c=JSON.parse(localStorage.getItem("gx-consent")||"null");if(c&&c.preferences){var t=localStorage.getItem("gx-theme");if(t)document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("gx-lite")==="1")document.documentElement.setAttribute("data-lite","");if(localStorage.getItem("gx-motion")==="off")document.documentElement.setAttribute("data-motion","off");}}catch(e){}})();</script>
 </head>
@@ -47,6 +47,15 @@
   <div class="wrap s3d-cap"><span class="eyebrow">The journey of one record</span>
     <h2>Watch a record light up the whole facility.</h2><p>One patient record moves from registration to discharge. Each department it touches stays lit, so the whole facility is illuminated by one journey through it.</p></div>
 </section>
+<section class="tight device-sec"><div class="wrap">
+  <span class="eyebrow">The real thing</span>
+  <h2 class="device-h">The actual screens, on a real machine.</h2>
+  <div class="device-stage" data-device-stage id="deviceStage">
+    <img class="device-fallback" src="assets/shots/login.jpg" alt="Genesys product screen: staff sign-in">
+    <canvas data-device3d data-shots="login,frontdesk,lab,pharmacy,billing,inventory" aria-hidden="true"></canvas>
+  </div>
+  <p class="muted device-cap">A live Genesys deployment cycling through sign-in, front desk, laboratory, pharmacy, billing and inventory. Demonstration data, not real patient records.</p>
+</div></section>
 <section class="tight"><div class="wrap">
   <div class="player reveal" aria-label="Genesys product walkthrough">
     <div class="pl-chapters" role="tablist"><button data-chapter="Sign in" aria-selected="true">Sign in</button><button data-chapter="Front desk" aria-selected="false">Front desk</button><button data-chapter="Diagnostics" aria-selected="false">Diagnostics</button><button data-chapter="Pharmacy &amp; stock" aria-selected="false">Pharmacy &amp; stock</button><button data-chapter="Billing" aria-selected="false">Billing</button></div>
@@ -98,5 +107,5 @@
 <div class="mobar"><a class="btn btn-primary" href="contact.html">Request a demo</a><a class="btn btn-ghost" href="contact.html">WhatsApp</a></div>
 <script src="assets/site.js?v=64e2d00e"></script>
 <script src="assets/themes.js?v=00e76049"></script>
-<script type="module" src="assets/scene-init.js?v=1d48360e"></script>
+<script type="module" src="assets/scene-init.js?v=a0b0d054"></script>
 </body></html>

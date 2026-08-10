@@ -210,6 +210,35 @@ SHOTS=[("frontdesk","Front desk &middot; Search patients","Every patient in the 
  ("billing","Billing &middot; Outpatient bills","Bills generated from care delivered, showing sponsor, amount and payment status across the facility."),
  ("billing_pay","Billing &middot; Receive payment","The patient's accumulated bills, wallet balance and sponsorship type on one screen, with discounts and invoicing built in.")]
 
+FACILITIES = ["Medbury Medical Services","Kaaf Specialist Hospital","Finnih Medical Centre","Sky-High Medical Centre","Subol Hospital Limited","11PLC Clinic","Mart Medical Clinic","Reddington Hospital, Ikeja"]
+
+def laptop_section():
+    return """
+<section class="tight device-sec"><div class="wrap">
+  <span class="eyebrow">The real thing</span>
+  <h2 class="device-h">The actual screens, on a real machine.</h2>
+  <div class="device-stage" data-device-stage id="deviceStage">
+    <img class="device-fallback" src="assets/shots/login.jpg" alt="Genesys product screen: staff sign-in">
+    <canvas data-device3d data-shots="login,frontdesk,lab,pharmacy,billing,inventory" aria-hidden="true"></canvas>
+  </div>
+  <p class="muted device-cap">A live Genesys deployment cycling through sign-in, front desk, laboratory, pharmacy, billing and inventory. Demonstration data, not real patient records.</p>
+</div></section>"""
+
+def cluster_band():
+    labels="|".join(FACILITIES)
+    items="".join(f"<li>{f}</li>" for f in FACILITIES)
+    return f"""
+<section class="scene3d-band cluster-band">
+  <canvas class="s3d-canvas" data-cluster3d data-labels="{labels}" aria-hidden="true"></canvas>
+  <div class="gx-pins" id="clusterLabels" aria-hidden="true"></div>
+  <div class="wrap s3d-cap">
+    <span class="eyebrow">Already running</span>
+    <h2>Live across Lagos today.</h2>
+    <p>Genesys is in daily use at facilities around the city. Drag the cluster to explore &mdash; each point is a live deployment.</p>
+    <ul class="fac-list">{items}</ul>
+  </div>
+</section>"""
+
 PAGES=[]
 def page(f,t,d,body):
     (OUT/f).write_text(head(t,d)+nav(f)+body+FOOT); PAGES.append(f)
@@ -705,7 +734,7 @@ case_cards="".join('<a class="ins reveal d%d" href="%s"><span class="k">Case stu
 
 # ============================================================ PROOF CLUSTER
 proof=phead("Proof","The record is <em>the argument.</em>",
- "Named clients, certifications and quantified case studies belong here. We publish only what we can stand behind, and mark clearly what is still to be confirmed.")+clients_section("Who runs Genesys today.")+f"""
+ "Named clients, certifications and quantified case studies belong here. We publish only what we can stand behind, and mark clearly what is still to be confirmed.")+clients_section("Who runs Genesys today.")+cluster_band()+f"""
 <section class="tight"><div class="wrap">
   <p class="stat-note" style="margin-top:0">Named with each facility&rsquo;s permission. We publish a quote only after that facility has approved its exact wording and named a spokesperson.</p>
 </div></section>
@@ -1003,7 +1032,7 @@ pl_segs="".join('<span class="pl-seg" role="button" aria-label="Go to screen %d"
                 for k in range(len(WALK)))
 
 how=phead("How it works","The system itself, <em>one screen at a time.</em>",
- "A walkthrough of a live Genesys deployment, from signing in to taking payment. It plays on its own; use the controls to pause or jump. Patient names and figures are demonstration data.")+scene_band("journey","The journey of one record","Watch a record light up the whole facility.","One patient record moves from registration to discharge. Each department it touches stays lit, so the whole facility is illuminated by one journey through it.")+f"""
+ "A walkthrough of a live Genesys deployment, from signing in to taking payment. It plays on its own; use the controls to pause or jump. Patient names and figures are demonstration data.")+scene_band("journey","The journey of one record","Watch a record light up the whole facility.","One patient record moves from registration to discharge. Each department it touches stays lit, so the whole facility is illuminated by one journey through it.")+laptop_section()+f"""
 <section class="tight"><div class="wrap">
   <div class="player reveal" aria-label="Genesys product walkthrough">
     <div class="pl-chapters" role="tablist">{pl_chaps}</div>

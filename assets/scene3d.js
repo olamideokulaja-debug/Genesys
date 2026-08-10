@@ -8,7 +8,7 @@
    =========================================================================== */
 import * as THREE from "./vendor/three.module.js";
 
-export function createScene({ canvas, mode="journey", reduceMotion=false, colors={}, onError }){
+export function createScene({ canvas, mode="journey", reduceMotion=false, colors={}, scrub=false, onError }){
   const C = {
     accent: colors.accent || "#39e0ff",
     dim:    colors.dim    || "#2b4a7a",
@@ -17,6 +17,15 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, colors
     shell:  colors.shell  || "#1c3358"
   };
   const cx0 = s => new THREE.Color().setStyle((s||"#39e0ff").trim());
+
+  // soft radial glow texture for a bloom-like halo around lit nodes
+  const glowTex = (function(){
+    const c=document.createElement("canvas"); c.width=c.height=128;
+    const g=c.getContext("2d"); const gr=g.createRadialGradient(64,64,0,64,64,64);
+    gr.addColorStop(0,"rgba(255,255,255,1)"); gr.addColorStop(0.25,"rgba(255,255,255,0.55)");
+    gr.addColorStop(1,"rgba(255,255,255,0)"); g.fillStyle=gr; g.fillRect(0,0,128,128);
+    const t=new THREE.CanvasTexture(c); return t;
+  })();
   const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:"high-performance" });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.setClearColor(0x000000, 0);
@@ -42,7 +51,11 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, colors
     const m = new THREE.Mesh(new THREE.IcosahedronGeometry(0.72,1), mat); m.position.copy(p);
     const halo = new THREE.Mesh(new THREE.SphereGeometry(0.82,18,18),
       new THREE.MeshBasicMaterial({ color:COL_LIT.clone(), transparent:true, opacity:0, blending:THREE.AdditiveBlending, depthWrite:false }));
-    m.add(halo); m.userData.halo=halo; m.userData.lit = mode==="constellation"?1:0;
+    const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map:glowTex, color:COL_LIT.clone(),
+      transparent:true, opacity:0, blending:THREE.AdditiveBlending, depthWrite:false, depthTest:false }));
+    glow.scale.setScalar(4.2);
+    m.add(halo); m.add(glow); m.userData.halo=halo; m.userData.glow=glow;
+    m.userData.lit = mode==="constellation"?1:0;
     group.add(m); return m;
   });
   const shellMats=[];
@@ -92,7 +105,7 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, colors
     jp=p; threadGeo.setDrawRange(0, Math.floor(p*(SEG+1)));
     const at=curve.getPoint(Math.min(0.999,Math.max(0.001,p))); spark.position.copy(at);
     spark.material.opacity=(p>0&&p<1)?1:0;
-    DEPTS.forEach((d,i)=>{ if(p>=i/(DEPTS.length-1)-0.02) nodes[i].userData.lit=1; });
+    DEPTS.forEach((d,i)=>{ nodes[i].userData.lit = (p >= i/(DEPTS.length-1)-0.02) ? 1 : 0; });
     threadMat.opacity=0.25+p*0.6;
   }
 
@@ -127,7 +140,7 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, colors
     const dt=Math.min(0.05,(now-last)/1000||0.016); last=now; t+=dt;
     pMat.uniforms.uTime.value=t;
 
-    if(mode==="journey"){
+    if(mode==="journey" && !scrub){
       if(!reduceMotion){ phaseT+=dt;
         if(phase==="run"){ setJourney(Math.min(1,jp+dt/11)); if(jp>=1){phase="hold";phaseT=0;} }
         else if(phase==="hold"){ if(phaseT>2.5){phase="fade";phaseT=0;} }
@@ -147,6 +160,9 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, colors
     nodes.forEach(m=>{
       m.material.color.lerp(m.userData.lit?COL_LIT:COL_DIM, 0.07);
       const ho=m.userData.halo.material; ho.opacity += ((m.userData.lit?0.5:0)-ho.opacity)*0.07;
+      const gl=m.userData.glow.material; gl.opacity += ((m.userData.lit?0.9:0)-gl.opacity)*0.07;
+      const pulse = m.userData.lit ? (4.2 + 0.5*Math.sin(t*3)) : 4.2;
+      m.userData.glow.scale.setScalar(pulse);
       m.scale.setScalar(1 + (m.userData.lit?0.12:0)*Math.sin(t*3));
     });
 
@@ -159,7 +175,7 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, colors
 
   function setTheme(nc){
     if(nc.accent){ COL_LIT.setStyle(nc.accent.trim()); threadMat.color.copy(COL_LIT);
-      nodes.forEach(m=>m.userData.halo.material.color.copy(COL_LIT)); }
+      nodes.forEach(m=>{ m.userData.halo.material.color.copy(COL_LIT); m.userData.glow.material.color.copy(COL_LIT); }); }
     if(nc.dim) COL_DIM.setStyle(nc.dim.trim());
     if(nc.particle) pMat.uniforms.uColor.value.setStyle(nc.particle.trim());
     if(nc.particleOpacity!=null) pMat.uniforms.uOpacity.value=parseFloat(nc.particleOpacity);
@@ -168,5 +184,6 @@ export function createScene({ canvas, mode="journey", reduceMotion=false, colors
 
   resize(); running=true; start();
   return { setPointer, pause, resume, stop:pause, setTheme,
+    setProgress(p){ setJourney(Math.max(0,Math.min(1,p))); },
     setVisible(v){ if(v){ running=true; start(); } else pause(); } };
 }

@@ -39,7 +39,9 @@ async function boot(){
   if (booted) return;
   const hasHero = !!document.getElementById("heroField");
   const bands = document.querySelectorAll("canvas[data-scene3d]");
-  if (!hasHero && bands.length === 0) return;
+  const devices = document.querySelectorAll("canvas[data-device3d]");
+  const clusters = document.querySelectorAll("canvas[data-cluster3d]");
+  if (!hasHero && !bands.length && !devices.length && !clusters.length) return;
   if (!capable()) return;
   booted = true;
 
@@ -60,13 +62,50 @@ async function boot(){
     onView(frame, vis=>{ onScreen=vis; hero.setVisible(showing3D && vis); });
   }
 
+  const scrubScenes=[];
   bands.forEach(cv=>{
     const band = cv.closest(".scene3d-band") || cv.parentElement;
-    const scene = engine.createScene({ canvas:cv, mode:cv.dataset.scene3d||"facility", reduceMotion:reduceMotion(), colors,
+    const mode = cv.dataset.scene3d || "facility";
+    const doScrub = (mode === "journey");
+    const scene = engine.createScene({ canvas:cv, mode, reduceMotion:reduceMotion(), colors, scrub:doScrub,
       onError:()=> band.classList.remove("s3d-live") });
     window.gxScenes.push(scene); band.classList.add("s3d-live");
     parallax(band, scene);
     onView(band, vis=> scene.setVisible(vis));
+    if (doScrub) scrubScenes.push({scene, band});
+  });
+  if (scrubScenes.length){
+    let ticking=false;
+    function upd(){ ticking=false; const vh=window.innerHeight;
+      scrubScenes.forEach(o=>{ const r=o.band.getBoundingClientRect();
+        const p=Math.max(0,Math.min(1,(vh - r.top)/(vh + r.height))); o.scene.setProgress(p); }); }
+    function onScroll(){ if(!ticking){ ticking=true; requestAnimationFrame(upd); } }
+    window.addEventListener("scroll", onScroll, {passive:true});
+    window.addEventListener("resize", onScroll);
+    upd();
+  }
+
+  /* 3D laptop showing real screens */
+  devices.forEach(async cv=>{
+    const stage = cv.closest("[data-device-stage]") || cv.parentElement;
+    try{
+      const mod = await import("./device3d.js");
+      const shots=(cv.dataset.shots||"").split(",").filter(Boolean).map(s=>"assets/shots/"+s+".jpg");
+      const dev = mod.createLaptop({ canvas:cv, shots, reduceMotion:reduceMotion(), onError:()=>stage.classList.remove("live") });
+      window.gxScenes.push(dev); stage.classList.add("live"); parallax(stage, dev); onView(stage, vis=>dev.setVisible(vis));
+    }catch(e){}
+  });
+
+  /* stylised facility cluster */
+  clusters.forEach(async cv=>{
+    const band = cv.closest(".scene3d-band") || cv.parentElement;
+    const layer = band.querySelector(".gx-pins");
+    try{
+      const mod = await import("./cluster3d.js");
+      const labels=(cv.dataset.labels||"").split("|").filter(Boolean);
+      const cl = mod.createCluster({ canvas:cv, labels, labelLayer:layer, colors, reduceMotion:reduceMotion(), onError:()=>band.classList.remove("s3d-live") });
+      window.gxScenes.push(cl); band.classList.add("s3d-live"); parallax(band, cl); onView(band, vis=>cl.setVisible(vis));
+    }catch(e){}
   });
 }
 window.gxBootScenes = function(){ if(!booted) boot(); else window.gxScenes.forEach(s=>s.setVisible(true)); };

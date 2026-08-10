@@ -784,3 +784,27 @@ html[data-motion="off"] *{animation-duration:.001ms!important;animation-iteratio
 .tgl input:checked::after{transform:translateX(16px)}
 .tgl .lbl b{display:block;color:var(--text);font-weight:600;font-size:13.5px}
 .tgl .lbl span{font-size:11.5px;color:var(--text-muted)}
+
+/* ===================== 3D LAPTOP SECTION ===================== */
+.device-sec{text-align:center}
+.device-h{font-size:clamp(22px,3vw,34px);max-width:22ch;margin:6px auto 18px}
+.device-stage{position:relative;max-width:920px;margin:0 auto;aspect-ratio:16/9;border-radius:16px;overflow:hidden}
+.device-stage .device-fallback{width:100%;height:100%;object-fit:contain;background:var(--tint);
+  border:1px solid var(--border);border-radius:16px;transition:opacity .6s var(--ease)}
+.device-stage canvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .8s var(--ease)}
+.device-stage.live canvas{opacity:1}
+.device-stage.live .device-fallback{opacity:0}
+.device-cap{max-width:60ch;margin:16px auto 0;font-size:14px}
+html[data-lite] .device-stage canvas{display:none!important}
+
+/* ===================== FACILITY CLUSTER ===================== */
+.cluster-band .s3d-cap{max-width:1180px}
+.cluster-band .fac-list{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px 10px}
+.cluster-band .fac-list li{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:#C7DBF5;
+  border:1px solid rgba(127,216,255,.3);border-radius:99px;padding:6px 12px}
+.gx-pins{position:absolute;inset:0;z-index:2;pointer-events:none}
+.gx-pin{position:absolute;top:0;left:0;font-family:var(--mono);font-size:11px;letter-spacing:.02em;
+  color:#EAF6FF;background:rgba(4,20,52,.72);border:1px solid rgba(127,216,255,.4);border-radius:8px;
+  padding:4px 9px;white-space:nowrap;transform:translate(-50%,-140%);transition:opacity .25s;
+  box-shadow:0 6px 18px -10px rgba(0,0,0,.8);backdrop-filter:blur(4px)}
+@media(max-width:767px){.gx-pins{display:none}}
