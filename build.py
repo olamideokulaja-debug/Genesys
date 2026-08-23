@@ -65,7 +65,7 @@ NOFLASH = r'''<script>(function(){try{var c=JSON.parse(localStorage.getItem("gx-
 
 JSONLD = '<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Genesys Health Information Systems Limited","url":"https://www.genesys-health.com/","logo":"https://www.genesys-health.com/assets/genesys-logo@2x.png","email":"cordor@genesys-health.com","telephone":"+2347047999337","foundingDate":"2017","address":{"@type":"PostalAddress","streetAddress":"21a Fatai Idowu Arobieke Street, Off Admiralty Way, Lekki Phase 1","addressLocality":"Lagos","addressRegion":"Lagos","addressCountry":"NG"},"areaServed":"NG"}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Genesys Health","url":"https://www.genesys-health.com/"}</script>'
 
-IMPORTMAP = '<script type="importmap">{"imports":{"three":"assets/vendor/three.module.js"}}</script>'
+IMPORTMAP = '<script type="importmap">{"imports":{"three":"/assets/vendor/three.module.js"}}</script>'
 
 def head(t,d):
     return f"""<!doctype html>
