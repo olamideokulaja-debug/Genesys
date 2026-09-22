@@ -252,7 +252,7 @@ def laptop_section():
   <h2 class="device-h">The actual screens, on a real machine.</h2>
   <div class="device-stage" data-device-stage id="deviceStage">
     <img class="device-fallback" src="assets/shots/login.jpg" alt="Genesys product screen: staff sign-in">
-    <canvas data-device3d data-shots="login,frontdesk,lab,pharmacy,billing,inventory" aria-hidden="true"></canvas>
+    <canvas data-device3d data-shots="login,frontdesk,triage,lab,results,pharmacy,billing,claims,inventory" aria-hidden="true"></canvas>
   </div>
   <p class="muted device-cap">A live Genesys deployment cycling through sign-in, front desk, laboratory, pharmacy, billing and inventory. Demonstration data, not real patient records.</p>
 </div></section>"""
@@ -328,6 +328,27 @@ home=f"""
   <div class="hero-trust"><span class="jv">Backed by Vatebra and Realms</span>
     <span class="chip">Offline-first</span><span class="chip">NDPR-aligned</span><span class="chip">HL7 / FHIR</span><span class="chip">ICD-10 ready</span></div>
 </div></section>
+<section class="tight film-band"><div class="wrap">
+  <div class="sec-head reveal" style="text-align:center">
+    <span class="eyebrow">Watch</span>
+    <h2 style="font-size:clamp(24px,3.4vw,38px);margin-top:6px">See Genesys in one short film.</h2>
+    <p class="muted" style="max-width:54ch;margin:8px auto 0">The story behind why one record changes how a whole facility runs.</p>
+  </div>
+  <button class="film-poster reveal" id="filmPlay" aria-label="Play the Genesys film">
+    <img src="assets/img/film-poster.jpg" alt="Genesys film: a facility's records still kept on paper" loading="lazy" decoding="async">
+    <span class="film-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+  </button>
+  </div>
+  <div class="film-modal" id="filmModal" role="dialog" aria-modal="true" aria-label="Genesys film">
+    <button class="film-close" id="filmClose" aria-label="Close">&times;</button>
+    <div class="film-frame">
+      <video id="filmVideo" controls playsinline preload="none" poster="assets/img/film-poster.jpg">
+        <source src="assets/video/genesys-film.mp4" type="video/mp4">
+        <track kind="captions" src="assets/video/genesys-film.vtt" srclang="en" label="English">
+      </video>
+    </div>
+  </div>
+</section>
 {marquee()}
 
 <section class="ticker"><div class="wrap"><span class="ticker-live"><span class="dot"></span>Live system activity</span><div class="ticker-track"><div class="ticker-row"><span class="ev"><span class="evd"></span><b>Lab result verified</b> &middot; Chemistry <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Front-desk check-in</b> &middot; Outpatient <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>NHIA claim submitted</b> &middot; e-Claim <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Pharmacy dispense logged</b> &middot; Store 2 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Bed assigned</b> &middot; Ward 3 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Radiology order scheduled</b> &middot; CT <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Payment captured</b> &middot; POS <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Record synced</b> &middot; offline → cloud <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Triage completed</b> &middot; A&amp;E <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Prescription e-signed</b> &middot; Clinic <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Lab result verified</b> &middot; Chemistry <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Front-desk check-in</b> &middot; Outpatient <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>NHIA claim submitted</b> &middot; e-Claim <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Pharmacy dispense logged</b> &middot; Store 2 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Bed assigned</b> &middot; Ward 3 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Radiology order scheduled</b> &middot; CT <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Payment captured</b> &middot; POS <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Record synced</b> &middot; offline → cloud <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Triage completed</b> &middot; A&amp;E <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Prescription e-signed</b> &middot; Clinic <span class="evt">now</span></span></div></div></div></section>
@@ -390,8 +411,21 @@ home=f"""
   <a class="shot reveal d1" href="how-it-works.html" style="display:block">
     <div class="shot-bar"><i></i><i></i><i></i><span>genesys &middot; live deployment</span></div>
     <img src="assets/shots/frontdesk.jpg" alt="The Genesys front desk patient search screen">
-    <div class="shot-cap"><b>Front desk &middot; Search patients.</b> One of ten screens in the walkthrough.</div>
+    <div class="shot-cap"><b>Front desk &middot; Search patients.</b> One of nine screens in the walkthrough.</div>
   </a>
+</div></section>
+<section class="tight"><div class="wrap">
+  <div class="sec-head reveal" style="text-align:center"><span class="eyebrow">The people building Genesys</span>
+    <h2 style="font-size:clamp(24px,3.4vw,36px);margin-top:6px">A team you can reach.</h2></div>
+  <div class="team-strip reveal">
+    <a class="ts-face" href="team.html"><img src="assets/team/kunle.jpg" alt="Kunle Akinniran"><b>Kunle Akinniran</b><span>Chairman</span></a>
+    <a class="ts-face" href="team.html"><img src="assets/team/mike.jpg" alt="Mike Aigbe"><b>Mike Aigbe</b><span>Deputy MD, Vatebra</span></a>
+    <a class="ts-face" href="team.html"><img src="assets/team/olamide.jpg" alt="Olamide Okulaja"><b>Olamide Okulaja</b><span>CEO, Realms Healthcare</span></a>
+    <a class="ts-face" href="team.html"><img src="assets/team/jennifer.jpg" alt="Jennifer Kaja"><b>Jennifer Kaja</b><span>MD, Realms Healthcare</span></a>
+    <a class="ts-face" href="team.html"><img src="assets/team/kitunde.jpg" alt="Kitunde"><b>Kitunde</b><span>Client Liaison Manager</span></a>
+    <a class="ts-face" href="team.html"><img src="assets/team/chinonso.jpg" alt="Chinonso"><b>Chinonso</b><span>ICT &amp; Implementation Officer</span></a>
+  </div>
+  <div style="text-align:center;margin-top:22px"><a class="btn btn-ghost" href="team.html">Meet the team <span class="arrow">&rarr;</span></a></div>
 </div></section>
 {cta()}"""
 
@@ -899,6 +933,14 @@ members="".join(f"""<article class="card member reveal d{i}">
  <div class="body"><span class="mtag">Board member</span><h3>{n}</h3><span class="aff">{r}</span>
  <p class="bio">{b}</p>{f'<span class="todo">{t}</span>' if t else ''}</div></article>"""
  for i,(im,n,r,b,t) in enumerate(MEMBERS,1))
+TEAM=[("kitunde","Kitunde","Client Liaison Manager","Full name and biography to follow"),
+      ("chinonso","Chinonso","ICT and Implementation Officer","Full name and biography to follow")]
+teamcards="".join(f'''<article class="card member reveal d{i}">
+ <div class="portrait" style="border:none;border-bottom:1px solid var(--border);border-radius:0">
+ <img src="assets/team/{im}.jpg" alt="{n}, {r}"></div>
+ <div class="body"><span class="mtag">Genesys team</span><h3>{n}</h3><span class="aff">{r}</span>
+ {f'<span class="todo">{t}</span>' if t else ""}</div></article>'''
+ for i,(im,n,r,t) in enumerate(TEAM,1))
 team=phead("The team","The people <em>building Genesys.</em>",
  "Our board brings together enterprise software leadership and healthcare operating experience, and sets the direction the company builds against.")+f"""
 <section class="tight"><div class="wrap">
@@ -910,7 +952,10 @@ team=phead("The team","The people <em>building Genesys.</em>",
       <p style="color:var(--blue);font-weight:600;font-size:14.5px;margin-bottom:14px">Managing Director and CEO, Vatebra Limited</p>
       <p style="font-size:15.5px">A technology leader with over 20 years of experience, Kunle joined the Vatebra board in 2006. He was previously Group Head of IT at the defunct Fountain Trust Bank, where in 2001 he led the implementation of the Bankmaster and Branchpower banking systems, and he was part of the team that pioneered a scratch-card based online solution that carried Vatebra's work across Ghana, Sierra Leone and The Gambia. He holds a B.Sc in Computer Sciences from the University of Lagos and an MBA in International Business Management, and is a member of the Nigerian Computer Society, the Computer Professionals Registration Council of Nigeria and the Institute of Directors. He is a multiple-time winner of Tech Company CEO of the Year at the Nigeria Technology Awards.</p></div>
   </div>
-  <div class="grid-3">{members}</div></div></section>
+  <div class="grid-3">{members}</div>
+  <div class="sec-head reveal" style="margin-top:44px"><span class="eyebrow">The wider team</span>
+    <h2 style="font-size:clamp(22px,3vw,30px);margin-top:6px">The people clients work with day to day.</h2></div>
+  <div class="grid-3">{teamcards}</div></div></section>
 {cta("Talk to the team behind Genesys.")}"""
 
 # ============================================================ STORIES
@@ -1046,26 +1091,24 @@ news=phead("Industry news","What the sector <em>is reporting.</em>",
 # ============================================================ HOW IT WORKS
 # Sequenced walkthrough: chapter, key, kicker, title, description
 WALK=[
- ("Sign in","login","Access","One login, one branch, one record",
+ ("Sign in","login","Access","One login, one role, one record",
   "Staff sign in against a role. What they can see and change follows that role, and every action is attributable. Multi-branch groups switch site from the top bar without signing out."),
- ("Front desk","frontdesk","Front desk &middot; Search patients","Every patient, findable in seconds",
-  "The whole patient list, filtered by number, name, phone, gender, sponsor, type, status or registration date. This is the front desk's working queue rather than a report they request."),
+ ("Front desk","frontdesk","Front desk &middot; Find a patient","Every patient, findable in seconds",
+  "The whole patient list, searchable by number, name, phone or sponsor. This is the front desk's working queue rather than a report they request."),
+ ("Emergency","triage","Emergency &middot; Record an arrival","Triage at the front door",
+  "An arrival is logged straight into the emergency queue with how they came in and how they arrived, so the sickest are seen first."),
  ("Diagnostics","lab","Laboratory &middot; Sample collection queue","Requests arrive ready to work",
-  "Orders reach the laboratory with the requesting doctor, category, priority and patient status already attached. The scientist takes the sample straight from the queue."),
- ("Diagnostics","radiology","Radiology &middot; Test order queue","Emergencies surface at the top",
-  "Imaging orders carry categories, priority flags and request dates. Emergency and high-priority cases are visible without anyone having to ask."),
- ("Diagnostics","radiology_sched","Radiology &middot; Scheduling","An order becomes an appointment",
-  "The request turns into a scheduled test against the patient record, with the doctor's requested date visible beside any rescheduling."),
- ("Pharmacy &amp; stock","pharmacy","Pharmacy &middot; Drug dispense history","Every dose accounted for",
-  "Each dispensed medication tied to prescriber, dispenser, quantity and instruction, filterable by patient, doctor, sponsor and status."),
- ("Pharmacy &amp; stock","inventory","Inventory &middot; Stock across stores","One product, several stores, live counts",
-  "Main store, pharmacy store and laboratory store counted separately and together, so nobody reorders what is already sitting in another room."),
- ("Pharmacy &amp; stock","products","Inventory &middot; Product catalogue","Cost, price and variants in one place",
-  "Unit cost, selling price, variants and total quantity per item, with bulk upload so a facility can be set up quickly rather than typed in over weeks."),
- ("Billing","billing","Billing &middot; Outpatient bills","Care delivered becomes money owed",
-  "Bills generated from the care actually delivered, showing sponsor, total amount, date generated and payment status across the facility."),
- ("Billing","billing_pay","Billing &middot; Receive payment","The whole account on one screen",
-  "Accumulated bills, payment receipts, wallet balance and sponsorship type together, with discount requests and invoicing built into the same view."),
+  "Orders reach the laboratory with the requesting clinician, priority and patient status attached. The scientist takes the sample straight from the queue."),
+ ("Diagnostics","results","Diagnostics &middot; Results waiting","Critical results surface in red",
+  "Verified results group by patient and wait for a clinician to acknowledge them. A critical value stays red until somebody signs it off."),
+ ("Pharmacy &amp; stock","pharmacy","Pharmacy &middot; Vet and dispense","Every dose accounted for",
+  "Prescriptions are vetted then dispensed, with stock decremented in the same step and each item tied to prescriber, quantity and instruction."),
+ ("Pharmacy &amp; stock","inventory","Store &middot; Stock on the shelf","One product, live counts",
+  "Every item counted on the shelf, with receipts, movements and reorder levels, so nobody reorders what is already sitting in another room."),
+ ("Billing","billing","Billing &middot; Bills and the till","Care delivered becomes money owed",
+  "Bills generated from the care actually delivered, grouped into outstanding and settled, with the till, refunds and sponsor on one screen."),
+ ("Billing","claims","Billing &middot; HMO claims","Claims reconciled against payers",
+  "Submitted claims tracked against each HMO, with reconciliation status and the amount still outstanding per payer."),
 ]
 CHAPTERS=[]
 for c,_,_,_,_ in WALK:

@@ -79,3 +79,16 @@
     }
   }
 })();
+
+/* ---- film lightbox ---- */
+(function(){
+  var fp=document.getElementById('filmPlay'), fm=document.getElementById('filmModal'),
+      fc=document.getElementById('filmClose'), fv=document.getElementById('filmVideo');
+  if(!fp||!fm||!fv) return;
+  function openF(){ fm.classList.add('show'); document.documentElement.style.overflow='hidden'; try{ fv.play(); }catch(e){} }
+  function closeF(){ fm.classList.remove('show'); document.documentElement.style.overflow=''; try{ fv.pause(); }catch(e){} }
+  fp.addEventListener('click', openF);
+  fc.addEventListener('click', closeF);
+  fm.addEventListener('click', function(e){ if(e.target===fm) closeF(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && fm.classList.contains('show')) closeF(); });
+})();
