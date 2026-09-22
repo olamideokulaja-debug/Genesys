@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=b98e87be">
+<link rel="stylesheet" href="assets/site.css?v=b9e8fac1">
 <script type="importmap">{"imports":{"three":"/assets/vendor/three.module.js"}}</script>
 <script src="assets/config.js"></script>
 <script>(function(){try{var c=JSON.parse(localStorage.getItem("gx-consent")||"null");if(c&&c.preferences){var t=localStorage.getItem("gx-theme");if(t)document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("gx-lite")==="1")document.documentElement.setAttribute("data-lite","");if(localStorage.getItem("gx-motion")==="off")document.documentElement.setAttribute("data-motion","off");}}catch(e){}})();</script>
@@ -100,21 +100,17 @@
     <h2 style="font-size:clamp(24px,3.4vw,38px);margin-top:6px">See Genesys in one short film.</h2>
     <p class="muted" style="max-width:54ch;margin:8px auto 0">The story behind why one record changes how a whole facility runs.</p>
   </div>
-  <button class="film-poster reveal" id="filmPlay" aria-label="Play the Genesys film">
-    <img src="assets/img/film-poster.jpg" alt="Genesys film: a facility's records still kept on paper" loading="lazy" decoding="async">
-    <span class="film-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-  </button>
+  <div class="film-stage reveal">
+    <button class="film-poster" id="filmPlay" aria-label="Play the Genesys film">
+      <img src="assets/img/film-poster.jpg" alt="Genesys film: a facility's records still kept on paper" loading="lazy" decoding="async">
+      <span class="film-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+    </button>
+    <video id="filmVideo" class="film-video" controls playsinline preload="none" poster="assets/img/film-poster.jpg">
+      <source src="assets/video/genesys-film.mp4" type="video/mp4">
+      <track kind="captions" src="assets/video/genesys-film.vtt" srclang="en" label="English">
+    </video>
   </div>
-  <div class="film-modal" id="filmModal" role="dialog" aria-modal="true" aria-label="Genesys film">
-    <button class="film-close" id="filmClose" aria-label="Close">&times;</button>
-    <div class="film-frame">
-      <video id="filmVideo" controls playsinline preload="none" poster="assets/img/film-poster.jpg">
-        <source src="assets/video/genesys-film.mp4" type="video/mp4">
-        <track kind="captions" src="assets/video/genesys-film.vtt" srclang="en" label="English">
-      </video>
-    </div>
-  </div>
-</section>
+</div></section>
 <div class="marquee"><div class="mq-track"><span class="mq-item">NDPR aligned</span><span class="mq-item">HL7 / FHIR ready</span><span class="mq-item">ICD-10 coded</span><span class="mq-item">Offline-first architecture</span><span class="mq-item">NHIA &amp; HMO claims</span><span class="mq-item">Multi-site reporting</span><span class="mq-item">Role-based access</span><span class="mq-item">Data export on request</span><span class="mq-item">NDPR aligned</span><span class="mq-item">HL7 / FHIR ready</span><span class="mq-item">ICD-10 coded</span><span class="mq-item">Offline-first architecture</span><span class="mq-item">NHIA &amp; HMO claims</span><span class="mq-item">Multi-site reporting</span><span class="mq-item">Role-based access</span><span class="mq-item">Data export on request</span></div></div>
 
 <section class="ticker"><div class="wrap"><span class="ticker-live"><span class="dot"></span>Live system activity</span><div class="ticker-track"><div class="ticker-row"><span class="ev"><span class="evd"></span><b>Lab result verified</b> &middot; Chemistry <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Front-desk check-in</b> &middot; Outpatient <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>NHIA claim submitted</b> &middot; e-Claim <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Pharmacy dispense logged</b> &middot; Store 2 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Bed assigned</b> &middot; Ward 3 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Radiology order scheduled</b> &middot; CT <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Payment captured</b> &middot; POS <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Record synced</b> &middot; offline → cloud <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Triage completed</b> &middot; A&amp;E <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Prescription e-signed</b> &middot; Clinic <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Lab result verified</b> &middot; Chemistry <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Front-desk check-in</b> &middot; Outpatient <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>NHIA claim submitted</b> &middot; e-Claim <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Pharmacy dispense logged</b> &middot; Store 2 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Bed assigned</b> &middot; Ward 3 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Radiology order scheduled</b> &middot; CT <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Payment captured</b> &middot; POS <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Record synced</b> &middot; offline → cloud <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Triage completed</b> &middot; A&amp;E <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Prescription e-signed</b> &middot; Clinic <span class="evt">now</span></span></div></div></div></section>
@@ -194,8 +190,8 @@
     <a class="ts-face" href="team.html"><img loading="lazy" decoding="async" src="assets/team/mike.jpg" alt="Mike Aigbe"><b>Mike Aigbe</b><span>Deputy MD, Vatebra</span></a>
     <a class="ts-face" href="team.html"><img loading="lazy" decoding="async" src="assets/team/olamide.jpg" alt="Olamide Okulaja"><b>Olamide Okulaja</b><span>CEO, Realms Healthcare</span></a>
     <a class="ts-face" href="team.html"><img loading="lazy" decoding="async" src="assets/team/jennifer.jpg" alt="Jennifer Kaja"><b>Jennifer Kaja</b><span>MD, Realms Healthcare</span></a>
-    <a class="ts-face" href="team.html"><img loading="lazy" decoding="async" src="assets/team/kitunde.jpg" alt="Kitunde"><b>Kitunde</b><span>Client Liaison Manager</span></a>
-    <a class="ts-face" href="team.html"><img loading="lazy" decoding="async" src="assets/team/chinonso.jpg" alt="Chinonso"><b>Chinonso</b><span>ICT &amp; Implementation Officer</span></a>
+    <a class="ts-face" href="team.html"><img loading="lazy" decoding="async" src="assets/team/kitunde.jpg" alt="Kitunde Abayomi"><b>Kitunde Abayomi</b><span>Client Liaison Manager</span></a>
+    <a class="ts-face" href="team.html"><img loading="lazy" decoding="async" src="assets/team/chinonso.jpg" alt="Chinomso Ordor"><b>Chinomso Ordor</b><span>ICT &amp; Implementation Officer</span></a>
   </div>
   <div style="text-align:center;margin-top:22px"><a class="btn btn-ghost" href="team.html">Meet the team <span class="arrow">&rarr;</span></a></div>
 </div></section>
@@ -219,6 +215,6 @@
 <script src="assets/site.js?v=b56757fc"></script>
 <script src="assets/themes.js?v=00e76049"></script>
 <script src="assets/palette.js?v=1ef06d9d"></script>
-<script src="assets/home-dyn.js?v=d9debc34"></script>
+<script src="assets/home-dyn.js?v=f891fe1c"></script>
 <script type="module" src="assets/scene-init.js?v=43dc0392"></script>
 </body></html>

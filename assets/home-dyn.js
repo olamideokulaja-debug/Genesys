@@ -80,15 +80,31 @@
   }
 })();
 
-/* ---- film lightbox ---- */
+/* ---- film: play fills the screen, returns to place when it ends ---- */
 (function(){
-  var fp=document.getElementById('filmPlay'), fm=document.getElementById('filmModal'),
-      fc=document.getElementById('filmClose'), fv=document.getElementById('filmVideo');
-  if(!fp||!fm||!fv) return;
-  function openF(){ fm.classList.add('show'); document.documentElement.style.overflow='hidden'; try{ fv.play(); }catch(e){} }
-  function closeF(){ fm.classList.remove('show'); document.documentElement.style.overflow=''; try{ fv.pause(); }catch(e){} }
-  fp.addEventListener('click', openF);
-  fc.addEventListener('click', closeF);
-  fm.addEventListener('click', function(e){ if(e.target===fm) closeF(); });
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && fm.classList.contains('show')) closeF(); });
+  var fp=document.getElementById('filmPlay'), fv=document.getElementById('filmVideo');
+  if(!fp||!fv) return;
+  function enterFS(){
+    var r=fv.requestFullscreen||fv.webkitRequestFullscreen||fv.webkitEnterFullscreen||fv.msRequestFullscreen;
+    if(r){ try{ r.call(fv); }catch(e){} }
+  }
+  function exitFS(){
+    if(document.fullscreenElement||document.webkitFullscreenElement){
+      var x=document.exitFullscreen||document.webkitExitFullscreen; if(x){ try{ x.call(document); }catch(e){} }
+    }
+  }
+  function toPoster(){ try{ fv.pause(); }catch(e){} fv.classList.remove('on'); fp.style.display=''; }
+  fp.addEventListener('click', function(){
+    fp.style.display='none'; fv.classList.add('on');
+    enterFS();
+    var pr=fv.play(); if(pr&&pr.catch){ pr.catch(function(){}); }
+  });
+  fv.addEventListener('ended', function(){ exitFS(); toPoster(); });
+  fv.addEventListener('webkitendfullscreen', toPoster);   // iOS returns inline
+  ['fullscreenchange','webkitfullscreenchange'].forEach(function(ev){
+    document.addEventListener(ev, function(){
+      var fsEl=document.fullscreenElement||document.webkitFullscreenElement;
+      if(!fsEl && fv.classList.contains('on') && !fv.ended){ toPoster(); }
+    });
+  });
 })();

@@ -928,7 +928,8 @@ html[data-motion="off"] .ticker-row,html[data-lite] .ticker-row{animation:none}
 
 /* ===================== FILM (landing) ===================== */
 .film-band .sec-head{margin-bottom:22px}
-.film-poster{display:block;position:relative;width:100%;max-width:900px;margin:0 auto;border:0;padding:0;cursor:pointer;
+.film-stage{position:relative;width:100%;max-width:900px;margin:0 auto}
+.film-poster{display:block;position:relative;width:100%;border:0;padding:0;cursor:pointer;
   border-radius:16px;overflow:hidden;background:#05122b;box-shadow:var(--shadow-lg)}
 .film-poster img{display:block;width:100%;height:auto;transition:transform .4s var(--ease),filter .3s}
 .film-poster:hover img{transform:scale(1.02);filter:brightness(1.05)}
@@ -936,12 +937,6 @@ html[data-motion="off"] .ticker-row,html[data-lite] .ticker-row{animation:none}
   display:grid;place-items:center;background:color-mix(in srgb,var(--blue) 88%,transparent);color:#fff;
   box-shadow:0 10px 30px -8px rgba(0,0,0,.5);transition:transform .2s var(--ease),background .2s}
 .film-poster:hover .film-play{transform:translate(-50%,-50%) scale(1.08)}
-.film-modal{position:fixed;inset:0;z-index:210;display:none;align-items:center;justify-content:center;
-  background:rgba(3,10,26,.86);backdrop-filter:blur(6px);padding:24px}
-.film-modal.show{display:flex}
-.film-frame{width:min(1100px,94vw);aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-lg)}
-.film-frame video{width:100%;height:100%;display:block;background:#000}
-.film-close{position:absolute;top:18px;right:22px;width:44px;height:44px;border-radius:50%;border:0;cursor:pointer;
-  font-size:26px;line-height:1;color:#fff;background:rgba(255,255,255,.12)}
-.film-close:hover{background:rgba(255,255,255,.22)}
+.film-video{display:none;width:100%;aspect-ratio:16/9;background:#000;border-radius:16px}
+.film-video.on{display:block}
 html[data-motion="off"] .film-poster:hover img{transform:none}

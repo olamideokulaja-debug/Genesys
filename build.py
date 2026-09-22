@@ -334,21 +334,17 @@ home=f"""
     <h2 style="font-size:clamp(24px,3.4vw,38px);margin-top:6px">See Genesys in one short film.</h2>
     <p class="muted" style="max-width:54ch;margin:8px auto 0">The story behind why one record changes how a whole facility runs.</p>
   </div>
-  <button class="film-poster reveal" id="filmPlay" aria-label="Play the Genesys film">
-    <img src="assets/img/film-poster.jpg" alt="Genesys film: a facility's records still kept on paper" loading="lazy" decoding="async">
-    <span class="film-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-  </button>
+  <div class="film-stage reveal">
+    <button class="film-poster" id="filmPlay" aria-label="Play the Genesys film">
+      <img src="assets/img/film-poster.jpg" alt="Genesys film: a facility's records still kept on paper" loading="lazy" decoding="async">
+      <span class="film-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+    </button>
+    <video id="filmVideo" class="film-video" controls playsinline preload="none" poster="assets/img/film-poster.jpg">
+      <source src="assets/video/genesys-film.mp4" type="video/mp4">
+      <track kind="captions" src="assets/video/genesys-film.vtt" srclang="en" label="English">
+    </video>
   </div>
-  <div class="film-modal" id="filmModal" role="dialog" aria-modal="true" aria-label="Genesys film">
-    <button class="film-close" id="filmClose" aria-label="Close">&times;</button>
-    <div class="film-frame">
-      <video id="filmVideo" controls playsinline preload="none" poster="assets/img/film-poster.jpg">
-        <source src="assets/video/genesys-film.mp4" type="video/mp4">
-        <track kind="captions" src="assets/video/genesys-film.vtt" srclang="en" label="English">
-      </video>
-    </div>
-  </div>
-</section>
+</div></section>
 {marquee()}
 
 <section class="ticker"><div class="wrap"><span class="ticker-live"><span class="dot"></span>Live system activity</span><div class="ticker-track"><div class="ticker-row"><span class="ev"><span class="evd"></span><b>Lab result verified</b> &middot; Chemistry <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Front-desk check-in</b> &middot; Outpatient <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>NHIA claim submitted</b> &middot; e-Claim <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Pharmacy dispense logged</b> &middot; Store 2 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Bed assigned</b> &middot; Ward 3 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Radiology order scheduled</b> &middot; CT <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Payment captured</b> &middot; POS <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Record synced</b> &middot; offline → cloud <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Triage completed</b> &middot; A&amp;E <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Prescription e-signed</b> &middot; Clinic <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Lab result verified</b> &middot; Chemistry <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Front-desk check-in</b> &middot; Outpatient <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>NHIA claim submitted</b> &middot; e-Claim <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Pharmacy dispense logged</b> &middot; Store 2 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Bed assigned</b> &middot; Ward 3 <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Radiology order scheduled</b> &middot; CT <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Payment captured</b> &middot; POS <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Record synced</b> &middot; offline → cloud <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Triage completed</b> &middot; A&amp;E <span class="evt">now</span></span><span class="ev"><span class="evd"></span><b>Prescription e-signed</b> &middot; Clinic <span class="evt">now</span></span></div></div></div></section>
@@ -422,8 +418,8 @@ home=f"""
     <a class="ts-face" href="team.html"><img src="assets/team/mike.jpg" alt="Mike Aigbe"><b>Mike Aigbe</b><span>Deputy MD, Vatebra</span></a>
     <a class="ts-face" href="team.html"><img src="assets/team/olamide.jpg" alt="Olamide Okulaja"><b>Olamide Okulaja</b><span>CEO, Realms Healthcare</span></a>
     <a class="ts-face" href="team.html"><img src="assets/team/jennifer.jpg" alt="Jennifer Kaja"><b>Jennifer Kaja</b><span>MD, Realms Healthcare</span></a>
-    <a class="ts-face" href="team.html"><img src="assets/team/kitunde.jpg" alt="Kitunde"><b>Kitunde</b><span>Client Liaison Manager</span></a>
-    <a class="ts-face" href="team.html"><img src="assets/team/chinonso.jpg" alt="Chinonso"><b>Chinonso</b><span>ICT &amp; Implementation Officer</span></a>
+    <a class="ts-face" href="team.html"><img src="assets/team/kitunde.jpg" alt="Kitunde Abayomi"><b>Kitunde Abayomi</b><span>Client Liaison Manager</span></a>
+    <a class="ts-face" href="team.html"><img src="assets/team/chinonso.jpg" alt="Chinomso Ordor"><b>Chinomso Ordor</b><span>ICT &amp; Implementation Officer</span></a>
   </div>
   <div style="text-align:center;margin-top:22px"><a class="btn btn-ghost" href="team.html">Meet the team <span class="arrow">&rarr;</span></a></div>
 </div></section>
@@ -933,8 +929,8 @@ members="".join(f"""<article class="card member reveal d{i}">
  <div class="body"><span class="mtag">Board member</span><h3>{n}</h3><span class="aff">{r}</span>
  <p class="bio">{b}</p>{f'<span class="todo">{t}</span>' if t else ''}</div></article>"""
  for i,(im,n,r,b,t) in enumerate(MEMBERS,1))
-TEAM=[("kitunde","Kitunde","Client Liaison Manager","Full name and biography to follow"),
-      ("chinonso","Chinonso","ICT and Implementation Officer","Full name and biography to follow")]
+TEAM=[("kitunde","Kitunde Abayomi","Client Liaison Manager","Biography to follow"),
+      ("chinonso","Chinomso Ordor","ICT and Implementation Officer","Biography to follow")]
 teamcards="".join(f'''<article class="card member reveal d{i}">
  <div class="portrait" style="border:none;border-bottom:1px solid var(--border);border-radius:0">
  <img src="assets/team/{im}.jpg" alt="{n}, {r}"></div>
