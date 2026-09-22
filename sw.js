@@ -1,7 +1,7 @@
 /* Genesys — service worker. Precache the shell, serve assets cache-first and
    pages network-first (so content stays fresh), with an offline fallback.
    Bump CACHE when assets change to retire the old cache. */
-const CACHE = "genesys-a2b1d439";
+const CACHE = "genesys-7ad39d17";
 const SHELL = [
   "/index.html",
   "/assets/site.css",
