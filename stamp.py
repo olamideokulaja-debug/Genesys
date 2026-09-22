@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import hashlib
 """Run after build.py: stamps CSS/JS links with a content hash so browsers
 and Vercel never serve a stale stylesheet. Usage: python3 build.py && python3 stamp.py"""
 import pathlib, hashlib, re
@@ -36,4 +37,11 @@ for f in pathlib.Path(".").glob("*.html"):
     t=re.sub(r'pricing\.config\.js(\?v=[0-9a-f]{8})?"', f'pricing.config.js?v={xpricev}"', t)
     t=_lazyimg(t)
     f.write_text(t)
-print(f"stamped CSS v={cssv} JS v={jsv} THEME v={themev} S3D v={s3dinitv} PAL v={palv} PCALC v={pcalcv}")
+# auto-version the service worker cache so deploys never serve stale assets
+swv=hashlib.md5((cssv+jsv+s3dinitv+themev).encode()).hexdigest()[:8]
+swf=pathlib.Path("sw.js")
+if swf.exists():
+    sw=swf.read_text()
+    sw=re.sub(r'genesys-[0-9a-zA-Z]+', f'genesys-{swv}', sw, count=1)
+    swf.write_text(sw)
+print(f"stamped CSS v={cssv} JS v={jsv} THEME v={themev} S3D v={s3dinitv} PAL v={palv} PCALC v={pcalcv} SW v={swv}")
