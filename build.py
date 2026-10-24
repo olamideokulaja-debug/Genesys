@@ -411,10 +411,11 @@ home=f"""
     <div class="shot-cap"><b>Front desk &middot; Search patients.</b> One of nine screens in the walkthrough.</div>
   </a>
 </div></section>
-<!-- The Genesys V3 demo film, 24 October 2026. Nine minutes of the system in use,
-     with demonstration data. It plays from the company's own storage, only when
-     somebody presses play: no autoplay, no third-party player, no tracking.
-     Captions are on by default. Esc, Close or a press outside the film closes it. -->
+<!-- The Genesys V3 demo film, 24 October 2026. The system in use, with
+     demonstration data, from the company's own storage: no third-party player,
+     no tracking. Watch the demo starts it at once and full screen, with captions
+     on; it closes itself when the film ends, and Esc or Close closes it sooner.
+     Nothing loads until the button is pressed. -->
 <dialog class="demo-film" id="demoFilm" aria-labelledby="demoFilmTitle">
   <div class="df-head"><h2 id="demoFilmTitle">Genesys V3 &middot; the platform demo, 10 minutes</h2>
     <button type="button" class="df-close" data-demo-film-close>Close</button></div>
@@ -427,28 +428,54 @@ home=f"""
   <p class="df-foot">Demonstration data throughout. Genesys V3 is in clinical validation.</p>
 </dialog>
 <style>
-.demo-film{{width:min(1100px,94vw);max-height:94vh;padding:0;border:0;border-radius:14px;background:#0b1220;color:#fff;overflow:auto}}
-.demo-film::backdrop{{background:rgba(6,10,18,.7)}}
-.demo-film .df-head{{display:flex;align-items:center;gap:12px;padding:12px 16px}}
-.demo-film h2{{font-size:17px;margin:0;flex:1;color:#fff}}
+/* The whole window, even where a browser refuses true full screen. */
+.demo-film{{inset:0;width:100vw;height:100vh;height:100dvh;max-width:100vw;max-height:100vh;max-height:100dvh;margin:0;padding:0;border:0;border-radius:0;background:#000;color:#fff;overflow:hidden}}
+.demo-film[open]{{display:flex;flex-direction:column}}
+.demo-film::backdrop{{background:#000}}
+.demo-film .df-head{{display:flex;align-items:center;gap:12px;padding:10px 16px;background:#0b1220}}
+.demo-film h2{{font-size:16px;margin:0;flex:1;color:#fff}}
 .demo-film .df-close{{font:inherit;font-size:14px;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.35);border-radius:8px;padding:6px 12px;cursor:pointer}}
-.demo-film video{{display:block;width:100%;aspect-ratio:16/9;background:#000}}
-.demo-film .df-foot{{margin:0;padding:10px 16px;font-size:13px;color:rgba(255,255,255,.7)}}
+.demo-film video{{display:block;flex:1;min-height:0;width:100%;height:100%;object-fit:contain;background:#000}}
+.demo-film .df-foot{{margin:0;padding:8px 16px;font-size:12px;color:rgba(255,255,255,.7);background:#0b1220}}
 </style>
 <script>
 (function(){{
   var d = document.getElementById("demoFilm");
   if (!d) return;
   var v = d.querySelector("video"), from = null;
-  function shut(){{ try {{ d.close(); }} catch(e) {{ d.removeAttribute("open"); }} }}
-  d.addEventListener("close", function(){{ try {{ v.pause(); }} catch(e){{}} if (from) try {{ from.focus(); }} catch(e){{}} }});
+  function full(){{ return document.fullscreenElement || document.webkitFullscreenElement; }}
+  // Leaving full screen, the film ending or Close all end the viewing the same
+  // way: out of full screen, the dialog shut, the film paused.
+  // The film is paused here rather than in a close listener, because on a busy
+  // page the dialog's close event can arrive late.
+  function shut(){{
+    try {{ v.pause(); }} catch(e){{}}
+    if (full()) {{ try {{ (document.exitFullscreen || document.webkitExitFullscreen).call(document); }} catch(e){{}} }}
+    if (d.open) {{ try {{ d.close(); }} catch(e) {{ d.removeAttribute("open"); }} }}
+    if (from) try {{ from.focus(); }} catch(e){{}}
+  }}
+  d.addEventListener("cancel", function(e){{ e.preventDefault(); shut(); }});
+  d.addEventListener("close", function(){{ try {{ v.pause(); }} catch(e){{}} }});
   d.addEventListener("click", function(e){{ if (e.target === d) shut(); }});
   d.querySelector("[data-demo-film-close]").addEventListener("click", shut);
+  v.addEventListener("ended", function(){{ shut(); try {{ v.currentTime = 0; }} catch(e){{}} }});
+  function left(){{ if (!full() && d.open) shut(); }}
+  document.addEventListener("fullscreenchange", left);
+  document.addEventListener("webkitfullscreenchange", left);
+  v.addEventListener("webkitendfullscreen", shut);
   document.querySelectorAll("[data-demo-film]").forEach(function(b){{
     b.addEventListener("click", function(){{
       from = b;
-      if (typeof d.showModal === "function") d.showModal();
-      else window.open(v.querySelector("source").src, "_blank", "noopener");
+      if (typeof d.showModal !== "function") {{ window.open(v.querySelector("source").src, "_blank", "noopener"); return; }}
+      d.showModal();
+      // The press is the visitor's own gesture, so the film may start with sound
+      // and take the whole screen. If either is refused it plays in the dialog.
+      try {{ var p = v.play(); if (p && p.catch) p.catch(function(){{}}); }} catch(e){{}}
+      try {{
+        if (v.requestFullscreen) v.requestFullscreen().catch(function(){{}});
+        else if (v.webkitRequestFullscreen) v.webkitRequestFullscreen();
+        else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+      }} catch(e){{}}
     }});
   }});
 }})();
