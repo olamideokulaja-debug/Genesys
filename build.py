@@ -397,6 +397,7 @@ home=f"""
       two minutes, or stop on any screen and read what you are looking at.</p>
     <div style="display:flex;gap:11px;flex-wrap:wrap">
       <a class="btn btn-primary" href="how-it-works.html">Watch the walkthrough <span class="arrow">&rarr;</span></a>
+      <button type="button" class="btn btn-ghost" data-demo-film style="font:inherit;font-weight:600;font-size:15px">Watch the demo <span class="arrow">&rarr;</span></button>
       <a class="btn btn-ghost" href="contact.html">Book a live demo</a>
     </div>
     <div class="hero-trust" style="margin-top:24px">
@@ -410,6 +411,48 @@ home=f"""
     <div class="shot-cap"><b>Front desk &middot; Search patients.</b> One of nine screens in the walkthrough.</div>
   </a>
 </div></section>
+<!-- The Genesys V3 demo film, 24 October 2026. Nine minutes of the system in use,
+     with demonstration data. It plays from the company's own storage, only when
+     somebody presses play: no autoplay, no third-party player, no tracking.
+     Captions are on by default. Esc, Close or a press outside the film closes it. -->
+<dialog class="demo-film" id="demoFilm" aria-labelledby="demoFilmTitle">
+  <div class="df-head"><h2 id="demoFilmTitle">Genesys V3 &middot; the platform demo, 10 minutes</h2>
+    <button type="button" class="df-close" data-demo-film-close>Close</button></div>
+  <video controls preload="none" playsinline crossorigin="anonymous"
+    poster="https://xkpjvslxdugiycvmzyka.supabase.co/storage/v1/object/public/media/genesys-v3-demo-poster.jpg">
+    <source src="https://xkpjvslxdugiycvmzyka.supabase.co/storage/v1/object/public/media/genesys-v3-demo-web-720p.mp4" type="video/mp4">
+    <track kind="captions" srclang="en" label="English" default
+      src="https://xkpjvslxdugiycvmzyka.supabase.co/storage/v1/object/public/media/genesys-v3-demo-captions.vtt">
+  </video>
+  <p class="df-foot">Demonstration data throughout. Genesys V3 is in clinical validation.</p>
+</dialog>
+<style>
+.demo-film{{width:min(1100px,94vw);max-height:94vh;padding:0;border:0;border-radius:14px;background:#0b1220;color:#fff;overflow:auto}}
+.demo-film::backdrop{{background:rgba(6,10,18,.7)}}
+.demo-film .df-head{{display:flex;align-items:center;gap:12px;padding:12px 16px}}
+.demo-film h2{{font-size:17px;margin:0;flex:1;color:#fff}}
+.demo-film .df-close{{font:inherit;font-size:14px;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.35);border-radius:8px;padding:6px 12px;cursor:pointer}}
+.demo-film video{{display:block;width:100%;aspect-ratio:16/9;background:#000}}
+.demo-film .df-foot{{margin:0;padding:10px 16px;font-size:13px;color:rgba(255,255,255,.7)}}
+</style>
+<script>
+(function(){{
+  var d = document.getElementById("demoFilm");
+  if (!d) return;
+  var v = d.querySelector("video"), from = null;
+  function shut(){{ try {{ d.close(); }} catch(e) {{ d.removeAttribute("open"); }} }}
+  d.addEventListener("close", function(){{ try {{ v.pause(); }} catch(e){{}} if (from) try {{ from.focus(); }} catch(e){{}} }});
+  d.addEventListener("click", function(e){{ if (e.target === d) shut(); }});
+  d.querySelector("[data-demo-film-close]").addEventListener("click", shut);
+  document.querySelectorAll("[data-demo-film]").forEach(function(b){{
+    b.addEventListener("click", function(){{
+      from = b;
+      if (typeof d.showModal === "function") d.showModal();
+      else window.open(v.querySelector("source").src, "_blank", "noopener");
+    }});
+  }});
+}})();
+</script>
 <section class="tight"><div class="wrap">
   <div class="sec-head reveal" style="text-align:center"><span class="eyebrow">The people building Genesys</span>
     <h2 style="font-size:clamp(24px,3.4vw,36px);margin-top:6px">A team you can reach.</h2></div>
