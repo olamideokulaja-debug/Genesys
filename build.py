@@ -420,10 +420,10 @@ home=f"""
   <div class="df-head"><h2 id="demoFilmTitle">Genesys V3 &middot; the platform demo, 11 minutes</h2>
     <button type="button" class="df-close" data-demo-film-close>Close</button></div>
   <video controls preload="none" playsinline crossorigin="anonymous"
-    poster="https://xkpjvslxdugiycvmzyka.supabase.co/storage/v1/object/public/media/genesys-v3-demo-poster%20(1).jpg">
-    <source src="https://xkpjvslxdugiycvmzyka.supabase.co/storage/v1/object/public/media/genesys-v3-demo-web-720p%20(1).mp4" type="video/mp4">
+    poster="https://xkpjvslxdugiycvmzyka.supabase.co/storage/v1/object/public/media/genesys-v3-demo-poster-v2.jpg">
+    <source src="https://xkpjvslxdugiycvmzyka.supabase.co/storage/v1/object/public/media/genesys-v3-demo-web-720p-v2.mp4" type="video/mp4">
     <track kind="captions" srclang="en" label="English" default
-      src="https://xkpjvslxdugiycvmzyka.supabase.co/storage/v1/object/public/media/genesys-v3-demo-captions%20(1).vtt">
+      src="https://xkpjvslxdugiycvmzyka.supabase.co/storage/v1/object/public/media/genesys-v3-demo-captions-v2.vtt">
   </video>
   <p class="df-foot">Demonstration data throughout. Genesys V3 is in clinical validation.</p>
 </dialog>
