@@ -397,7 +397,6 @@ home=f"""
       two minutes, or stop on any screen and read what you are looking at.</p>
     <div style="display:flex;gap:11px;flex-wrap:wrap">
       <a class="btn btn-primary" href="how-it-works.html">Watch the walkthrough <span class="arrow">&rarr;</span></a>
-      <button type="button" class="btn btn-ghost" data-demo-film style="font:inherit;font-weight:600;font-size:15px">Watch the demo <span class="arrow">&rarr;</span></button>
       <a class="btn btn-ghost" href="contact.html">Book a live demo</a>
     </div>
     <div class="hero-trust" style="margin-top:24px">
@@ -411,75 +410,6 @@ home=f"""
     <div class="shot-cap"><b>Front desk &middot; Search patients.</b> One of nine screens in the walkthrough.</div>
   </a>
 </div></section>
-<!-- The Genesys V3 demo film, 24 October 2026. The system in use, with
-     demonstration data, from the company's own storage: no third-party player,
-     no tracking. Watch the demo starts it at once and full screen, with captions
-     on; it closes itself when the film ends, and Esc or Close closes it sooner.
-     Nothing loads until the button is pressed. -->
-<dialog class="demo-film" id="demoFilm" aria-labelledby="demoFilmTitle">
-  <div class="df-head"><h2 id="demoFilmTitle">Genesys V3 &middot; the platform demo, 11 minutes</h2>
-    <button type="button" class="df-close" data-demo-film-close>Close</button></div>
-  <video controls preload="none" playsinline crossorigin="anonymous"
-    poster="https://xkpjvslxdugiycvmzyka.supabase.co/storage/v1/object/public/media/genesys-v3-demo-poster-v4.jpg">
-    <source src="https://xkpjvslxdugiycvmzyka.supabase.co/storage/v1/object/public/media/genesys-v3-demo-web-720p-v5.mp4" type="video/mp4">
-    <track kind="captions" srclang="en" label="English" default
-      src="https://xkpjvslxdugiycvmzyka.supabase.co/storage/v1/object/public/media/genesys-v3-demo-captions-v5.vtt">
-  </video>
-  <p class="df-foot">Demonstration data throughout.</p>
-</dialog>
-<style>
-/* The whole window, even where a browser refuses true full screen. */
-.demo-film{{inset:0;width:100vw;height:100vh;height:100dvh;max-width:100vw;max-height:100vh;max-height:100dvh;margin:0;padding:0;border:0;border-radius:0;background:#000;color:#fff;overflow:hidden}}
-.demo-film[open]{{display:flex;flex-direction:column}}
-.demo-film::backdrop{{background:#000}}
-.demo-film .df-head{{display:flex;align-items:center;gap:12px;padding:10px 16px;background:#0b1220}}
-.demo-film h2{{font-size:16px;margin:0;flex:1;color:#fff}}
-.demo-film .df-close{{font:inherit;font-size:14px;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.35);border-radius:8px;padding:6px 12px;cursor:pointer}}
-.demo-film video{{display:block;flex:1;min-height:0;width:100%;height:100%;object-fit:contain;background:#000}}
-.demo-film .df-foot{{margin:0;padding:8px 16px;font-size:12px;color:rgba(255,255,255,.7);background:#0b1220}}
-</style>
-<script>
-(function(){{
-  var d = document.getElementById("demoFilm");
-  if (!d) return;
-  var v = d.querySelector("video"), from = null;
-  function full(){{ return document.fullscreenElement || document.webkitFullscreenElement; }}
-  // Leaving full screen, the film ending or Close all end the viewing the same
-  // way: out of full screen, the dialog shut, the film paused.
-  // The film is paused here rather than in a close listener, because on a busy
-  // page the dialog's close event can arrive late.
-  function shut(){{
-    try {{ v.pause(); }} catch(e){{}}
-    if (full()) {{ try {{ (document.exitFullscreen || document.webkitExitFullscreen).call(document); }} catch(e){{}} }}
-    if (d.open) {{ try {{ d.close(); }} catch(e) {{ d.removeAttribute("open"); }} }}
-    if (from) try {{ from.focus(); }} catch(e){{}}
-  }}
-  d.addEventListener("cancel", function(e){{ e.preventDefault(); shut(); }});
-  d.addEventListener("close", function(){{ try {{ v.pause(); }} catch(e){{}} }});
-  d.addEventListener("click", function(e){{ if (e.target === d) shut(); }});
-  d.querySelector("[data-demo-film-close]").addEventListener("click", shut);
-  v.addEventListener("ended", function(){{ shut(); try {{ v.currentTime = 0; }} catch(e){{}} }});
-  function left(){{ if (!full() && d.open) shut(); }}
-  document.addEventListener("fullscreenchange", left);
-  document.addEventListener("webkitfullscreenchange", left);
-  v.addEventListener("webkitendfullscreen", shut);
-  document.querySelectorAll("[data-demo-film]").forEach(function(b){{
-    b.addEventListener("click", function(){{
-      from = b;
-      if (typeof d.showModal !== "function") {{ window.open(v.querySelector("source").src, "_blank", "noopener"); return; }}
-      d.showModal();
-      // The press is the visitor's own gesture, so the film may start with sound
-      // and take the whole screen. If either is refused it plays in the dialog.
-      try {{ var p = v.play(); if (p && p.catch) p.catch(function(){{}}); }} catch(e){{}}
-      try {{
-        if (v.requestFullscreen) v.requestFullscreen().catch(function(){{}});
-        else if (v.webkitRequestFullscreen) v.webkitRequestFullscreen();
-        else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
-      }} catch(e){{}}
-    }});
-  }});
-}})();
-</script>
 <section class="tight"><div class="wrap">
   <div class="sec-head reveal" style="text-align:center"><span class="eyebrow">The people building Genesys</span>
     <h2 style="font-size:clamp(24px,3.4vw,36px);margin-top:6px">A team you can reach.</h2></div>
@@ -488,6 +418,7 @@ home=f"""
     <a class="ts-face" href="team.html"><img src="assets/team/mike.jpg" alt="Mike Aigbe"><b>Mike Aigbe</b><span>Deputy MD, Vatebra</span></a>
     <a class="ts-face" href="team.html"><img src="assets/team/olamide.jpg" alt="Olamide Okulaja"><b>Olamide Okulaja</b><span>CEO, Realms Healthcare</span></a>
     <a class="ts-face" href="team.html"><img src="assets/team/jennifer.jpg" alt="Jennifer Kaja"><b>Jennifer Kaja</b><span>MD, Realms Healthcare</span></a>
+    <a class="ts-face" href="team.html"><img src="assets/team/temisa.jpg" alt="Temisa Mamuyovwi"><b>Temisa Mamuyovwi</b><span>Product Manager</span></a>
     <a class="ts-face" href="team.html"><img src="assets/team/kitunde.jpg" alt="Kitunde Abayomi"><b>Kitunde Abayomi</b><span>Client Liaison Manager</span></a>
     <a class="ts-face" href="team.html"><img src="assets/team/chinonso.jpg" alt="Chinomso Ordor"><b>Chinomso Ordor</b><span>ICT &amp; Implementation Officer</span></a>
   </div>
@@ -999,7 +930,8 @@ members="".join(f"""<article class="card member reveal d{i}">
  <div class="body"><span class="mtag">Board member</span><h3>{n}</h3><span class="aff">{r}</span>
  <p class="bio">{b}</p>{f'<span class="todo">{t}</span>' if t else ''}</div></article>"""
  for i,(im,n,r,b,t) in enumerate(MEMBERS,1))
-TEAM=[("kitunde","Kitunde Abayomi","Client Liaison Manager","Biography to follow"),
+TEAM=[("temisa","Temisa Mamuyovwi","Product Manager","Biography to follow"),
+      ("kitunde","Kitunde Abayomi","Client Liaison Manager","Biography to follow"),
       ("chinonso","Chinomso Ordor","ICT and Implementation Officer","Biography to follow")]
 teamcards="".join(f'''<article class="card member reveal d{i}">
  <div class="portrait" style="border:none;border-bottom:1px solid var(--border);border-radius:0">
